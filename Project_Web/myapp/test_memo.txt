@@ -1,0 +1,55 @@
+// DB
+(root pour password)
+
+demarrage: cat epytodo.sql | mysql -u root -p
+
+clean: cat drop_db.sql | mysql -u root -p
+
+
+// SERVEUR
+npm start
+
+// REQUETES
+
+/
+curl http://localhost:3000
+
+/register
+curl http://localhost:3000/register -H "Content-Type: application/json" --request POST --data '{"email":"test@test.test","password":"test","name":"test","firstname":"testest"}'
+
+/login
+curl http://localhost:3000/login -H "Content-Type: application/json" --request POST --data '{"email":"test@test.com","password":"test"}'
+
+/user
+curl http://localhost:3000/user -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTUwNTQ3NX0.A_rexRC4cFJkjw42fKvY3IsGDwJaxausuKMnz9NBWtU"
+
+/user/todos
+curl http://localhost:3000/user/todos -H "Authorization: Bearer [insert token here]"
+
+/users/:data
+curl http://localhost:3000/users/1 -H "Authorization: Bearer [insert token here]"
+curl http://localhost:3000/users/test@test.com -H "Authorization: Bearer [insert token here]"
+
+PUT /users
+curl http://localhost:3000/users/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTI2MjQ0NH0.xixNGRu1LldHhPMw-2Ha3aTYVrsFaMRmxz2kt7ctITw" -H "Content-Type: application/json" --request PUT --data '{"email":"test@test.com","password":"toto","name":"tata","firstname":"testest"}'
+
+DELETE
+curl http://localhost:3000/users/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTI2MjQ0NH0.xixNGRu1LldHhPMw-2Ha3aTYVrsFaMRmxz2kt7ctITw" --request DELETE
+
+GET /todos
+curl http://localhost:3000/todos/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTUwNTQ3NX0.A_rexRC4cFJkjw42fKvY3IsGDwJaxausuKMnz9NBWtU"
+
+GET /todos/:id
+curl http://localhost:3000/todos/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTI2MjQ0NH0.xixNGRu1LldHhPMw-2Ha3aTYVrsFaMRmxz2kt7ctITw
+
+POST /todos
+curl http://localhost:3000/todos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTUwOTAwN30.HNfj8eob2Vc-57VM89rdvsSeHgTxsOG_laEb2cu8FLk" -H "Content-Type: application/json" --request POST --data '{"title":"test","description":"test test test","due_time":"0000-00-00 00:00:00","user_id":"1", "status": "todo"}'
+
+PUT /todos/:id
+curl http://localhost:3000/todos/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTI2MjQ0NH0.xixNGRu1LldHhPMw-2Ha3aTYVrsFaMRmxz2kt7ctITw" -H "Content-Type: application/json" --request PUT --data '{"title":"test","description":"test test test","due_time":"0000-00-00 00:00:00","user_id":"1", "status": "test"}'
+
+DELETE /todos/:id
+curl http://localhost:3000/todos/1 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTI2MjQ0NH0.xixNGRu1LldHhPMw-2Ha3aTYVrsFaMRmxz2kt7ctITw" --request DELETE
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxNTUwNzc4OH0.DTRGIphtwdAVbRSj6y1p2xxI31hdGvRq_Rk68uU1TGo
