@@ -1,0 +1,77 @@
+/*
+** EPITECH PROJECT, 2023
+** star
+** File description:
+** display star
+*/
+
+void draw_space(int place, int max) {
+    if (place == 1 || place == max) {
+        my_putchar('*');
+    } else {
+        my_putchar(' ');
+    }
+}
+
+void draw_top(int size)
+{
+    int size_branch = (size * 2);
+    int rev_size = size;
+    
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size_branch + rev_size - 1; j++) {
+            my_putchar(' ');
+        }
+        for (int k = 1; k <= i * 2 - 1; k++) {
+            draw_space(k, i * 2 - 1);
+        }
+        my_putchar('\n');
+        rev_size--;
+    }
+}
+
+void draw_bottom(int size)
+{
+    int size_branch = (size * 2);
+    int rev_size = 1;
+
+    for (int i = size; i >= 1; i--) {
+        for (int j = 1; j <= size_branch + rev_size - 1; j++) {
+            my_putchar(' ');
+        }
+        for (int k = 1; k <= i * 2 - 1; k++) {
+            draw_space(k, i * 2 - 1);
+        }
+        my_putchar('\n');
+        rev_size++;
+    }
+}
+
+void draw_base(int size)
+{
+    int size_branch = ((size * 2)+1);
+
+    for (int i = 0; i < size_branch; i++) {
+        my_putchar('*');
+    }
+    for (int i = 0; i < size * 2 - 3; i++) {
+        my_putchar(' ');
+    }
+    for (int i = 0; i < size_branch; i++) {
+        my_putchar('*');
+    }
+    my_putchar('\n');
+    return;
+}
+
+void star(unsigned int size)
+{
+    if (size <= 0) {
+        return;
+    }
+    draw_top(size);
+    draw_base(size);
+    draw_middle(size);
+    draw_base(size);
+    draw_bottom(size);
+}

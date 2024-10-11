@@ -1,0 +1,29 @@
+/*
+** EPITECH PROJECT, 2023
+** my_compute_power_rec
+** File description:
+** function that return the first argument eleve a la puissance p
+*/
+
+int my_compute_power_rec(int nb, int p)
+{
+    int res = 1;
+
+    if (p == 0) {
+        return (1);
+    }
+    if (p < 0) {
+        return (0);
+    }
+    res = my_compute_power_rec(nb, p - 1);
+    res = nb * res;
+    return (res);
+}
+
+int main()
+{
+    int res = 1;
+    
+    res = my_compute_power_rec(5, 3);
+    return (res);
+}
