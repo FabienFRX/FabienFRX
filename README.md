@@ -1,9 +1,8 @@
-Students in IT at EPITECH Toulouse in FRANCE
+I'm a third-year IT student at EPITECH Toulouse (France),  
+Currently navigating between lines of code, rough nights, and too much coffee.  
+Here, you’ll find a selection of the projects I've built throughout my studies — from school assignments to personal experiments (some successful… some educational 😄).
 
-Here you will find some of my project during all my year,
-Be free to check it out
-But if you search some answers try to understand before.
-
+💡 If you're here looking for solutions, remember: copying is not learning — and at EPITECH, cheating can cost you your year. Use this code responsibly.
 <!---
 FabienFRX/FabienFRX is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
