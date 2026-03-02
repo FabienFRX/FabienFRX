@@ -1,0 +1,13 @@
+{
+  "header": {
+    "title": "Simple XML Document"
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        {"type": "text", "content": "This is a simple paragraph."}
+      ]
+    }
+  ]
+}

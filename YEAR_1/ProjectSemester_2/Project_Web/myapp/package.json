@@ -1,0 +1,19 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "setup_db": "cat epytodo.sql | mysql -u root -p",
+    "clean_db": "cat drop_db.sql | mysql -u root -p"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "postman": "^0.2.0"
+  }
+}

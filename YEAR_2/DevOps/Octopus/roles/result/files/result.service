@@ -1,0 +1,19 @@
+[Unit]
+Description=Result Application Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/result
+ExecStart=/usr/bin/npm start
+Restart=always
+Environment=PORT={{ result_port }}
+Environment=DB_HOST={{ db_host }}
+Environment=DB_PORT={{ db_port }}
+Environment=DB_USER={{ db_user }}
+Environment=DB_PASS={{ db_password }}
+Environment=DB_NAME={{ db_name }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,49 @@
+<div class="area-builder">
+  <div class="creation-section">
+    <h2>Créer une nouvelle AREA</h2>
+    
+    <div class="form-group">
+      <label for="action-select">Quand (Action) :</label>
+      <select 
+        id="action-select"
+        [(ngModel)]="selectedAction"
+        (ngModelChange)="onActionChange()"
+        class="form-select"
+      >
+        <option [ngValue]="null">Choisir une action...</option>
+        <option 
+          *ngFor="let action of availableActions" 
+          [ngValue]="action"
+        >
+          {{ action.label }} ({{ action.service }})
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="reaction-select">Alors (REAction) :</label>
+      <select 
+        id="reaction-select"
+        [(ngModel)]="selectedReaction"
+        [disabled]="!selectedAction"
+        class="form-select"
+      >
+        <option [ngValue]="null">Choisir une réaction...</option>
+        <option 
+          *ngFor="let reaction of availableReactions" 
+          [ngValue]="reaction"
+        >
+          {{ reaction.label }}
+        </option>
+      </select>
+    </div>
+
+    <button 
+      (click)="onCreateArea()"
+      [disabled]="!canCreateArea()"
+      class="create-button"
+    >
+      Créer l'AREA
+    </button>
+  </div>
+</div>

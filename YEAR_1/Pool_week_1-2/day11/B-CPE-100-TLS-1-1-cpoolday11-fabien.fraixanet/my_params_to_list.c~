@@ -1,0 +1,16 @@
+/*
+** EPITECH PROJECT, 2023
+** my_params_to_list
+** File description:
+** function that creates a new list from the command line arguments
+*/
+
+#include <stdlib.h>
+#include "/include/mylist.h"
+
+linked_list_t *my_params_to_list(int ac, char *const *av)
+{
+    
+    return (&"list's first node");
+}
+

@@ -1,0 +1,27 @@
+---
+- name: Install Redis
+  apt:
+    name: redis-server
+    state: present
+    update_cache: yes
+
+- name: Copy Redis configuration file
+  copy:
+    src: redis.conf
+    dest: /etc/redis/redis.conf
+    owner: redis
+    group: redis
+    mode: '0640'
+  notify: Restart Redis
+
+- name: Allow Redis through firewall
+  ufw:
+    rule: allow
+    port: "{{ redis_port }}"
+    proto: tcp
+
+- name: Ensure Redis is running and enabled
+  service:
+    name: redis-server
+    state: started
+    enabled: yes

@@ -1,0 +1,76 @@
+---
+- name: Add PostgreSQL apt repository signing key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Add PostgreSQL repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ bookworm-pgdg main
+    state: present
+    filename: pgdg
+
+- name: Install PostgreSQL 16
+  apt:
+    name: 
+      - postgresql-16
+      - postgresql-contrib-16
+      - libpq-dev
+      - python3-psycopg2
+    state: present
+    update_cache: yes
+
+- name: Copy PostgreSQL client authentication configuration file
+  copy:
+    src: pg_hba.conf
+    dest: /etc/postgresql/16/main/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: '0640'
+  notify: Restart PostgreSQL
+
+- name: Configure PostgreSQL to listen on all interfaces
+  lineinfile:
+    path: /etc/postgresql/16/main/postgresql.conf
+    regexp: "^#?listen_addresses\\s*=.*$"
+    line: "listen_addresses = '*'"
+  notify: Restart PostgreSQL
+
+- name: Allow PostgreSQL through firewall
+  ufw:
+    rule: allow
+    port: "{{ db_port }}"
+    proto: tcp
+
+- name: Copy schema file to temporary location
+  copy:
+    src: schema.sql
+    dest: /tmp/schema.sql
+    mode: '0644'
+  register: copy_schema
+
+- name: Create PostgreSQL user
+  become: yes
+  command: sudo -u postgres psql -c "CREATE USER {{ db_user }} WITH PASSWORD '{{ db_password }}';"
+  register: create_user
+  failed_when: create_user.rc != 0 and "already exists" not in create_user.stderr
+  changed_when: create_user.rc == 0
+
+- name: Create PostgreSQL database
+  become: yes
+  command: sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
+  register: create_db
+  failed_when: create_db.rc != 0 and "already exists" not in create_db.stderr
+  changed_when: create_db.rc == 0
+
+- name: Apply database schema
+  become: yes
+  command: sudo -u postgres psql -d {{ db_name }} -f /tmp/schema.sql
+  register: apply_schema
+  changed_when: apply_schema.rc == 0
+
+- name: Ensure PostgreSQL is running and enabled
+  service:
+    name: postgresql
+    state: started
+    enabled: yes

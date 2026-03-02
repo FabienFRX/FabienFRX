@@ -1,0 +1,17 @@
+rdi     | 1er argument
+rsi     | 2ème argument
+rdx     | 3ème argument
+rcx     | 4ème argument
+r8      | 5ème argument
+r9      | 6ème argument
+
+xor     rax, rax        | Initialisation d'une variable a 0
+mov dest, src       | associe src à dest
+inc registre    | pour incrémenter
+
+https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Registres
+al, ah, bl, bh, cl, ch, dl, dh        |  registre 8bits
+
+cmp     | pour comparer
+je      | si condition = vrai
+jne     | si condition = faux

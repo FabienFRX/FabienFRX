@@ -1,0 +1,21 @@
+fn bool_to_int(b) {
+    if (b) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+fn main() {
+    a = 10
+    b = 20
+
+    eq = bool_to_int(a == b)
+    neq = bool_to_int(a != b)
+    lt = bool_to_int(a < b)
+    gt = bool_to_int(a > b)
+    lte = bool_to_int(a <= b)
+    gte = bool_to_int(a >= b)
+
+    return eq + neq + lt + gt + lte + gte
+}

@@ -1,0 +1,114 @@
+my_ftp
+
+
+
+Basic tests
+
+  01 - Preliminaries - 4 tests
+    00 - Minimal functions: OK
+      PASSED
+    01 - several successive connections: OK
+      PASSED
+    02 - several simultaneous connections: Crashed
+      Crashed - Timed out after 5s
+    03 - Simple authentication with USER + PASS command: OK
+      PASSED
+  
+  05 - Authentication - 2 tests
+    01 - Sending request before authentication: OK
+      PASSED
+    02 - Wrong user authentication: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Trying to connect to server on port 60419...
+Trying to get init greeting...
+Receiving [220 Welcome to MyFTP Server^M$]
+Sending [USER p6thUjvB^M$]
+Receiving [530 Only anonymous login supported.^M$]
+Bad code, got 530 but expected 331
+
+The following outputs might not be accurate, your prints might not be flushed!
+----- stdout -----
+Server started on port 60419
+New client connected: 127.0.0.1
+Sending response: 220 Welcome to MyFTP Server
+Processing command: [USER p6thUjvB]
+
+----- stderr -----
+
+
+KO
+'
+  
+  08 - Various tests - 4 tests
+    01 - Wrong command: OK
+      PASSED
+    02 - Only spaces: OK
+      PASSED
+    03 - No operation: OK
+      PASSED
+    04 - Help: OK
+      PASSED
+  
+
+
+Advanced tests
+
+  02 - Error management:
+    Passed: 100.0 %
+    Crashed: 0.0 %
+  03 - Architecture:
+    Passed: 0.0 %
+    Crashed: 100.0 %
+  04 - Buffer management:
+    Passed: 100.0 %
+    Crashed: 0.0 %
+  06 - Working directory:
+    Passed: 100.0 %
+    Crashed: 0.0 %
+  09 - Directory Listing:
+    Passed: 0.0 %
+    Crashed: 33.3 %
+  10 - Downloading file:
+    Passed: 0.0 %
+    Crashed: 25.0 %
+  11 - Deleting file:
+    Passed: 100.0 %
+    Crashed: 0.0 %
+  12 - Uploading file:
+    Passed: 0.0 %
+    Crashed: 50.0 %
+
+
+=== BUILD LOG ===
+
+make: Entering directory '/usr/local/bugs/delivery'
+-e [1;3;4;35m 	Removed object files [00m
+-e [1;32m [OK] [1;36m  Done :  fclean [00m
+-e [1;32m [OK]  [00m [1;36m src/Main.cpp [00m  ----->  [1;32m src/Main.o [00m
+-e [1;32m [OK]  [00m [1;36m src/Server.cpp [00m  ----->  [1;32m src/Server.o [00m
+-e [1;32m [OK]  [00m [1;36m src/ClientHandler.cpp [00m  ----->  [1;32m src/ClientHandler.o [00m
+-e [1;32m [OK]  [00m [1;36m src/CommandParser.cpp [00m  ----->  [1;32m src/CommandParser.o [00m
+-e [1;32m [OK]  [00m [1;36m src/DataTransfer.cpp [00m  ----->  [1;32m src/DataTransfer.o [00m
+-e [1;32m [OK] [1;36m  Done :  all [00m
+make: Leaving directory '/usr/local/bugs/delivery'
+Build status: OK
+
+
+=== CODING STYLE ===
+
+
+
+
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: .
+------------------------------------------------------------------------------
+File                                       Lines    Exec  Cover   Missing
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+TOTAL                                          0       0    --%
+------------------------------------------------------------------------------
+lines: 0.0% (0 out of 0)
+functions: 0.0% (0 out of 0)
+branches: 0.0% (0 out of 0)
+calls: 0.0% (0 out of 0)

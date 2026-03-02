@@ -1,0 +1,17 @@
+node_modules/
+dist/
+# Next.js dir (not used now, kept just in case of migration)
+.next/
+*.log
+
+# Vite / tooling caches
+.vite/
+.turbo/
+.cache/
+.eslintcache
+tsconfig.tsbuildinfo
+coverage/
+
+# Env files (keep an eventual .env.example tracked)
+.env
+.env.*

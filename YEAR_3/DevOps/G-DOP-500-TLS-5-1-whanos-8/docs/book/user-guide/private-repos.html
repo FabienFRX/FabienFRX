@@ -1,0 +1,822 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Private Repositories - Whanos Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Complete documentation for the Whanos infrastructure - Automatically Deploy Nearly Anything!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Whanos Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos/edit/main/docs/src/user-guide/private-repos.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="working-with-private-repositories"><a class="header" href="#working-with-private-repositories">Working with Private Repositories</a></h1>
+<p>Whanos fully supports private Git repositories. This guide explains how to configure Git credentials in Jenkins and use them with your private repositories.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Private repositories require authentication to clone and access code. Whanos integrates with Jenkins’ credential management system to securely store and use Git credentials.</p>
+<p><strong>Supported authentication methods:</strong></p>
+<ul>
+<li>Username and Password</li>
+<li>Personal Access Tokens (recommended)</li>
+<li>SSH Keys</li>
+</ul>
+<h2 id="why-use-personal-access-tokens"><a class="header" href="#why-use-personal-access-tokens">Why Use Personal Access Tokens?</a></h2>
+<p>Personal access tokens (PATs) are more secure than passwords because:</p>
+<ul>
+<li>They can be scoped with specific permissions</li>
+<li>They can be revoked individually without changing your password</li>
+<li>They expire automatically (on most platforms)</li>
+<li>Many platforms (GitHub, GitLab) now require PATs instead of passwords</li>
+</ul>
+<h2 id="creating-personal-access-tokens"><a class="header" href="#creating-personal-access-tokens">Creating Personal Access Tokens</a></h2>
+<h3 id="github"><a class="header" href="#github">GitHub</a></h3>
+<ol>
+<li>Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
+<li>Click “Generate new token (classic)”</li>
+<li>Give it a descriptive name (e.g., “Whanos CI/CD”)</li>
+<li>Set expiration (90 days recommended, or custom)</li>
+<li>Select scopes:
+<ul>
+<li><code>repo</code> (full control of private repositories)</li>
+<li><code>read:org</code> (if using organization repositories)</li>
+</ul>
+</li>
+<li>Click “Generate token”</li>
+<li><strong>Copy the token immediately</strong> (you won’t see it again)</li>
+</ol>
+<p><strong>Token format:</strong> <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></p>
+<h3 id="gitlab"><a class="header" href="#gitlab">GitLab</a></h3>
+<ol>
+<li>Go to GitLab Preferences → Access Tokens</li>
+<li>Enter token name (e.g., “Whanos”)</li>
+<li>Set expiration date (optional but recommended)</li>
+<li>Select scopes:
+<ul>
+<li><code>read_repository</code></li>
+<li><code>write_repository</code></li>
+</ul>
+</li>
+<li>Click “Create personal access token”</li>
+<li><strong>Copy the token immediately</strong></li>
+</ol>
+<p><strong>Token format:</strong> <code>glpat-xxxxxxxxxxxxxxxxxxxx</code></p>
+<h3 id="bitbucket"><a class="header" href="#bitbucket">Bitbucket</a></h3>
+<ol>
+<li>Go to Bitbucket Settings → Personal access tokens</li>
+<li>Click “Create token”</li>
+<li>Enter label (e.g., “Whanos CI/CD”)</li>
+<li>Set permissions:
+<ul>
+<li>Repositories: Read, Write</li>
+</ul>
+</li>
+<li>Click “Create”</li>
+<li><strong>Copy the token immediately</strong></li>
+</ol>
+<h2 id="adding-credentials-to-jenkins"><a class="header" href="#adding-credentials-to-jenkins">Adding Credentials to Jenkins</a></h2>
+<h3 id="method-1-jenkins-web-ui-recommended"><a class="header" href="#method-1-jenkins-web-ui-recommended">Method 1: Jenkins Web UI (Recommended)</a></h3>
+<ol>
+<li>
+<p><strong>Access Jenkins:</strong></p>
+<pre><code class="language-bash"># Open Jenkins in your browser
+http://localhost:8080
+</code></pre>
+</li>
+<li>
+<p><strong>Navigate to Credentials:</strong></p>
+<ul>
+<li>Click “Manage Jenkins” (left sidebar)</li>
+<li>Click “Credentials”</li>
+<li>Click “(global)” under “Stores scoped to Jenkins”</li>
+<li>Click “Add Credentials” (left sidebar)</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Credential:</strong></p>
+<p><strong>For Personal Access Token (recommended):</strong></p>
+<ul>
+<li>Kind: <code>Username with password</code></li>
+<li>Scope: <code>Global (Jenkins, nodes, items, all child items, etc)</code></li>
+<li>Username: Your Git username (e.g., <code>johndoe</code>)</li>
+<li>Password: Your personal access token (paste the token you copied)</li>
+<li>ID: A unique identifier (e.g., <code>github-whanos</code>, <code>gitlab-private-repo</code>)</li>
+<li>Description: Human-readable description (e.g., “GitHub PAT for private repos”)</li>
+</ul>
+<p><strong>For SSH Key:</strong></p>
+<ul>
+<li>Kind: <code>SSH Username with private key</code></li>
+<li>Scope: <code>Global</code></li>
+<li>ID: Unique identifier (e.g., <code>github-ssh</code>)</li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Choose “Enter directly” and paste your private SSH key</li>
+<li>Passphrase: If your key is encrypted, enter passphrase</li>
+<li>Description: Description of the credential</li>
+</ul>
+</li>
+<li>
+<p><strong>Click “Create”</strong></p>
+</li>
+</ol>
+<h3 id="method-2-jenkins-configuration-as-code-jcasc"><a class="header" href="#method-2-jenkins-configuration-as-code-jcasc">Method 2: Jenkins Configuration as Code (JCasC)</a></h3>
+<p>You can also pre-configure credentials in <code>jenkins/config/jenkins.yaml</code>:</p>
+<pre><code class="language-yaml">credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "github-whanos"
+              username: "your-username"
+              password: "{AQAAABAAAAAw...}"  # Encrypted secret
+              description: "GitHub Personal Access Token"
+
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: "github-ssh"
+              username: "git"
+              privateKeySource:
+                directEntry:
+                  privateKey: "{AQAAABAAAAAw...}"  # Encrypted key
+              description: "GitHub SSH Key"
+</code></pre>
+<p><strong>Note:</strong> Secrets should be encrypted using Jenkins secret encryption. For simplicity, use the Web UI method.</p>
+<h2 id="using-credentials-in-link-project-job"><a class="header" href="#using-credentials-in-link-project-job">Using Credentials in link-project Job</a></h2>
+<p>When creating a new project via the <code>link-project</code> job, you specify the credential ID:</p>
+<h3 id="via-jenkins-ui"><a class="header" href="#via-jenkins-ui">Via Jenkins UI</a></h3>
+<ol>
+<li>
+<p><strong>Go to the link-project job:</strong></p>
+<pre><code>http://localhost:8080/job/Whanos/job/link-project/
+</code></pre>
+</li>
+<li>
+<p><strong>Click “Build with Parameters”</strong></p>
+</li>
+<li>
+<p><strong>Fill in the parameters:</strong></p>
+<ul>
+<li><strong>DISPLAY_NAME:</strong> Project name (e.g., <code>my-private-app</code>)</li>
+<li><strong>GIT_URL:</strong> Private repository URL
+<ul>
+<li>HTTPS: <code>https://github.com/username/private-repo.git</code></li>
+<li>SSH: <code>git@github.com:username/private-repo.git</code></li>
+</ul>
+</li>
+<li><strong>CREDENTIAL_ID:</strong> The ID you created in Jenkins (e.g., <code>github-whanos</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Click “Build”</strong></p>
+</li>
+</ol>
+<h3 id="via-jenkins-cliapi"><a class="header" href="#via-jenkins-cliapi">Via Jenkins CLI/API</a></h3>
+<pre><code class="language-bash"># Using Jenkins CLI
+java -jar jenkins-cli.jar -s http://localhost:8080/ build link-project \
+  -p DISPLAY_NAME="my-private-app" \
+  -p GIT_URL="https://github.com/username/private-repo.git" \
+  -p CREDENTIAL_ID="github-whanos"
+
+# Using curl
+curl -X POST 'http://localhost:8080/job/Whanos/job/link-project/buildWithParameters' \
+  --user admin:admin \
+  --data-urlencode DISPLAY_NAME="my-private-app" \
+  --data-urlencode GIT_URL="https://github.com/username/private-repo.git" \
+  --data-urlencode CREDENTIAL_ID="github-whanos"
+</code></pre>
+<h3 id="what-happens-next"><a class="header" href="#what-happens-next">What Happens Next</a></h3>
+<ol>
+<li>Jenkins creates a new job under <code>Whanos/Projects/</code></li>
+<li>The job is configured with your credential ID</li>
+<li>On the first build, Jenkins clones the private repository using the credentials</li>
+<li>The pipeline executes normally (detect language, build, test, deploy)</li>
+</ol>
+<h2 id="repository-url-formats"><a class="header" href="#repository-url-formats">Repository URL Formats</a></h2>
+<h3 id="https-use-with-personal-access-tokens"><a class="header" href="#https-use-with-personal-access-tokens">HTTPS (Use with Personal Access Tokens)</a></h3>
+<pre><code># GitHub
+https://github.com/username/repo.git
+
+# GitLab
+https://gitlab.com/username/repo.git
+
+# Bitbucket
+https://bitbucket.org/username/repo.git
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Works through corporate firewalls</li>
+<li>Easier to set up</li>
+<li>Token-based authentication</li>
+</ul>
+<h3 id="ssh-use-with-ssh-keys"><a class="header" href="#ssh-use-with-ssh-keys">SSH (Use with SSH Keys)</a></h3>
+<pre><code># GitHub
+git@github.com:username/repo.git
+
+# GitLab
+git@gitlab.com:username/repo.git
+
+# Bitbucket
+git@bitbucket.org:username/repo.git
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>More secure (key-based)</li>
+<li>No password prompts</li>
+<li>Common in enterprise environments</li>
+</ul>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>SSH key pair generated</li>
+<li>Public key added to Git platform</li>
+<li>Private key added to Jenkins</li>
+</ul>
+<h2 id="ssh-key-setup"><a class="header" href="#ssh-key-setup">SSH Key Setup</a></h2>
+<p>If you prefer SSH authentication:</p>
+<h3 id="1-generate-ssh-key-pair"><a class="header" href="#1-generate-ssh-key-pair">1. Generate SSH Key Pair</a></h3>
+<pre><code class="language-bash"># On your local machine or Jenkins server
+ssh-keygen -t ed25519 -C "whanos-jenkins" -f ~/.ssh/whanos_key
+
+# This creates:
+# - ~/.ssh/whanos_key (private key - add to Jenkins)
+# - ~/.ssh/whanos_key.pub (public key - add to Git platform)
+</code></pre>
+<h3 id="2-add-public-key-to-git-platform"><a class="header" href="#2-add-public-key-to-git-platform">2. Add Public Key to Git Platform</a></h3>
+<p><strong>GitHub:</strong></p>
+<ol>
+<li>Go to Settings → SSH and GPG keys → New SSH key</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+<li>Click “Add SSH key”</li>
+</ol>
+<p><strong>GitLab:</strong></p>
+<ol>
+<li>Go to Preferences → SSH Keys</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+<li>Click “Add key”</li>
+</ol>
+<p><strong>Bitbucket:</strong></p>
+<ol>
+<li>Go to Personal settings → SSH keys</li>
+<li>Click “Add key”</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+</ol>
+<h3 id="3-add-private-key-to-jenkins"><a class="header" href="#3-add-private-key-to-jenkins">3. Add Private Key to Jenkins</a></h3>
+<ol>
+<li>
+<p>Copy the <strong>private key</strong> content:</p>
+<pre><code class="language-bash">cat ~/.ssh/whanos_key
+</code></pre>
+</li>
+<li>
+<p>In Jenkins:</p>
+<ul>
+<li>Manage Jenkins → Credentials → Add Credentials</li>
+<li>Kind: <code>SSH Username with private key</code></li>
+<li>ID: <code>github-ssh</code></li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Choose “Enter directly”, paste the private key</li>
+<li>Click “Create”</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-use-ssh-url-in-link-project"><a class="header" href="#4-use-ssh-url-in-link-project">4. Use SSH URL in link-project</a></h3>
+<p>Use the SSH format URL (e.g., <code>git@github.com:username/repo.git</code>) and specify your SSH credential ID.</p>
+<h2 id="testing-credentials"><a class="header" href="#testing-credentials">Testing Credentials</a></h2>
+<h3 id="test-from-jenkins-script-console"><a class="header" href="#test-from-jenkins-script-console">Test from Jenkins Script Console</a></h3>
+<p>You can verify credentials work before creating projects:</p>
+<ol>
+<li>Go to Manage Jenkins → Script Console</li>
+<li>Run this Groovy script:</li>
+</ol>
+<pre><code class="language-groovy">import jenkins.model.Jenkins
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.common.*
+import com.cloudbees.plugins.credentials.domains.*
+
+// List all credentials
+def credentials = CredentialsProvider.lookupCredentials(
+    StandardCredentials.class,
+    Jenkins.instance,
+    null,
+    null
+)
+
+credentials.each { c -&gt;
+    println("ID: ${c.id}, Description: ${c.description}")
+}
+</code></pre>
+<p>This lists all available credentials to ensure yours was created correctly.</p>
+<h3 id="test-with-a-manual-git-clone"><a class="header" href="#test-with-a-manual-git-clone">Test with a Manual Git Clone</a></h3>
+<ol>
+<li>
+<p>Access the Jenkins container:</p>
+<pre><code class="language-bash">docker exec -it whanos-jenkins bash
+</code></pre>
+</li>
+<li>
+<p>Test HTTPS clone with token:</p>
+<pre><code class="language-bash">git clone https://USERNAME:TOKEN@github.com/username/private-repo.git /tmp/test-clone
+</code></pre>
+</li>
+<li>
+<p>Test SSH clone:</p>
+<pre><code class="language-bash"># First, add SSH key to ssh-agent
+eval $(ssh-agent)
+ssh-add /path/to/private/key
+
+# Then clone
+git clone git@github.com:username/private-repo.git /tmp/test-ssh-clone
+</code></pre>
+</li>
+</ol>
+<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="error-authentication-failed"><a class="header" href="#error-authentication-failed">Error: “Authentication failed”</a></h3>
+<p><strong>Cause:</strong> Invalid credentials or expired token</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify the token/password is correct</li>
+<li>Check if the token has expired</li>
+<li>Ensure the token has correct permissions (<code>repo</code> scope for GitHub)</li>
+<li>Regenerate the token if necessary</li>
+<li>Update the credential in Jenkins</li>
+</ol>
+<h3 id="error-repository-not-found"><a class="header" href="#error-repository-not-found">Error: “Repository not found”</a></h3>
+<p><strong>Causes:</strong></p>
+<ul>
+<li>Repository URL is incorrect</li>
+<li>Credentials don’t have access to the repository</li>
+<li>Repository name changed</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify the repository URL is correct</li>
+<li>Check that the Git user has access to the repository</li>
+<li>Ensure credential ID is specified in link-project parameters</li>
+</ol>
+<h3 id="error-permission-denied-publickey"><a class="header" href="#error-permission-denied-publickey">Error: “Permission denied (publickey)”</a></h3>
+<p><strong>Cause:</strong> SSH key not recognized</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify public key is added to Git platform</li>
+<li>Check private key is correctly added to Jenkins</li>
+<li>Ensure username is <code>git</code> (not your Git username)</li>
+<li>Test SSH connection:
+<pre><code class="language-bash">ssh -T git@github.com
+# Should output: Hi username! You've successfully authenticated...
+</code></pre>
+</li>
+</ol>
+<h3 id="error-host-key-verification-failed"><a class="header" href="#error-host-key-verification-failed">Error: “Host key verification failed”</a></h3>
+<p><strong>Cause:</strong> Jenkins doesn’t trust the Git host’s SSH key</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Add Git host to Jenkins known_hosts:
+<pre><code class="language-bash">docker exec -it whanos-jenkins bash
+ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+ssh-keyscan gitlab.com &gt;&gt; ~/.ssh/known_hosts
+ssh-keyscan bitbucket.org &gt;&gt; ~/.ssh/known_hosts
+</code></pre>
+</li>
+</ol>
+<h3 id="credential-not-found-in-job"><a class="header" href="#credential-not-found-in-job">Credential Not Found in Job</a></h3>
+<p><strong>Symptoms:</strong> Job shows “Credential not found” or uses anonymous clone</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify credential ID matches exactly (case-sensitive)</li>
+<li>Ensure credential scope is “Global”</li>
+<li>Check that the credential exists:
+<ul>
+<li>Manage Jenkins → Credentials</li>
+</ul>
+</li>
+<li>Re-run link-project with correct CREDENTIAL_ID parameter</li>
+</ol>
+<h3 id="token-permissions-insufficient"><a class="header" href="#token-permissions-insufficient">Token Permissions Insufficient</a></h3>
+<p><strong>Symptoms:</strong> Clone works but push fails, or certain operations fail</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li><strong>GitHub:</strong> Ensure token has <code>repo</code> scope (full control)</li>
+<li><strong>GitLab:</strong> Ensure token has <code>write_repository</code> scope</li>
+<li><strong>Bitbucket:</strong> Ensure token has “Repositories: Write” permission</li>
+</ul>
+<h2 id="security-best-practices"><a class="header" href="#security-best-practices">Security Best Practices</a></h2>
+<h3 id="1-use-tokens-not-passwords"><a class="header" href="#1-use-tokens-not-passwords">1. Use Tokens, Not Passwords</a></h3>
+<p>Always use personal access tokens instead of your actual password:</p>
+<ul>
+<li>Tokens can be revoked without changing your password</li>
+<li>Tokens can have limited scopes</li>
+<li>Many platforms now require tokens for API access</li>
+</ul>
+<h3 id="2-set-token-expiration"><a class="header" href="#2-set-token-expiration">2. Set Token Expiration</a></h3>
+<p>Configure tokens to expire after a reasonable time:</p>
+<ul>
+<li>90 days for active development</li>
+<li>30 days for testing/experimentation</li>
+<li>Set calendar reminders to rotate tokens before expiration</li>
+</ul>
+<h3 id="3-minimum-scope-principle"><a class="header" href="#3-minimum-scope-principle">3. Minimum Scope Principle</a></h3>
+<p>Only grant the minimum permissions needed:</p>
+<ul>
+<li>For read-only deployments: read access only</li>
+<li>For CI/CD: read + write to specific repos</li>
+<li>Avoid <code>admin</code> or <code>delete</code> permissions unless absolutely necessary</li>
+</ul>
+<h3 id="4-rotate-credentials-regularly"><a class="header" href="#4-rotate-credentials-regularly">4. Rotate Credentials Regularly</a></h3>
+<p>Rotate tokens and SSH keys periodically:</p>
+<ul>
+<li>Every 90 days for production</li>
+<li>Immediately if a credential may have been compromised</li>
+<li>After team member departures</li>
+</ul>
+<h3 id="5-use-organization-level-tokens"><a class="header" href="#5-use-organization-level-tokens">5. Use Organization-Level Tokens</a></h3>
+<p>For team projects, consider:</p>
+<ul>
+<li>GitHub: Use deploy keys or GitHub Apps instead of personal tokens</li>
+<li>GitLab: Use project access tokens</li>
+<li>Bitbucket: Use workspace access tokens</li>
+</ul>
+<p>This ensures credentials aren’t tied to a single person.</p>
+<h3 id="6-audit-credential-usage"><a class="header" href="#6-audit-credential-usage">6. Audit Credential Usage</a></h3>
+<p>Regularly review:</p>
+<ul>
+<li>Which credentials are configured in Jenkins</li>
+<li>Which jobs use which credentials</li>
+<li>When credentials were last used</li>
+<li>Remove unused credentials</li>
+</ul>
+<h3 id="7-encrypt-credentials-in-jcasc"><a class="header" href="#7-encrypt-credentials-in-jcasc">7. Encrypt Credentials in JCasC</a></h3>
+<p>If using Jenkins Configuration as Code:</p>
+<pre><code class="language-bash"># Encrypt secrets using Jenkins CLI
+echo -n 'my-secret-token' | java -jar jenkins-cli.jar -s http://localhost:8080/ \
+  groovy = &lt;&lt;&lt; "println(hudson.util.Secret.fromString(System.in.text).getEncryptedValue())"
+</code></pre>
+<p>Use the encrypted value in <code>jenkins.yaml</code>.</p>
+<h3 id="8-network-level-security"><a class="header" href="#8-network-level-security">8. Network-Level Security</a></h3>
+<p>For production deployments:</p>
+<ul>
+<li>Use HTTPS for Jenkins access</li>
+<li>Enable Jenkins authentication and authorization</li>
+<li>Restrict network access to Jenkins (firewall rules)</li>
+<li>Use VPN for Jenkins access if handling sensitive repos</li>
+</ul>
+<h2 id="multiple-credentials"><a class="header" href="#multiple-credentials">Multiple Credentials</a></h2>
+<p>You can create multiple credentials for different repositories or organizations:</p>
+<pre><code>github-public-repos     → Your public GitHub projects
+github-private-work     → Company private repositories
+gitlab-personal         → Personal GitLab projects
+bitbucket-team          → Team Bitbucket workspace
+</code></pre>
+<p>When running link-project, specify the appropriate credential ID for each project.</p>
+<h2 id="advanced-credential-binding-in-pipelines"><a class="header" href="#advanced-credential-binding-in-pipelines">Advanced: Credential Binding in Pipelines</a></h2>
+<p>The Whanos Jenkinsfile template already handles credentials, but for custom modifications:</p>
+<pre><code class="language-groovy">// In Jenkinsfile
+checkout([
+    $class: 'GitSCM',
+    branches: [[name: "*/${env.GIT_BRANCH}"]],
+    userRemoteConfigs: [[
+        url: env.GIT_URL,
+        credentialsId: env.CREDENTIAL_ID  // Passed from link-project
+    ]]
+])
+</code></pre>
+<p>This is already configured in the Whanos template, so you don’t need to modify it.</p>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="example-1-github-private-repository-with-token"><a class="header" href="#example-1-github-private-repository-with-token">Example 1: GitHub Private Repository with Token</a></h3>
+<ol>
+<li>
+<p><strong>Create Token:</strong> GitHub Settings → Developer settings → Personal access tokens</p>
+<ul>
+<li>Scopes: <code>repo</code></li>
+<li>Copy token: <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Add to Jenkins:</strong></p>
+<ul>
+<li>ID: <code>github-myapp</code></li>
+<li>Username: <code>johndoe</code></li>
+<li>Password: <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>DISPLAY_NAME: <code>my-backend</code></li>
+<li>GIT_URL: <code>https://github.com/johndoe/my-backend-app.git</code></li>
+<li>CREDENTIAL_ID: <code>github-myapp</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="example-2-gitlab-private-repository-with-ssh"><a class="header" href="#example-2-gitlab-private-repository-with-ssh">Example 2: GitLab Private Repository with SSH</a></h3>
+<ol>
+<li>
+<p><strong>Generate SSH Key:</strong></p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -f ~/.ssh/gitlab_whanos
+</code></pre>
+</li>
+<li>
+<p><strong>Add Public Key to GitLab:</strong></p>
+<ul>
+<li>Copy: <code>cat ~/.ssh/gitlab_whanos.pub</code></li>
+<li>GitLab → Preferences → SSH Keys → Add key</li>
+</ul>
+</li>
+<li>
+<p><strong>Add Private Key to Jenkins:</strong></p>
+<ul>
+<li>Kind: SSH Username with private key</li>
+<li>ID: <code>gitlab-ssh</code></li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Content of <code>~/.ssh/gitlab_whanos</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>DISPLAY_NAME: <code>my-frontend</code></li>
+<li>GIT_URL: <code>git@gitlab.com:username/my-frontend.git</code></li>
+<li>CREDENTIAL_ID: <code>gitlab-ssh</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="example-3-organization-repository"><a class="header" href="#example-3-organization-repository">Example 3: Organization Repository</a></h3>
+<p>For company/organization repositories:</p>
+<ol>
+<li>
+<p><strong>Create Organization Token</strong> (preferred over personal tokens)</p>
+<ul>
+<li>GitHub: Settings → Developer settings → Personal access tokens → Fine-grained tokens</li>
+<li>Limit to specific organization/repositories</li>
+<li>Set resource owner to organization</li>
+</ul>
+</li>
+<li>
+<p><strong>Add to Jenkins:</strong></p>
+<ul>
+<li>ID: <code>company-repos</code></li>
+<li>Username: Service account username</li>
+<li>Password: Organization token</li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>GIT_URL: <code>https://github.com/mycompany/backend-service.git</code></li>
+<li>CREDENTIAL_ID: <code>company-repos</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li><a href="./compatible-repo.html">Creating Compatible Repositories</a> - How to structure your app for Whanos</li>
+<li><a href="./deployment.html">Deployment Workflow</a> - Understanding the CI/CD pipeline</li>
+<li><a href="../troubleshooting/common-issues.html">Troubleshooting</a> - Common issues and solutions</li>
+</ul>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>To use private repositories with Whanos:</p>
+<ol>
+<li>✅ Create a personal access token on your Git platform</li>
+<li>✅ Add credentials to Jenkins (Manage Jenkins → Credentials)</li>
+<li>✅ Note the credential ID you create</li>
+<li>✅ Run link-project job with the credential ID</li>
+<li>✅ Your private repository will be automatically deployed</li>
+</ol>
+<p><strong>Remember:</strong> Keep your tokens secure, rotate them regularly, and use the minimum required permissions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../user-guide/configuring-deployment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../user-guide/monitoring.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../user-guide/configuring-deployment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../user-guide/monitoring.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "header": {
+    "title": "Simple Document",
+    "author": "Test User",
+    "date": "2025-04-28"
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        {"type": "text", "content": "This is a simple paragraph with plain text.# First SectionThis is content in the first section.- List item 1- List item 2"}
+      ]
+    }
+  ]
+}

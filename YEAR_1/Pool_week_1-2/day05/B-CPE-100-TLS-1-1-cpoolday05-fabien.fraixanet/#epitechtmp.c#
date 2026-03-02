@@ -1,0 +1,15 @@
+/*
+** EPITECH PROJECT, 2023
+** test
+** File description:
+** test
+*/
+
+my_compute_factorial_rec(5);
+res = 1;
+res = my_compute_factorial_rec(5 - 1);
+----------
+my_compute_factorial_rec(4);
+res = 1;
+res = my_compute_factorial_rec(4 - 1);
+res = 6

@@ -1,0 +1,6 @@
+<document>
+  <header title="Formatted Document" author="Test User" date="2025-04-28"></header>
+  <body>
+    <paragraph>This paragraph has <bold>bold text</bold>, <italic>italic text</italic>, and <code>inline code</code>.# Section with ListsHere&apos;s a paragraph before the list.- First item- Second item with <bold>bold</bold>- Third item with <italic>italic</italic># Another Section</paragraph>
+  </body>
+</document>

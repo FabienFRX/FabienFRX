@@ -1,0 +1,9 @@
+automakefile:
+
+Probleme quand il y a pas de lib (-lmy)
+
+Effacer les .gcno avec make clean
+
+Voir pour quand il y a pas de sources_files
+
+

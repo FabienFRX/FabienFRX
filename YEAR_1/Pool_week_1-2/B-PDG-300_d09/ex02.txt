@@ -1,0 +1,9 @@
+Merlin goes for an adventure.
+Merlin learns magic from his spellbook.
+Merlin doesn't know how to fight.
+Merlin is out of power.
+Merlin meditates.
+Merlin casts a fireball.
+Merlin takes 50 damage.
+Merlin closes his spellbook.
+Merlin is back to his crops.

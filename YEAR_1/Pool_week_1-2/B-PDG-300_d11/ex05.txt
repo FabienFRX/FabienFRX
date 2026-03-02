@@ -1,0 +1,23 @@
+Naruto is alive
+Sasuke is alive
+Sakura is alive
+Serge is alive
+Naruto is touched
+Sasuke is touched
+Sakura is touched
+Serge is touched
+Naruto is dead
+Sasuke is dead
+Orochimaru is alive
+Tsunade is alive
+Orochimaru is touched
+Sakura is touched
+Serge is touched
+Tsunade is touched
+Jiraya is alive
+Jiraya is dead
+Orochimaru is dead
+Sakura is dead
+Serge is dead
+Tsunade is dead
+Invalid iterator

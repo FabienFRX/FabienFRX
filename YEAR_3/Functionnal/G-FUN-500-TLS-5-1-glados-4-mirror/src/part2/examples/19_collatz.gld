@@ -1,0 +1,22 @@
+fn collatz_step(n) {
+    half = n / 2
+    if (n == half * 2) {
+        return half
+    } else {
+        return 3 * n + 1
+    }
+}
+
+fn collatz_count(n) {
+    if (n == 1) {
+        return 0
+    } else {
+        next = collatz_step(n)
+        return 1 + collatz_count(next)
+    }
+}
+
+fn main() {
+    result = collatz_count(27)
+    return result
+}

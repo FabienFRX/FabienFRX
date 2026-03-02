@@ -1,0 +1,3835 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Whanos Documentation</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Complete documentation for the Whanos infrastructure - Automatically Deploy Nearly Anything!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Whanos Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Welcome to <strong>Whanos</strong> - Automatically Deploy (Nearly) Anything with a Snap!</p>
+<h2 id="what-is-whanos"><a class="header" href="#what-is-whanos">What is Whanos?</a></h2>
+<p>Whanos is a powerful DevOps infrastructure that combines Docker, Jenkins, Kubernetes, and Infrastructure as Code (Terraform) to provide automatic containerization and deployment of applications written in multiple programming languages.</p>
+<p>Named after the purple whale, Whanos brings together the “Infinity Stones” of DevOps:</p>
+<ul>
+<li>🐳 <strong>Containerization</strong> with Docker</li>
+<li>🔄 <strong>Task Automation</strong> with Jenkins</li>
+<li>📦 <strong>Configuration Management</strong> with Terraform</li>
+<li>☸️ <strong>Orchestration</strong> with Kubernetes</li>
+</ul>
+<h2 id="key-features"><a class="header" href="#key-features">Key Features</a></h2>
+<h3 id="multi-language-support"><a class="header" href="#multi-language-support">Multi-Language Support</a></h3>
+<p>Whanos supports automatic detection and containerization of applications written in:</p>
+<ul>
+<li><strong>C</strong> (GCC 13.2)</li>
+<li><strong>Java</strong> (Java SE 21 with Maven)</li>
+<li><strong>JavaScript</strong> (Node.js 20.9)</li>
+<li><strong>Python</strong> (3.12)</li>
+<li><strong>Befunge</strong> (Befunge-93)</li>
+</ul>
+<h3 id="automated-pipeline"><a class="header" href="#automated-pipeline">Automated Pipeline</a></h3>
+<p>When you push to a Whanos-compatible repository, the system automatically:</p>
+<ol>
+<li>✅ Fetches the Git repository</li>
+<li>✅ Analyzes content to determine the programming language</li>
+<li>✅ Containerizes the application using pre-built base images</li>
+<li>✅ Pushes the image to a Docker registry</li>
+<li>✅ Deploys to Kubernetes (if configured with <code>whanos.yml</code>)</li>
+</ol>
+<h3 id="infrastructure-as-code"><a class="header" href="#infrastructure-as-code">Infrastructure as Code</a></h3>
+<p>The entire Whanos infrastructure is deployed using Terraform, ensuring:</p>
+<ul>
+<li><strong>Reproducibility</strong>: Deploy identical environments with a single command</li>
+<li><strong>Version Control</strong>: Infrastructure changes are tracked in Git</li>
+<li><strong>Idempotency</strong>: Re-running deployment is safe and predictable</li>
+<li><strong>Modularity</strong>: Reusable Terraform modules for each component</li>
+</ul>
+<h2 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h2>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    Developer                            │
+│                        ↓                                │
+│                   git push                              │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│                     Jenkins                             │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  1. Detect Language (C/Java/JS/Python/Befunge)   │   │
+│  │  2. Build Docker Image                           │   │
+│  │  3. Push to Registry                             │   │
+│  │  4. Deploy to Kubernetes (if whanos.yml exists)  │   │
+│  └──────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+         ┌───────────────┴───────────────┐
+         ↓                               ↓
+┌─────────────────┐           ┌─────────────────────┐
+│ Docker Registry │           │  Kubernetes Cluster │
+│                 │           │   (3 nodes: k3d)    │
+│  - Base Images  │           │                     │
+│  - App Images   │           │  - Deployments      │
+│                 │           │  - Services         │
+│  Port: 5000     │           │  - Pods             │
+└─────────────────┘           └─────────────────────┘
+</code></pre>
+<h2 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h2>
+<p>Whanos is ideal for:</p>
+<ul>
+<li><strong>🚀 Rapid Prototyping</strong>: Quickly containerize and deploy applications</li>
+<li><strong>🎓 Educational Purposes</strong>: Learn DevOps practices in a complete environment</li>
+<li><strong>🧪 Testing</strong>: Create isolated test environments for applications</li>
+<li><strong>📦 Microservices</strong>: Deploy multiple services automatically</li>
+<li><strong>🔄 CI/CD Pipelines</strong>: Automate the entire build-test-deploy cycle</li>
+</ul>
+<h2 id="philosophy"><a class="header" href="#philosophy">Philosophy</a></h2>
+<p>Whanos follows the principle of <strong>Convention over Configuration</strong>:</p>
+<ul>
+<li>Place your application in an <code>app/</code> directory</li>
+<li>Include the appropriate language marker file (e.g., <code>requirements.txt</code> for Python)</li>
+<li>Optionally add a <code>whanos.yml</code> for Kubernetes configuration</li>
+<li>Push to your repository</li>
+<li><strong>Whanos handles the rest!</strong></li>
+</ul>
+<h2 id="whats-next"><a class="header" href="#whats-next">What’s Next?</a></h2>
+<ul>
+<li>Ready to dive in? Check out the <a href="./quick-start.html">Quick Start</a> guide</li>
+<li>Want to understand the architecture? Read the <a href="./architecture/overview.html">Architecture Overview</a></li>
+<li>Need to troubleshoot? Visit the <a href="./troubleshooting/common-issues.html">Troubleshooting</a> section</li>
+</ul>
+<hr />
+<p>Let’s embark on your DevOps journey with Whanos! 🐋</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
+<p>Get Whanos up and running in less than 5 minutes!</p>
+<h2 id="tldr"><a class="header" href="#tldr">TL;DR</a></h2>
+<pre><code class="language-bash"># Clone the repository
+git clone https://github.com/your-org/whanos.git
+cd whanos
+
+# Deploy the infrastructure
+./scripts/deploy.sh
+
+# Access Jenkins
+open http://localhost:8080
+
+# Get admin password
+docker exec whanos-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre>
+<h2 id="step-by-step-guide"><a class="header" href="#step-by-step-guide">Step-by-Step Guide</a></h2>
+<h3 id="1-prerequisites-check"><a class="header" href="#1-prerequisites-check">1. Prerequisites Check</a></h3>
+<p>Ensure you have the following installed:</p>
+<pre><code class="language-bash"># Check Docker
+docker --version
+# Docker version 20.10+ required
+
+# Check Git
+git --version
+</code></pre>
+<p>The deploy script will automatically install:</p>
+<ul>
+<li>k3d (for Kubernetes cluster)</li>
+<li>kubectl (for Kubernetes CLI)</li>
+<li>Terraform (if not present)</li>
+</ul>
+<h3 id="2-deploy-whanos-infrastructure"><a class="header" href="#2-deploy-whanos-infrastructure">2. Deploy Whanos Infrastructure</a></h3>
+<p>From the repository root:</p>
+<pre><code class="language-bash">./scripts/deploy.sh
+</code></pre>
+<p>This script will:</p>
+<ul>
+<li>✅ Check prerequisites</li>
+<li>✅ Install k3d and kubectl if needed</li>
+<li>✅ Create a 3-node Kubernetes cluster</li>
+<li>✅ Deploy Jenkins using Terraform</li>
+<li>✅ Deploy Docker registries</li>
+<li>✅ Configure networking</li>
+</ul>
+<p>Expected output:</p>
+<pre><code>╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║     ✓ WHANOS DEPLOYED WITH TERRAFORM (Docker Provider)!        ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+🌐 Access Points:
+   Jenkins:  http://localhost:8080
+   Registry: http://localhost:5000
+   K8s Apps: http://localhost:8081
+</code></pre>
+<h3 id="3-access-jenkins"><a class="header" href="#3-access-jenkins">3. Access Jenkins</a></h3>
+<ol>
+<li>
+<p><strong>Open Jenkins</strong> in your browser:</p>
+<pre><code>http://localhost:8080
+</code></pre>
+</li>
+<li>
+<p><strong>Get the admin password</strong>:</p>
+<pre><code class="language-bash">docker exec whanos-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre>
+</li>
+<li>
+<p><strong>Login</strong> with:</p>
+<ul>
+<li>Username: <code>admin</code></li>
+<li>Password: <code>admin</code> (default) or the password from step 2</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-build-base-images"><a class="header" href="#4-build-base-images">4. Build Base Images</a></h3>
+<p>Before linking projects, you need to build the Whanos base images:</p>
+<ol>
+<li>Navigate to <strong>Whanos base images</strong> folder</li>
+<li>Click on <strong>Build all base images</strong></li>
+<li>Click <strong>Build Now</strong></li>
+</ol>
+<p>Wait for all 5 base images to build:</p>
+<ul>
+<li>whanos-c</li>
+<li>whanos-java</li>
+<li>whanos-javascript</li>
+<li>whanos-python</li>
+<li>whanos-befunge</li>
+</ul>
+<h3 id="5-link-your-first-project"><a class="header" href="#5-link-your-first-project">5. Link Your First Project</a></h3>
+<h4 id="option-a-use-test-applications"><a class="header" href="#option-a-use-test-applications">Option A: Use Test Applications</a></h4>
+<p>The repository includes test applications. Let’s deploy the Python app:</p>
+<ol>
+<li>In Jenkins, click on <strong>link-project</strong></li>
+<li>Click <strong>Build with Parameters</strong></li>
+<li>Fill in:
+<ul>
+<li><strong>REPOSITORY_URL</strong>: <code>file:///path/to/whanos/test-apps/python-app</code> (or your Git URL)</li>
+<li><strong>PROJECT_NAME</strong>: <code>python-test-app</code></li>
+<li><strong>GIT_CREDENTIALS_ID</strong>: (leave empty for public repos)</li>
+<li><strong>DEFAULT_BRANCH</strong>: <code>main</code></li>
+</ul>
+</li>
+<li>Click <strong>Build</strong></li>
+</ol>
+<h4 id="option-b-link-your-own-repository"><a class="header" href="#option-b-link-your-own-repository">Option B: Link Your Own Repository</a></h4>
+<ol>
+<li>Create a Whanos-compatible repository (see <a href="./user-guide/compatible-repo.html">Creating a Compatible Repository</a>)</li>
+<li>Use the <strong>link-project</strong> job with your repository URL</li>
+</ol>
+<h3 id="6-monitor-the-build"><a class="header" href="#6-monitor-the-build">6. Monitor the Build</a></h3>
+<ol>
+<li>Go to <strong>Projects</strong> folder</li>
+<li>Click on your project name</li>
+<li>Watch the pipeline execute:
+<ul>
+<li>🔍 Detect Language</li>
+<li>🔨 Build Application Image</li>
+<li>📤 Push to Registry</li>
+<li>🚀 Deploy to Kubernetes (if <code>whanos.yml</code> exists)</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-verify-deployment"><a class="header" href="#7-verify-deployment">7. Verify Deployment</a></h3>
+<p>Check if your application is running in Kubernetes:</p>
+<pre><code class="language-bash"># Setup kubeconfig
+export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+
+# Check deployments
+kubectl get deployments -n whanos
+
+# Check pods
+kubectl get pods -n whanos
+
+# Check services
+kubectl get services -n whanos
+</code></pre>
+<h2 id="whats-next-1"><a class="header" href="#whats-next-1">What’s Next?</a></h2>
+<p>Now that Whanos is running, you can:</p>
+<ul>
+<li>📚 Learn about <a href="./user-guide/compatible-repo.html">Whanos-Compatible Repositories</a></li>
+<li>⚙️ Configure <a href="./kubernetes/whanos-yml.html">Kubernetes Deployment</a> with <code>whanos.yml</code></li>
+<li>🔧 Understand the <a href="./architecture/overview.html">Architecture</a></li>
+<li>🐛 Check <a href="./troubleshooting/common-issues.html">Troubleshooting</a> if you encounter issues</li>
+</ul>
+<h2 id="cleanup"><a class="header" href="#cleanup">Cleanup</a></h2>
+<p>To remove the Whanos infrastructure:</p>
+<pre><code class="language-bash">./scripts/destroy.sh
+</code></pre>
+<p>This will:</p>
+<ul>
+<li>Stop and remove all containers</li>
+<li>Delete the k3d cluster</li>
+<li>Remove Terraform state</li>
+</ul>
+<hr />
+<h2 id="common-quick-start-issues"><a class="header" href="#common-quick-start-issues">Common Quick Start Issues</a></h2>
+<h3 id="jenkins-not-starting"><a class="header" href="#jenkins-not-starting">Jenkins not starting</a></h3>
+<pre><code class="language-bash"># Check container logs
+docker logs whanos-jenkins
+
+# Restart Jenkins
+docker restart whanos-jenkins
+</code></pre>
+<h3 id="kubectl-connection-refused"><a class="header" href="#kubectl-connection-refused">kubectl connection refused</a></h3>
+<pre><code class="language-bash"># Reconnect to k3d cluster
+export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+</code></pre>
+<h3 id="port-already-in-use"><a class="header" href="#port-already-in-use">Port already in use</a></h3>
+<pre><code class="language-bash"># Check what's using port 8080
+lsof -i :8080
+
+# Stop conflicting service or change port in terraform/environments/dev/main.tf
+</code></pre>
+<p>For more issues, see the <a href="./troubleshooting/common-issues.html">Troubleshooting</a> section.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h1>
+<p>Before installing Whanos, ensure your system meets the following requirements.</p>
+<h2 id="required-software"><a class="header" href="#required-software">Required Software</a></h2>
+<h3 id="docker-required"><a class="header" href="#docker-required">Docker (Required)</a></h3>
+<p><strong>Minimum Version</strong>: 20.10+
+<strong>Recommended</strong>: Latest stable version</p>
+<pre><code class="language-bash"># Check Docker installation
+docker --version
+
+# Verify Docker is running
+docker ps
+</code></pre>
+<h4 id="install-docker"><a class="header" href="#install-docker">Install Docker</a></h4>
+<p><strong>Ubuntu/Debian</strong>:</p>
+<pre><code class="language-bash">curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+</code></pre>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash"># Install Docker Desktop
+brew install --cask docker
+</code></pre>
+<p><strong>Windows</strong>:
+Download Docker Desktop from <a href="https://www.docker.com/products/docker-desktop">docker.com</a></p>
+<h3 id="git-required"><a class="header" href="#git-required">Git (Required)</a></h3>
+<p><strong>Minimum Version</strong>: 2.0+</p>
+<pre><code class="language-bash"># Check Git installation
+git --version
+</code></pre>
+<h4 id="install-git"><a class="header" href="#install-git">Install Git</a></h4>
+<p><strong>Ubuntu/Debian</strong>:</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install git
+</code></pre>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">brew install git
+</code></pre>
+<h2 id="auto-installed-components"><a class="header" href="#auto-installed-components">Auto-Installed Components</a></h2>
+<p>The <code>deploy.sh</code> script automatically installs the following if not present:</p>
+<h3 id="k3d"><a class="header" href="#k3d">k3d</a></h3>
+<p>Lightweight Kubernetes distribution running in Docker.</p>
+<pre><code class="language-bash"># Manually install (optional)
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+</code></pre>
+<h3 id="kubectl"><a class="header" href="#kubectl">kubectl</a></h3>
+<p>Kubernetes command-line tool.</p>
+<pre><code class="language-bash"># Manually install (optional)
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+</code></pre>
+<h3 id="terraform-optional"><a class="header" href="#terraform-optional">Terraform (Optional)</a></h3>
+<p>Infrastructure as Code tool for deployment.</p>
+<p><strong>Minimum Version</strong>: 1.0+</p>
+<pre><code class="language-bash"># Check Terraform installation
+terraform --version
+</code></pre>
+<p>If not installed, download from <a href="https://www.terraform.io/downloads">terraform.io</a></p>
+<h2 id="system-requirements"><a class="header" href="#system-requirements">System Requirements</a></h2>
+<h3 id="hardware"><a class="header" href="#hardware">Hardware</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr></thead><tbody>
+<tr><td>CPU</td><td>2 cores</td><td>4+ cores</td></tr>
+<tr><td>RAM</td><td>4 GB</td><td>8+ GB</td></tr>
+<tr><td>Disk Space</td><td>20 GB</td><td>50+ GB</td></tr>
+</tbody></table>
+</div>
+<h3 id="operating-system"><a class="header" href="#operating-system">Operating System</a></h3>
+<p>Whanos has been tested on:</p>
+<ul>
+<li>✅ Ubuntu 20.04+</li>
+<li>✅ Debian 11+</li>
+<li>✅ macOS 11+ (Big Sur and later)</li>
+<li>✅ WSL2 on Windows 10/11</li>
+</ul>
+<h3 id="network"><a class="header" href="#network">Network</a></h3>
+<ul>
+<li>Internet connection for downloading images</li>
+<li>Ports available:
+<ul>
+<li><code>8080</code> - Jenkins UI</li>
+<li><code>5000</code> - Docker registry (whanos-registry)</li>
+<li><code>5001</code> - Docker registry (k3d-whanos-registry)</li>
+<li><code>6443</code> - Kubernetes API server</li>
+<li><code>8081</code> - Kubernetes LoadBalancer</li>
+<li><code>50000</code> - Jenkins agent communication</li>
+</ul>
+</li>
+</ul>
+<h2 id="optional-tools"><a class="header" href="#optional-tools">Optional Tools</a></h2>
+<h3 id="mdbook-for-building-documentation"><a class="header" href="#mdbook-for-building-documentation">mdbook (for building documentation)</a></h3>
+<pre><code class="language-bash">cargo install mdbook
+</code></pre>
+<h3 id="jq-for-json-processing"><a class="header" href="#jq-for-json-processing">jq (for JSON processing)</a></h3>
+<pre><code class="language-bash"># Ubuntu/Debian
+sudo apt install jq
+
+# macOS
+brew install jq
+</code></pre>
+<h3 id="curl-for-api-testing"><a class="header" href="#curl-for-api-testing">curl (for API testing)</a></h3>
+<p>Usually pre-installed on most systems.</p>
+<h2 id="verification"><a class="header" href="#verification">Verification</a></h2>
+<p>Run this script to verify all prerequisites:</p>
+<pre><code class="language-bash">#!/bin/bash
+
+echo "Checking prerequisites..."
+
+# Check Docker
+if command -v docker &amp;&gt; /dev/null; then
+    echo "✅ Docker: $(docker --version)"
+else
+    echo "❌ Docker: Not installed"
+fi
+
+# Check Git
+if command -v git &amp;&gt; /dev/null; then
+    echo "✅ Git: $(git --version)"
+else
+    echo "❌ Git: Not installed"
+fi
+
+# Check k3d (optional)
+if command -v k3d &amp;&gt; /dev/null; then
+    echo "✅ k3d: $(k3d version | head -1)"
+else
+    echo "⚠️  k3d: Not installed (will be auto-installed)"
+fi
+
+# Check kubectl (optional)
+if command -v kubectl &amp;&gt; /dev/null; then
+    echo "✅ kubectl: $(kubectl version --client --short 2&gt;/dev/null)"
+else
+    echo "⚠️  kubectl: Not installed (will be auto-installed)"
+fi
+
+# Check Terraform (optional)
+if command -v terraform &amp;&gt; /dev/null; then
+    echo "✅ Terraform: $(terraform version | head -1)"
+else
+    echo "⚠️  Terraform: Not installed (optional)"
+fi
+
+# Check ports
+echo ""
+echo "Checking port availability..."
+for port in 8080 5000 5001 6443 8081 50000; do
+    if lsof -Pi :$port -sTCP:LISTEN -t &gt;/dev/null 2&gt;&amp;1; then
+        echo "❌ Port $port: Already in use"
+    else
+        echo "✅ Port $port: Available"
+    fi
+done
+</code></pre>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>Once prerequisites are met:</p>
+<ol>
+<li>Proceed to <a href="./installation.html">Installation</a></li>
+<li>Or skip directly to <a href="./quick-start.html">Quick Start</a> if you want to get started immediately</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Complete guide to installing and deploying the Whanos infrastructure.</p>
+<h2 id="installation-methods"><a class="header" href="#installation-methods">Installation Methods</a></h2>
+<p>Whanos can be deployed using two methods:</p>
+<ol>
+<li><strong>Automated Deployment</strong> (Recommended) - Using the <code>deploy.sh</code> script</li>
+<li><strong>Manual Deployment</strong> - Using Terraform directly</li>
+</ol>
+<h2 id="method-1-automated-deployment"><a class="header" href="#method-1-automated-deployment">Method 1: Automated Deployment</a></h2>
+<h3 id="step-1-clone-the-repository"><a class="header" href="#step-1-clone-the-repository">Step 1: Clone the Repository</a></h3>
+<pre><code class="language-bash">git clone https://github.com/your-org/whanos.git
+cd whanos
+</code></pre>
+<h3 id="step-2-run-the-deployment-script"><a class="header" href="#step-2-run-the-deployment-script">Step 2: Run the Deployment Script</a></h3>
+<pre><code class="language-bash">./scripts/deploy.sh
+</code></pre>
+<p>The script will:</p>
+<ol>
+<li>✅ Check for required prerequisites (Docker, Git)</li>
+<li>✅ Install k3d if not present</li>
+<li>✅ Install kubectl if not present</li>
+<li>✅ Create a k3d Kubernetes cluster named <code>whanos-cluster</code> with:
+<ul>
+<li>1 server node (control plane)</li>
+<li>2 agent nodes (workers)</li>
+<li>Integrated Docker registry</li>
+</ul>
+</li>
+<li>✅ Deploy Jenkins using Terraform</li>
+<li>✅ Deploy Docker registries</li>
+<li>✅ Configure networking between components</li>
+<li>✅ Create Kubernetes namespace <code>whanos</code></li>
+</ol>
+<h3 id="step-3-verify-installation"><a class="header" href="#step-3-verify-installation">Step 3: Verify Installation</a></h3>
+<pre><code class="language-bash"># Check Docker containers
+docker ps --filter "name=whanos"
+
+# Check k3d cluster
+k3d cluster list
+
+# Check Kubernetes nodes
+export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+kubectl get nodes
+
+# Access Jenkins
+open http://localhost:8080
+</code></pre>
+<p>Expected containers:</p>
+<ul>
+<li><code>whanos-jenkins</code> - Jenkins CI/CD server</li>
+<li><code>whanos-registry</code> - Docker registry (port 5000)</li>
+<li><code>k3d-whanos-registry</code> - k3d internal registry (port 5001)</li>
+<li><code>k3d-whanos-cluster-server-0</code> - Kubernetes control plane</li>
+<li><code>k3d-whanos-cluster-agent-0</code> - Kubernetes worker 1</li>
+<li><code>k3d-whanos-cluster-agent-1</code> - Kubernetes worker 2</li>
+<li><code>k3d-whanos-cluster-serverlb</code> - Load balancer</li>
+</ul>
+<h2 id="method-2-manual-deployment-with-terraform"><a class="header" href="#method-2-manual-deployment-with-terraform">Method 2: Manual Deployment with Terraform</a></h2>
+<h3 id="step-1-create-k3d-cluster"><a class="header" href="#step-1-create-k3d-cluster">Step 1: Create k3d Cluster</a></h3>
+<pre><code class="language-bash"># Create k3d registry
+k3d registry create whanos-registry --port 5001
+
+# Create k3d cluster
+k3d cluster create whanos-cluster \
+  --agents 2 \
+  --registry-use k3d-whanos-registry:5001 \
+  --port "8081:80@loadbalancer" \
+  --api-port 6443 \
+  --wait
+</code></pre>
+<h3 id="step-2-deploy-with-terraform"><a class="header" href="#step-2-deploy-with-terraform">Step 2: Deploy with Terraform</a></h3>
+<pre><code class="language-bash">cd terraform/environments/dev
+
+# Initialize Terraform
+terraform init
+
+# Review the plan
+terraform plan
+
+# Apply the configuration
+terraform apply
+</code></pre>
+<h3 id="step-3-create-kubernetes-namespace"><a class="header" href="#step-3-create-kubernetes-namespace">Step 3: Create Kubernetes Namespace</a></h3>
+<pre><code class="language-bash">export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+kubectl create namespace whanos
+</code></pre>
+<h3 id="step-4-verify-deployment"><a class="header" href="#step-4-verify-deployment">Step 4: Verify Deployment</a></h3>
+<pre><code class="language-bash"># Check Terraform state
+terraform show
+
+# Verify containers
+docker ps
+
+# Check Kubernetes
+kubectl get all -n whanos
+</code></pre>
+<h2 id="post-installation-steps"><a class="header" href="#post-installation-steps">Post-Installation Steps</a></h2>
+<h3 id="1-configure-jenkins"><a class="header" href="#1-configure-jenkins">1. Configure Jenkins</a></h3>
+<p>Get the initial admin password:</p>
+<pre><code class="language-bash">docker exec whanos-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre>
+<p>Or use the default credentials:</p>
+<ul>
+<li>Username: <code>admin</code></li>
+<li>Password: <code>admin</code></li>
+</ul>
+<h3 id="2-build-base-images"><a class="header" href="#2-build-base-images">2. Build Base Images</a></h3>
+<p>Before using Whanos, you must build the base Docker images:</p>
+<ol>
+<li>Access Jenkins at <code>http://localhost:8080</code></li>
+<li>Navigate to <strong>Whanos base images</strong></li>
+<li>Run <strong>Build all base images</strong></li>
+</ol>
+<p>This will build:</p>
+<ul>
+<li><code>whanos-c</code></li>
+<li><code>whanos-java</code></li>
+<li><code>whanos-javascript</code></li>
+<li><code>whanos-python</code></li>
+<li><code>whanos-befunge</code></li>
+</ul>
+<h3 id="3-verify-network-connectivity"><a class="header" href="#3-verify-network-connectivity">3. Verify Network Connectivity</a></h3>
+<pre><code class="language-bash"># Test Jenkins to k3d cluster
+docker exec whanos-jenkins kubectl get nodes
+
+# Test Docker registry
+curl http://localhost:5000/v2/_catalog
+curl http://localhost:5001/v2/_catalog
+</code></pre>
+<h2 id="configuration-files"><a class="header" href="#configuration-files">Configuration Files</a></h2>
+<h3 id="terraform-configuration"><a class="header" href="#terraform-configuration">Terraform Configuration</a></h3>
+<p>Located in <code>terraform/environments/dev/</code>:</p>
+<pre><code>terraform/environments/dev/
+├── main.tf          # Main configuration
+├── variables.tf     # Input variables
+└── outputs.tf       # Output values
+</code></pre>
+<h3 id="jenkins-configuration"><a class="header" href="#jenkins-configuration">Jenkins Configuration</a></h3>
+<p>Located in <code>jenkins/config/</code>:</p>
+<pre><code>jenkins/config/
+├── jenkins.yaml     # Jenkins Configuration as Code (JCasC)
+└── job-dsl/         # Job DSL scripts
+</code></pre>
+<h3 id="dockerfile-directory"><a class="header" href="#dockerfile-directory">Dockerfile Directory</a></h3>
+<p>Located in <code>images/</code>:</p>
+<pre><code>images/
+├── c/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── java/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── javascript/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── python/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+└── befunge/
+    ├── Dockerfile.base
+    └── Dockerfile.standalone
+</code></pre>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
+<p>The deployment uses the following environment variables (optional):</p>
+<div class="table-wrapper"><table><thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>CLUSTER_NAME</code></td><td><code>whanos-cluster</code></td><td>Name of the k3d cluster</td></tr>
+<tr><td><code>REGISTRY_PORT</code></td><td><code>5000</code></td><td>External registry port</td></tr>
+<tr><td><code>JENKINS_PORT</code></td><td><code>8080</code></td><td>Jenkins UI port</td></tr>
+</tbody></table>
+</div>
+<p>Example:</p>
+<pre><code class="language-bash">export JENKINS_PORT=9090
+./scripts/deploy.sh
+</code></pre>
+<h2 id="troubleshooting-installation"><a class="header" href="#troubleshooting-installation">Troubleshooting Installation</a></h2>
+<h3 id="port-already-in-use-1"><a class="header" href="#port-already-in-use-1">Port Already in Use</a></h3>
+<pre><code class="language-bash"># Find what's using the port
+lsof -i :8080
+
+# Kill the process or change the port
+export JENKINS_PORT=9090
+</code></pre>
+<h3 id="k3d-cluster-creation-failed"><a class="header" href="#k3d-cluster-creation-failed">k3d Cluster Creation Failed</a></h3>
+<pre><code class="language-bash"># Remove existing cluster
+k3d cluster delete whanos-cluster
+
+# Try again
+k3d cluster create whanos-cluster --agents 2
+</code></pre>
+<h3 id="terraform-apply-failed"><a class="header" href="#terraform-apply-failed">Terraform Apply Failed</a></h3>
+<pre><code class="language-bash"># Check Terraform logs
+terraform apply
+
+# If state is corrupted
+terraform destroy
+terraform apply
+</code></pre>
+<h3 id="docker-permission-denied"><a class="header" href="#docker-permission-denied">Docker Permission Denied</a></h3>
+<pre><code class="language-bash"># Add user to docker group
+sudo usermod -aG docker $USER
+
+# Log out and back in, or:
+newgrp docker
+</code></pre>
+<h2 id="uninstallation"><a class="header" href="#uninstallation">Uninstallation</a></h2>
+<p>To completely remove the Whanos infrastructure:</p>
+<pre><code class="language-bash">./scripts/destroy.sh
+</code></pre>
+<p>This will:</p>
+<ol>
+<li>Stop all containers</li>
+<li>Remove Docker containers and networks</li>
+<li>Delete the k3d cluster</li>
+<li>Clean up Terraform state</li>
+</ol>
+<p>Manual cleanup:</p>
+<pre><code class="language-bash"># Stop containers
+docker stop $(docker ps -a --filter "name=whanos" -q)
+docker rm $(docker ps -a --filter "name=whanos" -q)
+
+# Delete k3d cluster
+k3d cluster delete whanos-cluster
+k3d registry delete whanos-registry
+
+# Clean Terraform
+cd terraform/environments/dev
+terraform destroy
+</code></pre>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
+<p>After successful installation:</p>
+<ol>
+<li>📚 Read the <a href="./architecture/overview.html">Architecture Overview</a></li>
+<li>🚀 Try the <a href="./quick-start.html">Quick Start</a> guide</li>
+<li>👤 Learn how to <a href="./user-guide/linking-project.html">Link a Project</a></li>
+<li>⚙️ Configure <a href="./kubernetes/whanos-yml.html">Kubernetes Deployment</a></li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="architecture-overview-1"><a class="header" href="#architecture-overview-1">Architecture Overview</a></h1>
+<p>Whanos is built on a modular architecture combining four key DevOps technologies.</p>
+<h2 id="system-architecture"><a class="header" href="#system-architecture">System Architecture</a></h2>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│                         HOST MACHINE                            │
+│                                                                 │
+│  ┌──────────────┐  ┌───────────────┐  ┌────────────────────┐   │
+│  │   Jenkins    │  │    Docker     │  │    Kubernetes      │   │
+│  │              │  │   Registries  │  │      (k3d)         │   │
+│  │  Port: 8080  │  │               │  │                    │   │
+│  │              │  │  - whanos     │  │  ┌──────────────┐  │   │
+│  │ ┌──────────┐ │  │    :5000      │  │  │ Server Node  │  │   │
+│  │ │ Pipeline │ │  │  - k3d        │  │  │              │  │   │
+│  │ │          │ │  │    :5001      │  │  └──────────────┘  │   │
+│  │ │ 1. Detect│ │  │               │  │  ┌──────────────┐  │   │
+│  │ │ 2. Build │ │  │               │  │  │ Agent Node 0 │  │   │
+│  │ │ 3. Push  │◄─┼─►│               │◄─┼─►│              │  │   │
+│  │ │ 4. Deploy│ │  │               │  │  └──────────────┘  │   │
+│  │ └──────────┘ │  │               │  │  ┌──────────────┐  │   │
+│  │              │  │               │  │  │ Agent Node 1 │  │   │
+│  └──────────────┘  └───────────────┘  │  │              │  │   │
+│                                        │  └──────────────┘  │   │
+│                                        └────────────────────┘   │
+│                                                                 │
+│  Docker Network: k3d-whanos-cluster                            │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="core-components"><a class="header" href="#core-components">Core Components</a></h2>
+<h3 id="1-jenkins-cicd-server"><a class="header" href="#1-jenkins-cicd-server">1. Jenkins CI/CD Server</a></h3>
+<p><strong>Purpose</strong>: Orchestrates the entire build and deployment pipeline</p>
+<p><strong>Technology</strong>: Jenkins with Configuration as Code (JCasC)</p>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Automatic language detection</li>
+<li>Docker-in-Docker (DinD) capability</li>
+<li>Kubernetes integration</li>
+<li>Job DSL for dynamic job creation</li>
+</ul>
+<p><strong>Port</strong>: 8080</p>
+<h3 id="2-docker-registries"><a class="header" href="#2-docker-registries">2. Docker Registries</a></h3>
+<p><strong>Purpose</strong>: Store Docker images for applications</p>
+<p><strong>Registries</strong>:</p>
+<ul>
+<li><strong>whanos-registry</strong> (port 5000): Public-facing registry</li>
+<li><strong>k3d-whanos-registry</strong> (port 5001): Internal k3d registry</li>
+</ul>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>HTTP API for image management</li>
+<li>Integrated with k3d cluster</li>
+<li>Accessible from Jenkins and Kubernetes</li>
+</ul>
+<h3 id="3-kubernetes-cluster-k3d"><a class="header" href="#3-kubernetes-cluster-k3d">3. Kubernetes Cluster (k3d)</a></h3>
+<p><strong>Purpose</strong>: Orchestrate containerized applications</p>
+<p><strong>Technology</strong>: k3d (k3s in Docker) - Lightweight Kubernetes</p>
+<p><strong>Cluster Configuration</strong>:</p>
+<ul>
+<li><strong>1 Server Node</strong>: Control plane + etcd</li>
+<li><strong>2 Agent Nodes</strong>: Worker nodes for running pods</li>
+<li><strong>LoadBalancer</strong>: Exposes services on port 8081</li>
+</ul>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Multi-node cluster for high availability</li>
+<li>Integrated Docker registry</li>
+<li>Namespace isolation (<code>whanos</code> namespace)</li>
+</ul>
+<h3 id="4-infrastructure-as-code-terraform"><a class="header" href="#4-infrastructure-as-code-terraform">4. Infrastructure as Code (Terraform)</a></h3>
+<p><strong>Purpose</strong>: Deploy and manage infrastructure</p>
+<p><strong>Technology</strong>: Terraform with Docker provider</p>
+<p><strong>Modules</strong>:</p>
+<ul>
+<li><code>jenkins</code>: Deploys Jenkins container</li>
+<li><code>registry</code>: Deploys Docker registries</li>
+<li><code>aks</code> (optional): For cloud deployments</li>
+</ul>
+<h2 id="data-flow"><a class="header" href="#data-flow">Data Flow</a></h2>
+<h3 id="build-pipeline-flow"><a class="header" href="#build-pipeline-flow">Build Pipeline Flow</a></h3>
+<pre><code>1. Developer pushes to Git repository
+         ↓
+2. Jenkins webhook triggered (every minute check)
+         ↓
+3. Language Detection
+   - Check for Makefile (C)
+   - Check for pom.xml (Java)
+   - Check for package.json (JavaScript)
+   - Check for requirements.txt (Python)
+   - Check for main.bf (Befunge)
+         ↓
+4. Docker Build
+   - If no Dockerfile: Use whanos standalone image
+   - If Dockerfile exists: Use custom Dockerfile with whanos base
+         ↓
+5. Tag and Push to Registry
+   - Tag with build number
+   - Tag as latest
+   - Push to k3d-whanos-registry:5000
+         ↓
+6. Kubernetes Deployment (if whanos.yml exists)
+   - Parse whanos.yml
+   - Create/Update Deployment
+   - Create Service (if ports defined)
+   - Wait for rollout
+         ↓
+7. Success! Application is running
+</code></pre>
+<h3 id="image-hierarchy"><a class="header" href="#image-hierarchy">Image Hierarchy</a></h3>
+<pre><code>Official Base Images
+  ├── gcc:13.2           → whanos-c (base)
+  ├── maven:3.9-jdk21    → whanos-java (base)
+  ├── node:20.9          → whanos-javascript (base)
+  ├── python:3.12        → whanos-python (base)
+  └── python:3.12+pyfunge → whanos-befunge (base)
+                ↓
+        ONBUILD Instructions
+                ↓
+        Application Image
+      (in k3d-whanos-registry)
+                ↓
+        Kubernetes Deployment
+</code></pre>
+<h2 id="network-architecture"><a class="header" href="#network-architecture">Network Architecture</a></h2>
+<h3 id="docker-networks"><a class="header" href="#docker-networks">Docker Networks</a></h3>
+<ol>
+<li>
+<p><strong>k3d-whanos-cluster</strong>: Main network connecting all components</p>
+<ul>
+<li>Jenkins container</li>
+<li>k3d cluster nodes</li>
+<li>k3d registry</li>
+</ul>
+</li>
+<li>
+<p><strong>whanos-network</strong>: Network for whanos-registry</p>
+</li>
+</ol>
+<h3 id="port-mapping"><a class="header" href="#port-mapping">Port Mapping</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Service</th><th>Internal Port</th><th>External Port</th><th>Protocol</th></tr></thead><tbody>
+<tr><td>Jenkins UI</td><td>8080</td><td>8080</td><td>HTTP</td></tr>
+<tr><td>Jenkins Agent</td><td>50000</td><td>50000</td><td>TCP</td></tr>
+<tr><td>Registry (whanos)</td><td>5000</td><td>5000</td><td>HTTP</td></tr>
+<tr><td>Registry (k3d)</td><td>5000</td><td>5001</td><td>HTTP</td></tr>
+<tr><td>K8s API Server</td><td>6443</td><td>6443</td><td>HTTPS</td></tr>
+<tr><td>K8s LoadBalancer</td><td>80</td><td>8081</td><td>HTTP</td></tr>
+</tbody></table>
+</div>
+<h2 id="storage-architecture"><a class="header" href="#storage-architecture">Storage Architecture</a></h2>
+<h3 id="persistent-volumes"><a class="header" href="#persistent-volumes">Persistent Volumes</a></h3>
+<ul>
+<li><strong>Jenkins Home</strong>: <code>/var/jenkins_home</code> (Docker volume)</li>
+<li><strong>Registry Data</strong>: <code>/var/lib/registry</code> (Docker volume)</li>
+<li><strong>k3d Data</strong>: Managed by k3d</li>
+</ul>
+<h3 id="mounted-directories"><a class="header" href="#mounted-directories">Mounted Directories</a></h3>
+<ul>
+<li><strong>Whanos Images</strong>: <code>/var/jenkins_home/whanos-images/</code>
+<ul>
+<li>Contains all Dockerfile.base and Dockerfile.standalone</li>
+<li>Mounted from host <code>images/</code> directory</li>
+</ul>
+</li>
+</ul>
+<h2 id="security-architecture"><a class="header" href="#security-architecture">Security Architecture</a></h2>
+<h3 id="authentication"><a class="header" href="#authentication">Authentication</a></h3>
+<ul>
+<li><strong>Jenkins</strong>: Admin user with configurable password</li>
+<li><strong>Docker Registry</strong>: Insecure HTTP (localhost only)</li>
+<li><strong>Kubernetes</strong>: Certificate-based authentication</li>
+</ul>
+<h3 id="network-isolation"><a class="header" href="#network-isolation">Network Isolation</a></h3>
+<ul>
+<li>All components run in Docker networks</li>
+<li>Kubernetes namespace isolation (<code>whanos</code>)</li>
+<li>No external access to internal registry</li>
+</ul>
+<h3 id="secrets-management"><a class="header" href="#secrets-management">Secrets Management</a></h3>
+<ul>
+<li>Jenkins credentials stored in Jenkins credentials store</li>
+<li>Kubernetes secrets for sensitive data</li>
+<li>Git credentials for private repositories</li>
+</ul>
+<h2 id="scalability"><a class="header" href="#scalability">Scalability</a></h2>
+<h3 id="horizontal-scaling"><a class="header" href="#horizontal-scaling">Horizontal Scaling</a></h3>
+<ul>
+<li><strong>Kubernetes</strong>: Add more agent nodes to k3d cluster</li>
+<li><strong>Jenkins</strong>: Add Jenkins agents for parallel builds</li>
+</ul>
+<h3 id="vertical-scaling"><a class="header" href="#vertical-scaling">Vertical Scaling</a></h3>
+<ul>
+<li>Increase Docker resources (CPU/Memory)</li>
+<li>Adjust Kubernetes resource requests/limits</li>
+</ul>
+<h2 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h2>
+<ul>
+<li><strong>Multiple K8s Nodes</strong>: 2 agent nodes for pod distribution</li>
+<li><strong>LoadBalancer</strong>: Distributes traffic across pods</li>
+<li><strong>Replicas</strong>: Configure via <code>whanos.yml</code></li>
+</ul>
+<h2 id="technology-stack-summary"><a class="header" href="#technology-stack-summary">Technology Stack Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Layer</th><th>Technology</th><th>Version</th></tr></thead><tbody>
+<tr><td>Container Runtime</td><td>Docker</td><td>20.10+</td></tr>
+<tr><td>CI/CD</td><td>Jenkins</td><td>Latest (LTS)</td></tr>
+<tr><td>IaC</td><td>Terraform</td><td>1.0+</td></tr>
+<tr><td>Orchestration</td><td>k3d/k3s</td><td>v1.31+</td></tr>
+<tr><td>Registry</td><td>Docker Registry</td><td>2.0</td></tr>
+<tr><td>Automation</td><td>Bash Scripts</td><td>-</td></tr>
+</tbody></table>
+</div>
+<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="architecture/./components.html">Components</a> in detail</li>
+<li>Understand <a href="architecture/./jenkins.html">Jenkins</a> configuration</li>
+<li>Explore <a href="architecture/./kubernetes.html">Kubernetes</a> setup</li>
+<li>Review <a href="architecture/./registry.html">Docker Registry</a> details</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="components"><a class="header" href="#components">Components</a></h1>
+<p>Detailed information about each Whanos component.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Whanos consists of three main components:</p>
+<ul>
+<li>Jenkins CI/CD Server</li>
+<li>Docker Registries</li>
+<li>Kubernetes Cluster</li>
+</ul>
+<p>See individual component pages for details.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jenkins-component"><a class="header" href="#jenkins-component">Jenkins Component</a></h1>
+<p>Jenkins server configuration and setup.</p>
+<h2 id="configuration"><a class="header" href="#configuration">Configuration</a></h2>
+<p>Jenkins is configured using Jenkins Configuration as Code (JCasC).</p>
+<p>See <a href="architecture/../jenkins/jcasc.html">Jenkins Configuration</a> for details.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-registry"><a class="header" href="#docker-registry">Docker Registry</a></h1>
+<p>Docker registry setup and configuration.</p>
+<h2 id="registries"><a class="header" href="#registries">Registries</a></h2>
+<ul>
+<li>whanos-registry (port 5000)</li>
+<li>k3d-whanos-registry (port 5001)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kubernetes-cluster"><a class="header" href="#kubernetes-cluster">Kubernetes Cluster</a></h1>
+<p>k3d Kubernetes cluster architecture.</p>
+<h2 id="cluster-setup"><a class="header" href="#cluster-setup">Cluster Setup</a></h2>
+<p>3-node cluster with 1 server and 2 agents.</p>
+<p>See <a href="architecture/../kubernetes/cluster-setup.html">Cluster Setup</a> for details.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="base-images"><a class="header" href="#base-images">Base Images</a></h1>
+<p>Whanos base Docker images for each language.</p>
+<h2 id="overview-1"><a class="header" href="#overview-1">Overview</a></h2>
+<p>Base images use ONBUILD instructions to prepare the build environment.</p>
+<p>See language-specific pages for details.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="c-language-support"><a class="header" href="#c-language-support">C Language Support</a></h1>
+<h2 id="base-image-whanos-c"><a class="header" href="#base-image-whanos-c">Base Image: whanos-c</a></h2>
+<p>Based on gcc:13.2</p>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>Makefile at root</li>
+<li>Output: compiled-app binary</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="java-language-support"><a class="header" href="#java-language-support">Java Language Support</a></h1>
+<h2 id="base-image-whanos-java"><a class="header" href="#base-image-whanos-java">Base Image: whanos-java</a></h2>
+<p>Based on maven:3.9-eclipse-temurin-21</p>
+<h2 id="requirements-1"><a class="header" href="#requirements-1">Requirements</a></h2>
+<ul>
+<li>app/pom.xml</li>
+<li>Output: target/app.jar</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="javascript-language-support"><a class="header" href="#javascript-language-support">JavaScript Language Support</a></h1>
+<h2 id="base-image-whanos-javascript"><a class="header" href="#base-image-whanos-javascript">Base Image: whanos-javascript</a></h2>
+<p>Based on node:20.9</p>
+<h2 id="requirements-2"><a class="header" href="#requirements-2">Requirements</a></h2>
+<ul>
+<li>package.json at root</li>
+<li>app/ directory with code</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="python-language-support"><a class="header" href="#python-language-support">Python Language Support</a></h1>
+<h2 id="base-image-whanos-python"><a class="header" href="#base-image-whanos-python">Base Image: whanos-python</a></h2>
+<p>Based on python:3.12</p>
+<h2 id="requirements-3"><a class="header" href="#requirements-3">Requirements</a></h2>
+<ul>
+<li>requirements.txt at root</li>
+<li>app/ directory as module</li>
+<li>app/<strong>main</strong>.py as entry point</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="befunge-language-support"><a class="header" href="#befunge-language-support">Befunge Language Support</a></h1>
+<h2 id="base-image-whanos-befunge"><a class="header" href="#base-image-whanos-befunge">Base Image: whanos-befunge</a></h2>
+<p>Based on python:3.12 with pyfunge</p>
+<h2 id="requirements-4"><a class="header" href="#requirements-4">Requirements</a></h2>
+<ul>
+<li>app/main.bf file</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="standalone-images"><a class="header" href="#standalone-images">Standalone Images</a></h1>
+<p>Standalone images include everything needed to run the application.</p>
+<p>Used when no custom Dockerfile is present in the repository.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="custom-dockerfiles"><a class="header" href="#custom-dockerfiles">Custom Dockerfiles</a></h1>
+<p>How to use custom Dockerfiles with Whanos base images.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<pre><code class="language-dockerfile">FROM whanos-python:latest
+RUN pip install custom-package
+CMD ["python", "-m", "app"]
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jenkins-configuration-as-code"><a class="header" href="#jenkins-configuration-as-code">Jenkins Configuration as Code</a></h1>
+<p>Jenkins is configured using JCasC (jenkins.yaml).</p>
+<h2 id="configuration-file"><a class="header" href="#configuration-file">Configuration File</a></h2>
+<p>Location: jenkins/config/jenkins.yaml</p>
+<p>Defines users, folders, and jobs.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jenkins-jobs"><a class="header" href="#jenkins-jobs">Jenkins Jobs</a></h1>
+<p>Overview of all Jenkins jobs in Whanos.</p>
+<h2 id="job-folders"><a class="header" href="#job-folders">Job Folders</a></h2>
+<ul>
+<li>Whanos base images: Build jobs for base images</li>
+<li>Projects: Application build jobs</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="base-images-jobs"><a class="header" href="#base-images-jobs">Base Images Jobs</a></h1>
+<p>Jobs for building Whanos base Docker images.</p>
+<h2 id="jobs"><a class="header" href="#jobs">Jobs</a></h2>
+<ul>
+<li>whanos-c</li>
+<li>whanos-java</li>
+<li>whanos-javascript</li>
+<li>whanos-python</li>
+<li>whanos-befunge</li>
+<li>Build all base images (triggers all)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="link-project-job"><a class="header" href="#link-project-job">Link Project Job</a></h1>
+<p>The link-project job creates new pipeline jobs for applications.</p>
+<h2 id="parameters"><a class="header" href="#parameters">Parameters</a></h2>
+<ul>
+<li>REPOSITORY_URL: Git repository URL</li>
+<li>PROJECT_NAME: Name for the job</li>
+<li>GIT_CREDENTIALS_ID: Jenkins credentials ID</li>
+<li>DEFAULT_BRANCH: Branch to monitor</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pipeline-overview"><a class="header" href="#pipeline-overview">Pipeline Overview</a></h1>
+<p>Whanos pipeline stages:</p>
+<ol>
+<li>Detect Language</li>
+<li>Build Application Image</li>
+<li>Push to Registry</li>
+<li>Deploy to Kubernetes</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="language-detection"><a class="header" href="#language-detection">Language Detection</a></h1>
+<p>Automatic detection based on marker files:</p>
+<ul>
+<li>Makefile → C</li>
+<li>app/pom.xml → Java</li>
+<li>package.json → JavaScript</li>
+<li>requirements.txt → Python</li>
+<li>app/main.bf → Befunge</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="build-process"><a class="header" href="#build-process">Build Process</a></h1>
+<p>Builds Docker image using:</p>
+<ul>
+<li>Standalone Dockerfile (if no custom Dockerfile)</li>
+<li>Custom Dockerfile (if present)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="registry-push"><a class="header" href="#registry-push">Registry Push</a></h1>
+<p>Pushes built images to k3d-whanos-registry:5000</p>
+<p>Tags:</p>
+<ul>
+<li><app>:BUILD_NUMBER</li>
+<li><app>:latest</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kubernetes-deployment"><a class="header" href="#kubernetes-deployment">Kubernetes Deployment</a></h1>
+<p>Deploys to Kubernetes if whanos.yml exists.</p>
+<p>Parses:</p>
+<ul>
+<li>replicas</li>
+<li>resources</li>
+<li>ports</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cluster-setup-1"><a class="header" href="#cluster-setup-1">Cluster Setup</a></h1>
+<p>k3d cluster with 3 nodes.</p>
+<h2 id="creation"><a class="header" href="#creation">Creation</a></h2>
+<pre><code class="language-bash">k3d cluster create whanos-cluster --agents 2
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="whanosyml-configuration-file"><a class="header" href="#whanosyml-configuration-file">whanos.yml Configuration File</a></h1>
+<p>The <code>whanos.yml</code> file is an optional configuration file that controls how your application is deployed to the Kubernetes cluster.</p>
+<h2 id="overview-2"><a class="header" href="#overview-2">Overview</a></h2>
+<p>When Whanos detects a <code>whanos.yml</code> file at the root of your repository with a <code>deployment</code> section, it will:</p>
+<ol>
+<li>Build and containerize your application</li>
+<li>Deploy it to the Kubernetes cluster with the specified configuration</li>
+<li>Create necessary Kubernetes resources (Deployment, Service)</li>
+</ol>
+<p><strong>If <code>whanos.yml</code> is missing or has no <code>deployment</code> section</strong>, Whanos will only containerize your application without deploying it to Kubernetes.</p>
+<h2 id="file-location"><a class="header" href="#file-location">File Location</a></h2>
+<pre><code>your-repo/
+├── app/                # Your application code
+├── whanos.yml         # ← Must be at repository root
+├── Dockerfile         # Optional custom Dockerfile
+└── ...
+</code></pre>
+<h2 id="configuration-structure"><a class="header" href="#configuration-structure">Configuration Structure</a></h2>
+<pre><code class="language-yaml">deployment:              # Root property (required for K8s deployment)
+  replicas: 2           # Number of pod replicas (optional)
+  resources:            # Resource limits and requests (optional)
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+  ports:                # List of ports to expose (optional)
+    - 5000
+    - 8080
+</code></pre>
+<h2 id="configuration-options"><a class="header" href="#configuration-options">Configuration Options</a></h2>
+<h3 id="deploymentreplicas"><a class="header" href="#deploymentreplicas"><code>deployment.replicas</code></a></h3>
+<p><strong>Type:</strong> Integer
+<strong>Default:</strong> 1
+<strong>Description:</strong> Number of identical pod instances to run</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3  # Run 3 instances of the application
+</code></pre>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li><strong>1 replica:</strong> Development, single-instance apps</li>
+<li><strong>2+ replicas:</strong> High availability, load distribution</li>
+<li><strong>3+ replicas:</strong> Production apps requiring redundancy</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Kubernetes ensures the specified number of replicas are always running</li>
+<li>If a pod crashes, Kubernetes automatically creates a replacement</li>
+<li>Replicas are distributed across available cluster nodes</li>
+</ul>
+<p><strong>Checking replicas:</strong></p>
+<pre><code class="language-bash">kubectl get deployment &lt;app-name&gt; -n whanos
+# Shows READY column: e.g., 3/3 means 3 out of 3 replicas are ready
+</code></pre>
+<h3 id="deploymentresources"><a class="header" href="#deploymentresources"><code>deployment.resources</code></a></h3>
+<p><strong>Type:</strong> Object
+<strong>Default:</strong> No limits (uses cluster defaults)
+<strong>Description:</strong> CPU and memory resource constraints</p>
+<p><strong>Syntax follows <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes resource specifications</a></strong></p>
+<h4 id="resource-fields"><a class="header" href="#resource-fields">Resource Fields</a></h4>
+<p><strong><code>resources.limits</code></strong> - Maximum resources a container can use</p>
+<ul>
+<li>Container will be killed if it exceeds memory limit</li>
+<li>Container will be throttled if it exceeds CPU limit</li>
+</ul>
+<p><strong><code>resources.requests</code></strong> - Guaranteed minimum resources</p>
+<ul>
+<li>Kubernetes uses this for pod scheduling</li>
+<li>Node must have at least this much resources available</li>
+</ul>
+<h4 id="memory-units"><a class="header" href="#memory-units">Memory Units</a></h4>
+<pre><code class="language-yaml">resources:
+  limits:
+    memory: "256Mi"    # 256 mebibytes (268,435,456 bytes)
+    memory: "1Gi"      # 1 gibibyte
+    memory: "512M"     # 512 megabytes (500,000,000 bytes)
+</code></pre>
+<p><strong>Common values:</strong></p>
+<ul>
+<li><code>128Mi</code> - Small apps, simple services</li>
+<li><code>256Mi</code> - Medium apps, web servers</li>
+<li><code>512Mi</code> - Large apps, data processing</li>
+<li><code>1Gi</code> - Heavy apps, in-memory databases</li>
+</ul>
+<h4 id="cpu-units"><a class="header" href="#cpu-units">CPU Units</a></h4>
+<pre><code class="language-yaml">resources:
+  limits:
+    cpu: "500m"    # 500 millicores = 0.5 CPU
+    cpu: "1"       # 1 full CPU core
+    cpu: "2000m"   # 2000 millicores = 2 CPUs
+</code></pre>
+<p><strong>Common values:</strong></p>
+<ul>
+<li><code>100m</code> - Very light apps (0.1 CPU)</li>
+<li><code>250m</code> - Small apps (0.25 CPU)</li>
+<li><code>500m</code> - Medium apps (0.5 CPU)</li>
+<li><code>1</code> or <code>1000m</code> - CPU-intensive apps (1 full CPU)</li>
+</ul>
+<h4 id="complete-example"><a class="header" href="#complete-example">Complete Example</a></h4>
+<pre><code class="language-yaml">deployment:
+  resources:
+    limits:           # Maximum allowed
+      memory: "512Mi"
+      cpu: "1000m"
+    requests:         # Guaranteed minimum
+      memory: "256Mi"
+      cpu: "500m"
+</code></pre>
+<p><strong>Best Practice:</strong> Set requests lower than limits to allow bursting</p>
+<h4 id="resource-quota-checking"><a class="header" href="#resource-quota-checking">Resource Quota Checking</a></h4>
+<pre><code class="language-bash"># Check pod resource usage
+kubectl top pod -n whanos
+
+# Check node resources
+kubectl top nodes
+
+# Describe pod to see resource configuration
+kubectl describe pod &lt;pod-name&gt; -n whanos
+</code></pre>
+<h3 id="deploymentports"><a class="header" href="#deploymentports"><code>deployment.ports</code></a></h3>
+<p><strong>Type:</strong> Array of integers
+<strong>Default:</strong> <code>[]</code> (no ports exposed)
+<strong>Description:</strong> List of container ports that need to be accessible</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-yaml">deployment:
+  ports:
+    - 5000
+    - 8080
+</code></pre>
+<p><strong>What happens when ports are defined:</strong></p>
+<ol>
+<li>
+<p><strong>Container Ports:</strong> Specified ports are added to pod specification</p>
+<pre><code class="language-yaml">ports:
+  - containerPort: 5000
+  - containerPort: 8080
+</code></pre>
+</li>
+<li>
+<p><strong>Kubernetes Service:</strong> A service is automatically created</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: my-app
+spec:
+  type: ClusterIP  # Default in Whanos
+  ports:
+    - port: 5000
+      targetPort: 5000
+    - port: 8080
+      targetPort: 8080
+</code></pre>
+</li>
+<li>
+<p><strong>Service Discovery:</strong> Other pods can reach your app via DNS</p>
+<ul>
+<li>Within namespace: <code>http://my-app:5000</code></li>
+<li>From other namespace: <code>http://my-app.whanos.svc.cluster.local:5000</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>Important Notes:</strong></p>
+<ul>
+<li>Ports must match what your application listens on</li>
+<li>By default, services use <code>ClusterIP</code> type (internal only)</li>
+<li><strong>External access requires additional configuration</strong> (see <a href="kubernetes/./services.html">Services and External Access</a>)</li>
+</ul>
+<p><strong>Common Port Numbers:</strong></p>
+<ul>
+<li><code>80</code> - HTTP (web servers)</li>
+<li><code>443</code> - HTTPS (secure web)</li>
+<li><code>3000</code> - Node.js development servers</li>
+<li><code>5000</code> - Flask, Python apps</li>
+<li><code>8080</code> - Alternative HTTP, Java apps</li>
+<li><code>8000</code> - Django development server</li>
+</ul>
+<h2 id="complete-examples"><a class="header" href="#complete-examples">Complete Examples</a></h2>
+<h3 id="example-1-simple-web-application"><a class="header" href="#example-1-simple-web-application">Example 1: Simple Web Application</a></h3>
+<p><strong>Python Flask app listening on port 5000:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  ports:
+    - 5000
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>2 instances of your app running</li>
+<li>Service exposes port 5000 internally</li>
+<li>No resource limits (uses cluster defaults)</li>
+</ul>
+<h3 id="example-2-production-application"><a class="header" href="#example-2-production-application">Example 2: Production Application</a></h3>
+<p><strong>Node.js app with resource management:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "1"
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 3000
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>3 high-availability replicas</li>
+<li>Each pod guaranteed 256Mi RAM and 0.5 CPU</li>
+<li>Can burst up to 512Mi RAM and 1 CPU</li>
+<li>Port 3000 exposed internally</li>
+</ul>
+<h3 id="example-3-microservice-with-multiple-ports"><a class="header" href="#example-3-microservice-with-multiple-ports">Example 3: Microservice with Multiple Ports</a></h3>
+<p><strong>Service exposing HTTP and gRPC:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+  ports:
+    - 8080  # HTTP API
+    - 9090  # gRPC
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>2 replicas for redundancy</li>
+<li>Efficient resource allocation</li>
+<li>Both HTTP and gRPC accessible within cluster</li>
+</ul>
+<h3 id="example-4-high-memory-application"><a class="header" href="#example-4-high-memory-application">Example 4: High-Memory Application</a></h3>
+<p><strong>Data processing service:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 1
+  resources:
+    limits:
+      memory: "2Gi"
+      cpu: "2"
+    requests:
+      memory: "1Gi"
+      cpu: "1"
+  ports:
+    - 8000
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>Single instance (not parallelizable)</li>
+<li>High memory allocation for data processing</li>
+<li>2 CPU cores for compute-intensive tasks</li>
+</ul>
+<h3 id="example-5-minimal-configuration"><a class="header" href="#example-5-minimal-configuration">Example 5: Minimal Configuration</a></h3>
+<p><strong>Simple deployment with defaults:</strong></p>
+<pre><code class="language-yaml">deployment:
+  ports:
+    - 5000
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>1 replica (default)</li>
+<li>No resource limits</li>
+<li>Port 5000 exposed</li>
+</ul>
+<h3 id="example-6-no-ports-background-service"><a class="header" href="#example-6-no-ports-background-service">Example 6: No Ports (Background Service)</a></h3>
+<p><strong>Worker/cron job that doesn’t serve HTTP:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 1
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "200m"
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>Pod runs but no Service is created</li>
+<li>Useful for background workers, cron jobs</li>
+<li>Still benefits from Kubernetes management (restarts, logging)</li>
+</ul>
+<h2 id="no-deployment-section"><a class="header" href="#no-deployment-section">No Deployment Section</a></h2>
+<p><strong>If <code>whanos.yml</code> is missing or has no deployment section:</strong></p>
+<pre><code class="language-yaml"># This file has no effect - app won't be deployed to K8s
+</code></pre>
+<p><strong>Or no file at all:</strong></p>
+<pre><code>your-repo/
+├── app/
+└── (no whanos.yml)
+</code></pre>
+<p><strong>Result:</strong></p>
+<ul>
+<li>Application is containerized and pushed to registry</li>
+<li><strong>NOT</strong> deployed to Kubernetes</li>
+<li>Image is available for manual deployment</li>
+</ul>
+<h2 id="validation"><a class="header" href="#validation">Validation</a></h2>
+<h3 id="valid-configuration"><a class="header" href="#valid-configuration">Valid Configuration</a></h3>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 5000
+</code></pre>
+<p>✅ All fields properly formatted
+✅ Memory and CPU use correct units
+✅ Ports are integers
+✅ Replicas is a positive integer</p>
+<h3 id="invalid-configurations"><a class="header" href="#invalid-configurations">Invalid Configurations</a></h3>
+<p>❌ <strong>Wrong YAML syntax:</strong></p>
+<pre><code class="language-yaml">deployment:
+replicas: 2  # Wrong indentation
+</code></pre>
+<p>❌ <strong>Invalid resource units:</strong></p>
+<pre><code class="language-yaml">deployment:
+  resources:
+    limits:
+      memory: "256MB"  # Should be "256Mi" or "256M"
+      cpu: "half"      # Should be "500m" or "0.5"
+</code></pre>
+<p>❌ <strong>Invalid port format:</strong></p>
+<pre><code class="language-yaml">deployment:
+  ports:
+    - "5000"  # Should be integer, not string
+    - http    # Must be a number
+</code></pre>
+<p>❌ <strong>Negative values:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: -1  # Must be positive
+</code></pre>
+<h2 id="testing-your-configuration"><a class="header" href="#testing-your-configuration">Testing Your Configuration</a></h2>
+<h3 id="1-validate-yaml-syntax"><a class="header" href="#1-validate-yaml-syntax">1. Validate YAML Syntax</a></h3>
+<pre><code class="language-bash"># Check if whanos.yml is valid YAML
+python3 -c "import yaml; yaml.safe_load(open('whanos.yml'))"
+</code></pre>
+<h3 id="2-deploy-and-check"><a class="header" href="#2-deploy-and-check">2. Deploy and Check</a></h3>
+<pre><code class="language-bash"># After deployment via Jenkins, check the deployment
+kubectl get deployment &lt;app-name&gt; -n whanos
+
+# Check pods
+kubectl get pods -n whanos -l app=&lt;app-name&gt;
+
+# Check service
+kubectl get service &lt;app-name&gt; -n whanos
+
+# Get full deployment details
+kubectl describe deployment &lt;app-name&gt; -n whanos
+</code></pre>
+<h3 id="3-verify-resources"><a class="header" href="#3-verify-resources">3. Verify Resources</a></h3>
+<pre><code class="language-bash"># Check actual resource usage
+kubectl top pod -n whanos -l app=&lt;app-name&gt;
+
+# Compare with configured limits
+kubectl get pod &lt;pod-name&gt; -n whanos -o jsonpath='{.spec.containers[0].resources}'
+</code></pre>
+<h3 id="4-test-port-connectivity"><a class="header" href="#4-test-port-connectivity">4. Test Port Connectivity</a></h3>
+<pre><code class="language-bash"># Port-forward to test application
+kubectl port-forward -n whanos service/&lt;app-name&gt; 8080:5000
+
+# Test with curl
+curl http://localhost:8080
+</code></pre>
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h3 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h3>
+<pre><code class="language-yaml">deployment:
+  replicas: 1
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 5000
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Single replica (fast restarts)</li>
+<li>Moderate resources</li>
+<li>Simple setup</li>
+</ul>
+<h3 id="staging-environment"><a class="header" href="#staging-environment">Staging Environment</a></h3>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "1"
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 8080
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>2 replicas (tests HA)</li>
+<li>Production-like resources</li>
+<li>Simulates prod environment</li>
+</ul>
+<h3 id="production-environment"><a class="header" href="#production-environment">Production Environment</a></h3>
+<pre><code class="language-yaml">deployment:
+  replicas: 3
+  resources:
+    limits:
+      memory: "1Gi"
+      cpu: "2"
+    requests:
+      memory: "512Mi"
+      cpu: "1"
+  ports:
+    - 80
+    - 443
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>3+ replicas (high availability)</li>
+<li>Generous resources with headroom</li>
+<li>Multiple ports (HTTP/HTTPS)</li>
+</ul>
+<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="issue-pods-not-starting"><a class="header" href="#issue-pods-not-starting">Issue: Pods not starting</a></h3>
+<p><strong>Check events:</strong></p>
+<pre><code class="language-bash">kubectl get events -n whanos --sort-by='.lastTimestamp'
+kubectl describe pod &lt;pod-name&gt; -n whanos
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<ul>
+<li><strong>Insufficient resources:</strong> Node doesn’t have enough CPU/memory</li>
+<li><strong>Invalid port:</strong> Application not listening on specified port</li>
+<li><strong>Image pull error:</strong> Container image not accessible</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-yaml"># Reduce resource requests
+deployment:
+  resources:
+    requests:
+      memory: "128Mi"  # Lower than before
+      cpu: "250m"
+</code></pre>
+<h3 id="issue-pods-keep-restarting"><a class="header" href="#issue-pods-keep-restarting">Issue: Pods keep restarting</a></h3>
+<p><strong>Check logs:</strong></p>
+<pre><code class="language-bash">kubectl logs &lt;pod-name&gt; -n whanos
+kubectl logs &lt;pod-name&gt; -n whanos --previous  # Previous crashed instance
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<ul>
+<li><strong>OOMKilled:</strong> Exceeded memory limit</li>
+<li><strong>Application crash:</strong> Code error</li>
+<li><strong>Port conflict:</strong> Wrong port configuration</li>
+</ul>
+<p><strong>Solution for OOMKilled:</strong></p>
+<pre><code class="language-yaml">deployment:
+  resources:
+    limits:
+      memory: "512Mi"  # Increase from 256Mi
+</code></pre>
+<h3 id="issue-cannot-access-application"><a class="header" href="#issue-cannot-access-application">Issue: Cannot access application</a></h3>
+<p><strong>Check service:</strong></p>
+<pre><code class="language-bash">kubectl get service &lt;app-name&gt; -n whanos
+kubectl get endpoints &lt;app-name&gt; -n whanos
+</code></pre>
+<p><strong>If endpoints are empty:</strong></p>
+<ul>
+<li>Pods aren’t ready</li>
+<li>Port mismatch between app and whanos.yml</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-yaml"># Ensure port matches what app listens on
+deployment:
+  ports:
+    - 5000  # Must match app.listen(5000) or similar
+</code></pre>
+<h3 id="issue-deployment-not-created"><a class="header" href="#issue-deployment-not-created">Issue: Deployment not created</a></h3>
+<p><strong>Check Jenkins logs:</strong></p>
+<pre><code class="language-bash"># In Jenkins UI, check the build console output
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<ul>
+<li><strong>No deployment section in whanos.yml</strong></li>
+<li><strong>YAML syntax error</strong></li>
+<li><strong>File not at repository root</strong></li>
+</ul>
+<p><strong>Solution:</strong>
+Ensure whanos.yml is valid and at root:</p>
+<pre><code class="language-bash"># Validate locally
+yamllint whanos.yml
+</code></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-always-set-resource-limits"><a class="header" href="#1-always-set-resource-limits">1. Always Set Resource Limits</a></h3>
+<p><strong>Bad:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3
+  # No resources defined - can starve other pods
+</code></pre>
+<p><strong>Good:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+</code></pre>
+<h3 id="2-requests--limits"><a class="header" href="#2-requests--limits">2. Requests &lt; Limits</a></h3>
+<p>Allow pods to burst when needed:</p>
+<pre><code class="language-yaml">resources:
+  limits:
+    memory: "512Mi"  # Maximum
+    cpu: "1"
+  requests:
+    memory: "256Mi"  # Guaranteed (50% of limit)
+    cpu: "500m"      # Guaranteed (50% of limit)
+</code></pre>
+<h3 id="3-use-multiple-replicas-for-ha"><a class="header" href="#3-use-multiple-replicas-for-ha">3. Use Multiple Replicas for HA</a></h3>
+<p><strong>Single point of failure:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 1  # If this pod dies, app is down
+</code></pre>
+<p><strong>High availability:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3  # Even if 1-2 pods die, app stays up
+</code></pre>
+<h3 id="4-match-ports-to-application"><a class="header" href="#4-match-ports-to-application">4. Match Ports to Application</a></h3>
+<pre><code class="language-yaml"># If your app does:
+# app.listen(5000)
+# Then whanos.yml should have:
+deployment:
+  ports:
+    - 5000  # ← Must match
+</code></pre>
+<h3 id="5-start-conservative-scale-up"><a class="header" href="#5-start-conservative-scale-up">5. Start Conservative, Scale Up</a></h3>
+<pre><code class="language-yaml"># Start with minimal resources
+deployment:
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
+
+# Monitor usage with: kubectl top pod
+# Increase if needed
+</code></pre>
+<h3 id="6-version-control-your-whanosyml"><a class="header" href="#6-version-control-your-whanosyml">6. Version Control Your whanos.yml</a></h3>
+<p>Commit whanos.yml to git alongside your code:</p>
+<pre><code class="language-bash">git add whanos.yml
+git commit -m "Configure K8s deployment: 2 replicas, 256Mi limit"
+</code></pre>
+<h2 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h2>
+<h3 id="horizontal-pod-autoscaling-not-in-basic-whanos"><a class="header" href="#horizontal-pod-autoscaling-not-in-basic-whanos">Horizontal Pod Autoscaling (Not in Basic Whanos)</a></h3>
+<p>Future enhancement could add:</p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  autoscaling:
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+</code></pre>
+<h3 id="health-checks-not-in-basic-whanos"><a class="header" href="#health-checks-not-in-basic-whanos">Health Checks (Not in Basic Whanos)</a></h3>
+<p>Future enhancement could add:</p>
+<pre><code class="language-yaml">deployment:
+  healthCheck:
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 5000
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 5000
+</code></pre>
+<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
+<h3 id="complete-whanosyml-schema"><a class="header" href="#complete-whanosyml-schema">Complete whanos.yml Schema</a></h3>
+<pre><code class="language-yaml"># All possible options
+deployment:                    # Required for K8s deployment
+
+  replicas: 2                 # Optional, default: 1
+                              # Type: Integer &gt; 0
+
+  resources:                  # Optional, default: no limits
+    limits:                   # Optional
+      memory: "256Mi"         # Optional, K8s memory units
+      cpu: "500m"             # Optional, K8s CPU units (millicores)
+    requests:                 # Optional
+      memory: "128Mi"         # Optional, K8s memory units
+      cpu: "250m"             # Optional, K8s CPU units
+
+  ports:                      # Optional, default: []
+    - 5000                    # Integer, container port number
+    - 8080                    # Can specify multiple ports
+</code></pre>
+<h3 id="resource-units-reference"><a class="header" href="#resource-units-reference">Resource Units Reference</a></h3>
+<p><strong>Memory:</strong></p>
+<ul>
+<li><code>Ki</code> - Kibibyte (1024 bytes)</li>
+<li><code>Mi</code> - Mebibyte (1024² bytes)</li>
+<li><code>Gi</code> - Gibibyte (1024³ bytes)</li>
+<li><code>K</code> - Kilobyte (1000 bytes)</li>
+<li><code>M</code> - Megabyte (1000² bytes)</li>
+<li><code>G</code> - Gigabyte (1000³ bytes)</li>
+</ul>
+<p><strong>CPU:</strong></p>
+<ul>
+<li><code>1</code> - 1 full CPU core</li>
+<li><code>500m</code> - 500 millicores = 0.5 CPU</li>
+<li><code>0.5</code> - Same as <code>500m</code></li>
+<li><code>2000m</code> - 2 full CPUs</li>
+</ul>
+<h2 id="related-documentation"><a class="header" href="#related-documentation">Related Documentation</a></h2>
+<ul>
+<li><a href="kubernetes/./services.html">Services and External Access</a> - How to access deployed applications</li>
+<li><a href="kubernetes/../jenkins/k8s-deployment.html">Kubernetes Deployment</a> - How Jenkins deploys to K8s</li>
+<li><a href="kubernetes/../user-guide/compatible-repo.html">Compatible Repository Structure</a> - Repository requirements</li>
+</ul>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p><strong>whanos.yml is optional:</strong></p>
+<ul>
+<li>Without it (or without <code>deployment</code> section): Only builds container image</li>
+<li>With <code>deployment</code> section: Builds image AND deploys to Kubernetes</li>
+</ul>
+<p><strong>Key takeaways:</strong></p>
+<ol>
+<li>File must be at repository root</li>
+<li><code>deployment</code> section triggers Kubernetes deployment</li>
+<li><code>replicas</code> controls number of pod instances (default: 1)</li>
+<li><code>resources</code> sets memory/CPU limits (default: no limits)</li>
+<li><code>ports</code> exposes container ports (default: no ports)</li>
+<li>Services are created as ClusterIP (see <a href="kubernetes/./services.html">Services docs</a> for external access)</li>
+</ol>
+<p><strong>Minimal working example:</strong></p>
+<pre><code class="language-yaml">deployment:
+  ports:
+    - 5000
+</code></pre>
+<p><strong>Production example:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 3
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "1"
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 8080
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kubernetes-deployments"><a class="header" href="#kubernetes-deployments">Kubernetes Deployments</a></h1>
+<p>Applications are deployed as Kubernetes Deployments.</p>
+<p>Namespace: whanos</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="services-and-external-access"><a class="header" href="#services-and-external-access">Services and External Access</a></h1>
+<p>This guide explains how applications deployed in the Whanos Kubernetes cluster can be accessed from outside the cluster.</p>
+<h2 id="overview-3"><a class="header" href="#overview-3">Overview</a></h2>
+<p>When you deploy an application with ports defined in <code>whanos.yml</code>, Whanos creates:</p>
+<ol>
+<li><strong>Kubernetes Deployment</strong> - Runs your application pods</li>
+<li><strong>Kubernetes Service</strong> - Exposes your application within the cluster</li>
+</ol>
+<p>By default, services are created as <code>ClusterIP</code> type, which means they’re only accessible within the Kubernetes cluster. To access applications from outside, you have several options.</p>
+<h2 id="current-whanos-configuration"><a class="header" href="#current-whanos-configuration">Current Whanos Configuration</a></h2>
+<p>The Whanos k3d cluster is created with the following port mapping (from <code>scripts/deploy.sh:104</code>):</p>
+<pre><code class="language-bash">k3d cluster create whanos-cluster \
+    --agents 2 \
+    --port "8081:80@loadbalancer"
+</code></pre>
+<p>This configuration:</p>
+<ul>
+<li>Maps <strong>host port 8081</strong> → <strong>cluster LoadBalancer port 80</strong></li>
+<li>Enables external access to services exposed through the LoadBalancer</li>
+</ul>
+<h2 id="service-types-in-kubernetes"><a class="header" href="#service-types-in-kubernetes">Service Types in Kubernetes</a></h2>
+<h3 id="clusterip-default"><a class="header" href="#clusterip-default">ClusterIP (Default)</a></h3>
+<p><strong>Current implementation in Jenkinsfile.template:197</strong></p>
+<pre><code class="language-yaml">type: ClusterIP
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Service is only accessible within the cluster</li>
+<li>Not accessible from outside (localhost or internet)</li>
+<li>Most secure option</li>
+<li>Requires additional configuration for external access</li>
+</ul>
+<p><strong>Use case:</strong> Internal microservices, databases, cache services</p>
+<h3 id="loadbalancer"><a class="header" href="#loadbalancer">LoadBalancer</a></h3>
+<p><strong>Recommended for Whanos with k3d</strong></p>
+<pre><code class="language-yaml">type: LoadBalancer
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Exposes service externally</li>
+<li>With k3d’s port mapping <code>8081:80</code>, services are accessible on <code>localhost:8081</code></li>
+<li>Multiple services will share the same external IP/port</li>
+<li>Requires Ingress controller or unique ports for multiple apps</li>
+</ul>
+<p><strong>How it works with k3d:</strong></p>
+<ol>
+<li>Service requests LoadBalancer IP</li>
+<li>k3d’s built-in LoadBalancer provides an IP</li>
+<li>Traffic to host port 8081 → LoadBalancer → Service → Pod</li>
+</ol>
+<h3 id="nodeport"><a class="header" href="#nodeport">NodePort</a></h3>
+<p><strong>Alternative option</strong></p>
+<pre><code class="language-yaml">type: NodePort
+ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 30500  # Must be in range 30000-32767
+</code></pre>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Exposes service on each node’s IP at a static port</li>
+<li>Port range: 30000-32767</li>
+<li>Accessible via <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code></li>
+<li>Good for development, not recommended for production</li>
+</ul>
+<h3 id="externalname"><a class="header" href="#externalname">ExternalName</a></h3>
+<p>Maps service to a DNS name. Not applicable for Whanos use case.</p>
+<h2 id="methods-to-access-applications-externally"><a class="header" href="#methods-to-access-applications-externally">Methods to Access Applications Externally</a></h2>
+<h3 id="method-1-using-kubectl-port-forward-development"><a class="header" href="#method-1-using-kubectl-port-forward-development">Method 1: Using kubectl port-forward (Development)</a></h3>
+<p><strong>Quickest method for testing</strong></p>
+<pre><code class="language-bash"># Forward local port 8080 to application port 5000
+kubectl port-forward -n whanos service/&lt;app-name&gt; 8080:5000
+
+# Example: Forward port 8080 to python-app on port 5000
+kubectl port-forward -n whanos service/python-app 8080:5000
+</code></pre>
+<p><strong>Access:</strong> <code>http://localhost:8080</code></p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>No configuration changes needed</li>
+<li>Works with ClusterIP services</li>
+<li>Great for debugging</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Only works while command is running</li>
+<li>Single connection</li>
+<li>Not suitable for production</li>
+</ul>
+<h3 id="method-2-change-service-type-to-loadbalancer"><a class="header" href="#method-2-change-service-type-to-loadbalancer">Method 2: Change Service Type to LoadBalancer</a></h3>
+<p><strong>Modify Jenkinsfile.template</strong> to use LoadBalancer instead of ClusterIP:</p>
+<p><strong>Current code (line 197):</strong></p>
+<pre><code class="language-groovy">type: ClusterIP
+</code></pre>
+<p><strong>Modified code:</strong></p>
+<pre><code class="language-groovy">type: LoadBalancer
+</code></pre>
+<p><strong>Complete service definition:</strong></p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: my-app
+  namespace: whanos
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80        # Service port
+      targetPort: 5000  # Container port
+  type: LoadBalancer
+</code></pre>
+<p><strong>Access:</strong></p>
+<ul>
+<li>With k3d port mapping <code>8081:80</code>: <code>http://localhost:8081</code></li>
+<li><strong>Important:</strong> Only ONE service can use port 80 at a time with this configuration</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple configuration</li>
+<li>Works well with k3d</li>
+<li>Automatic load balancing</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Only one app can use port 80</li>
+<li>Need Ingress for multiple apps</li>
+</ul>
+<h3 id="method-3-using-ingress-controller-recommended-for-production"><a class="header" href="#method-3-using-ingress-controller-recommended-for-production">Method 3: Using Ingress Controller (Recommended for Production)</a></h3>
+<p><strong>Setup Nginx Ingress Controller:</strong></p>
+<pre><code class="language-bash"># Install Nginx Ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+# Wait for controller to be ready
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+</code></pre>
+<p><strong>Create Ingress resource</strong> (add to Jenkinsfile deployment logic):</p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  namespace: whanos
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: my-app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app
+                port:
+                  number: 5000
+</code></pre>
+<p><strong>Add to /etc/hosts:</strong></p>
+<pre><code class="language-bash">echo "127.0.0.1 my-app.local" | sudo tee -a /etc/hosts
+</code></pre>
+<p><strong>Access:</strong> <code>http://my-app.local:8081</code></p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Multiple applications on same port</li>
+<li>Path-based routing</li>
+<li>Host-based routing</li>
+<li>SSL/TLS termination</li>
+<li>Production-ready</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>More complex setup</li>
+<li>Requires Ingress controller installation</li>
+</ul>
+<h3 id="method-4-using-nodeport"><a class="header" href="#method-4-using-nodeport">Method 4: Using NodePort</a></h3>
+<p><strong>Modify Jenkinsfile.template</strong> to use NodePort:</p>
+<pre><code class="language-groovy">// Change type to NodePort and add nodePort specification
+if (ports) {
+    servicePorts = ports.collect { port -&gt;
+        def nodePort = 30000 + (port.toInteger() % 2000)  // Generate NodePort in range
+        """
+  - protocol: TCP
+    port: ${port}
+    targetPort: ${port}
+    nodePort: ${nodePort}"""
+    }.join('')
+
+    k8sManifest += """
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${env.APP_NAME}
+  namespace: whanos
+spec:
+  selector:
+    app: ${env.APP_NAME}
+  ports:${servicePorts}
+  type: NodePort
+"""
+}
+</code></pre>
+<p><strong>Find NodePort:</strong></p>
+<pre><code class="language-bash">kubectl get service &lt;app-name&gt; -n whanos
+</code></pre>
+<p><strong>Access:</strong></p>
+<pre><code class="language-bash"># Get node IP (usually localhost for k3d)
+kubectl get nodes -o wide
+
+# Access via NodePort
+# http://localhost:&lt;NodePort&gt;
+# Example: http://localhost:30500
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple to configure</li>
+<li>No additional components needed</li>
+<li>Good for development</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Limited port range (30000-32767)</li>
+<li>Need to remember/document NodePorts</li>
+<li>Ports may conflict with host services</li>
+</ul>
+<h2 id="implementation-options-for-whanos"><a class="header" href="#implementation-options-for-whanos">Implementation Options for Whanos</a></h2>
+<h3 id="option-a-simple-loadbalancer-quick-solution"><a class="header" href="#option-a-simple-loadbalancer-quick-solution">Option A: Simple LoadBalancer (Quick Solution)</a></h3>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Minimal code changes</li>
+<li>Works immediately with k3d</li>
+<li>Good for single-app deployments</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Only one app accessible at port 8081 at a time</li>
+<li>Not suitable for multiple simultaneous deployments</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<pre><code class="language-groovy">// In Jenkinsfile.template line 197, change:
+type: ClusterIP
+// To:
+type: LoadBalancer
+</code></pre>
+<h3 id="option-b-ingress-controller-production-ready"><a class="header" href="#option-b-ingress-controller-production-ready">Option B: Ingress Controller (Production-Ready)</a></h3>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Multiple apps accessible simultaneously</li>
+<li>Professional solution</li>
+<li>Scalable</li>
+<li>Supports SSL/TLS</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Requires Ingress controller setup</li>
+<li>More complex configuration</li>
+<li>Need to manage DNS/hosts entries</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<ol>
+<li>Install Ingress controller (one-time setup)</li>
+<li>Modify Jenkinsfile to create Ingress resources</li>
+<li>Configure hostname-based routing</li>
+</ol>
+<h3 id="option-c-nodeport-development-friendly"><a class="header" href="#option-c-nodeport-development-friendly">Option C: NodePort (Development Friendly)</a></h3>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Easy to understand</li>
+<li>No additional components</li>
+<li>Each app gets unique port</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Port management complexity</li>
+<li>Non-standard ports</li>
+<li>Not production-recommended</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<pre><code class="language-groovy">// In Jenkinsfile.template, modify service creation to use NodePort
+type: NodePort
+</code></pre>
+<h3 id="option-d-hybrid-approach-recommended"><a class="header" href="#option-d-hybrid-approach-recommended">Option D: Hybrid Approach (Recommended)</a></h3>
+<p><strong>Use ClusterIP + kubectl port-forward for development:</strong></p>
+<ul>
+<li>Keep services as ClusterIP</li>
+<li>Document port-forward commands</li>
+<li>Simple and secure</li>
+</ul>
+<p><strong>Use Ingress for production deployment:</strong></p>
+<ul>
+<li>Install Ingress controller for production</li>
+<li>Configure Ingress rules</li>
+<li>Professional setup</li>
+</ul>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="example-1-port-forward-to-python-app"><a class="header" href="#example-1-port-forward-to-python-app">Example 1: Port-Forward to Python App</a></h3>
+<p><strong>App deployed with whanos.yml:</strong></p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  ports:
+    - 5000
+</code></pre>
+<p><strong>Access from localhost:</strong></p>
+<pre><code class="language-bash"># Find the service
+kubectl get service -n whanos
+
+# Port-forward
+kubectl port-forward -n whanos service/python-app 8080:5000
+
+# Access
+curl http://localhost:8080
+</code></pre>
+<h3 id="example-2-loadbalancer-service"><a class="header" href="#example-2-loadbalancer-service">Example 2: LoadBalancer Service</a></h3>
+<p><strong>Modified Jenkinsfile creates:</strong></p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  namespace: whanos
+spec:
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+</code></pre>
+<p><strong>Access:</strong></p>
+<pre><code class="language-bash"># Wait for LoadBalancer to get external IP
+kubectl get service python-app -n whanos
+# NAME         TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+# python-app   LoadBalancer   10.43.50.123   &lt;pending&gt;     80:31234/TCP   10s
+
+# With k3d, access via mapped port
+curl http://localhost:8081
+
+# Or use the NodePort shown (31234 in this example)
+curl http://localhost:31234
+</code></pre>
+<h3 id="example-3-ingress-with-multiple-apps"><a class="header" href="#example-3-ingress-with-multiple-apps">Example 3: Ingress with Multiple Apps</a></h3>
+<p><strong>Install Ingress:</strong></p>
+<pre><code class="language-bash">kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+</code></pre>
+<p><strong>Create Ingress for app1:</strong></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app1-ingress
+  namespace: whanos
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: app1.whanos.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app1
+                port:
+                  number: 5000
+</code></pre>
+<p><strong>Create Ingress for app2:</strong></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app2-ingress
+  namespace: whanos
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: app2.whanos.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app2
+                port:
+                  number: 8080
+</code></pre>
+<p><strong>Configure hosts:</strong></p>
+<pre><code class="language-bash">sudo tee -a /etc/hosts &lt;&lt;EOF
+127.0.0.1 app1.whanos.local
+127.0.0.1 app2.whanos.local
+EOF
+</code></pre>
+<p><strong>Access:</strong></p>
+<pre><code class="language-bash">curl http://app1.whanos.local:8081
+curl http://app2.whanos.local:8081
+</code></pre>
+<h2 id="checking-service-status"><a class="header" href="#checking-service-status">Checking Service Status</a></h2>
+<h3 id="view-services"><a class="header" href="#view-services">View Services</a></h3>
+<pre><code class="language-bash"># List all services in whanos namespace
+kubectl get services -n whanos
+
+# Get detailed info about a specific service
+kubectl describe service &lt;app-name&gt; -n whanos
+
+# Get service with more details
+kubectl get service &lt;app-name&gt; -n whanos -o wide
+</code></pre>
+<h3 id="view-endpoints"><a class="header" href="#view-endpoints">View Endpoints</a></h3>
+<pre><code class="language-bash"># Check which pods are behind a service
+kubectl get endpoints &lt;app-name&gt; -n whanos
+
+# Detailed endpoint information
+kubectl describe endpoints &lt;app-name&gt; -n whanos
+</code></pre>
+<h3 id="test-service-connectivity"><a class="header" href="#test-service-connectivity">Test Service Connectivity</a></h3>
+<pre><code class="language-bash"># From within the cluster (using a debug pod)
+kubectl run -n whanos debug-pod --rm -it --image=curlimages/curl -- sh
+# Then inside the pod:
+curl http://&lt;app-name&gt;:&lt;port&gt;
+
+# From outside using port-forward
+kubectl port-forward -n whanos service/&lt;app-name&gt; 8080:&lt;port&gt;
+curl http://localhost:8080
+</code></pre>
+<h2 id="troubleshooting-external-access"><a class="header" href="#troubleshooting-external-access">Troubleshooting External Access</a></h2>
+<h3 id="issue-cannot-access-service-from-localhost"><a class="header" href="#issue-cannot-access-service-from-localhost">Issue: Cannot access service from localhost</a></h3>
+<p><strong>Check service type:</strong></p>
+<pre><code class="language-bash">kubectl get service &lt;app-name&gt; -n whanos -o jsonpath='{.spec.type}'
+</code></pre>
+<p><strong>If ClusterIP:</strong></p>
+<ul>
+<li>Use <code>kubectl port-forward</code> for testing</li>
+<li>Change to LoadBalancer or NodePort for permanent access</li>
+<li>Or set up Ingress</li>
+</ul>
+<h3 id="issue-loadbalancer-external-ip-stuck-on-pending"><a class="header" href="#issue-loadbalancer-external-ip-stuck-on-pending">Issue: LoadBalancer external IP stuck on &lt;pending&gt;</a></h3>
+<p><strong>With k3d, this is normal:</strong></p>
+<ul>
+<li>k3d provides built-in LoadBalancer support</li>
+<li>Access via the port mapping: <code>localhost:8081</code></li>
+<li>Or use the automatically assigned NodePort</li>
+</ul>
+<p><strong>Check:</strong></p>
+<pre><code class="language-bash">kubectl get service &lt;app-name&gt; -n whanos
+# Note the NodePort in PORT(S) column (e.g., 80:31234/TCP)
+# Access via: http://localhost:31234
+</code></pre>
+<h3 id="issue-port-8081-connection-refused"><a class="header" href="#issue-port-8081-connection-refused">Issue: Port 8081 connection refused</a></h3>
+<p><strong>Check k3d cluster status:</strong></p>
+<pre><code class="language-bash">k3d cluster list
+docker ps | grep k3d
+</code></pre>
+<p><strong>Verify port mapping:</strong></p>
+<pre><code class="language-bash">docker port k3d-whanos-cluster-serverlb
+# Should show: 80/tcp -&gt; 0.0.0.0:8081
+</code></pre>
+<p><strong>Check if any service is using LoadBalancer:</strong></p>
+<pre><code class="language-bash">kubectl get services -n whanos -o wide
+</code></pre>
+<h3 id="issue-multiple-apps-only-one-accessible"><a class="header" href="#issue-multiple-apps-only-one-accessible">Issue: Multiple apps, only one accessible</a></h3>
+<p><strong>Problem:</strong> Multiple LoadBalancer services competing for port 80</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Use Ingress controller with host-based routing</li>
+<li>Use different service ports:
+<pre><code class="language-yaml">ports:
+  - port: 8080  # app1
+  - port: 8090  # app2
+</code></pre>
+</li>
+<li>Use NodePort with unique ports</li>
+</ol>
+<h3 id="issue-ingress-not-working"><a class="header" href="#issue-ingress-not-working">Issue: Ingress not working</a></h3>
+<p><strong>Check Ingress controller:</strong></p>
+<pre><code class="language-bash">kubectl get pods -n ingress-nginx
+kubectl logs -n ingress-nginx &lt;ingress-controller-pod&gt;
+</code></pre>
+<p><strong>Check Ingress resource:</strong></p>
+<pre><code class="language-bash">kubectl get ingress -n whanos
+kubectl describe ingress &lt;app-name&gt;-ingress -n whanos
+</code></pre>
+<p><strong>Verify Ingress class:</strong></p>
+<pre><code class="language-bash">kubectl get ingressclass
+</code></pre>
+<h2 id="recommendations"><a class="header" href="#recommendations">Recommendations</a></h2>
+<h3 id="for-development-local-testing"><a class="header" href="#for-development-local-testing">For Development (Local Testing)</a></h3>
+<p><strong>Use kubectl port-forward:</strong></p>
+<ul>
+<li>No infrastructure changes needed</li>
+<li>Quick and simple</li>
+<li>Easy cleanup</li>
+</ul>
+<pre><code class="language-bash">kubectl port-forward -n whanos service/my-app 8080:5000
+</code></pre>
+<h3 id="for-demopresentation"><a class="header" href="#for-demopresentation">For Demo/Presentation</a></h3>
+<p><strong>Use LoadBalancer or NodePort:</strong></p>
+<ul>
+<li>Persistent access</li>
+<li>No manual forwarding needed</li>
+<li>Easy to demonstrate</li>
+</ul>
+<p><strong>Configure once, access always:</strong></p>
+<pre><code class="language-bash"># After deployment, get NodePort
+kubectl get service my-app -n whanos
+# Access via http://localhost:&lt;NodePort&gt;
+</code></pre>
+<h3 id="for-production-deployment"><a class="header" href="#for-production-deployment">For Production Deployment</a></h3>
+<p><strong>Use Ingress Controller:</strong></p>
+<ul>
+<li>Professional solution</li>
+<li>Multiple apps support</li>
+<li>SSL/TLS support</li>
+<li>Proper load balancing</li>
+</ul>
+<p><strong>Setup Ingress controller + configure Ingress resources</strong></p>
+<h2 id="next-steps-3"><a class="header" href="#next-steps-3">Next Steps</a></h2>
+<ul>
+<li><a href="kubernetes/./whanos-yml.html">whanos.yml Configuration</a> - Learn how to configure ports in whanos.yml</li>
+<li><a href="kubernetes/../jenkins/k8s-deployment.html">Kubernetes Deployment</a> - Understand the deployment process</li>
+<li><a href="kubernetes/../troubleshooting/common-issues.html">Troubleshooting</a> - Common issues and solutions</li>
+</ul>
+<h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
+<p><strong>Current Whanos Setup:</strong></p>
+<ul>
+<li>Services are created as <code>ClusterIP</code> (internal only)</li>
+<li>k3d cluster has port mapping <code>8081:80</code> ready for LoadBalancer</li>
+<li>Applications are NOT accessible externally by default</li>
+</ul>
+<p><strong>To Make Apps Accessible:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Difficulty</th><th>Production Ready</th><th>Multiple Apps</th></tr></thead><tbody>
+<tr><td>port-forward</td><td>Easy</td><td>No</td><td>Yes (manual)</td></tr>
+<tr><td>LoadBalancer</td><td>Easy</td><td>Yes (1 app)</td><td>No (port conflicts)</td></tr>
+<tr><td>NodePort</td><td>Medium</td><td>No</td><td>Yes (unique ports)</td></tr>
+<tr><td>Ingress</td><td>Hard</td><td>Yes</td><td>Yes (host routing)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Quick Fix:</strong>
+Change <code>type: ClusterIP</code> to <code>type: LoadBalancer</code> in Jenkinsfile.template:197</p>
+<p><strong>Best Practice:</strong>
+Implement Ingress controller for proper multi-app support</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-a-whanos-compatible-repository"><a class="header" href="#creating-a-whanos-compatible-repository">Creating a Whanos-Compatible Repository</a></h1>
+<p>Learn how to structure your repository to work seamlessly with Whanos.</p>
+<h2 id="repository-structure"><a class="header" href="#repository-structure">Repository Structure</a></h2>
+<p>A Whanos-compatible repository must follow this structure:</p>
+<pre><code>your-repository/
+├── app/                    # Your application code (REQUIRED)
+│   ├── src/               # Source files
+│   ├── __main__.py        # Entry point (Python example)
+│   └── ...
+├── Makefile               # For C projects
+├── pom.xml                # For Java projects (in app/)
+├── package.json           # For JavaScript projects
+├── requirements.txt       # For Python projects
+├── Dockerfile             # OPTIONAL: Custom Dockerfile
+├── whanos.yml             # OPTIONAL: Kubernetes configuration
+└── README.md              # Your project documentation
+</code></pre>
+<h2 id="language-specific-requirements"><a class="header" href="#language-specific-requirements">Language-Specific Requirements</a></h2>
+<h3 id="c-projects"><a class="header" href="#c-projects">C Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>Makefile</code> at repository root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>Makefile</code> at root</li>
+<li><code>app/</code> directory with source code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">make                    # Should compile
+./compiled-app          # Should be the output binary
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>c-project/
+├── Makefile
+└── app/
+    ├── main.c
+    ├── utils.c
+    └── utils.h
+</code></pre>
+<p><strong>Makefile Template</strong>:</p>
+<pre><code class="language-makefile">CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+SRC = app/main.c app/utils.c
+OBJ = $(SRC:.c=.o)
+
+compiled-app: $(OBJ)
+	$(CC) $(OBJ) -o compiled-app
+
+clean:
+	rm -f $(OBJ) compiled-app
+</code></pre>
+<h3 id="java-projects"><a class="header" href="#java-projects">Java Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>app/pom.xml</code></p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>app/pom.xml</code></li>
+<li><code>app/src/</code> with Java source code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">cd app
+mvn package
+# Output: target/app.jar
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>java-project/
+└── app/
+    ├── pom.xml
+    └── src/
+        └── main/
+            └── java/
+                └── com/
+                    └── example/
+                        └── Main.java
+</code></pre>
+<p><strong>pom.xml Template</strong>:</p>
+<pre><code class="language-xml">&lt;project&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;app&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+
+    &lt;build&gt;
+        &lt;finalName&gt;app&lt;/finalName&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+<h3 id="javascript-projects"><a class="header" href="#javascript-projects">JavaScript Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>package.json</code> at root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>package.json</code> at root</li>
+<li><code>app/</code> directory with JS code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">npm ci --only=production
+node app
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>javascript-project/
+├── package.json
+├── package-lock.json
+└── app/
+    ├── index.js
+    └── server.js
+</code></pre>
+<p><strong>package.json Template</strong>:</p>
+<pre><code class="language-json">{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
+</code></pre>
+<h3 id="python-projects"><a class="header" href="#python-projects">Python Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>requirements.txt</code> at root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>requirements.txt</code> at root</li>
+<li><code>app/</code> directory as Python module</li>
+<li><code>app/__main__.py</code> as entry point</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+python -m app
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>python-project/
+├── requirements.txt
+└── app/
+    ├── __init__.py
+    ├── __main__.py
+    └── server.py
+</code></pre>
+<p><strong>requirements.txt Template</strong>:</p>
+<pre><code>Flask==3.0.0
+Werkzeug==3.0.1
+</code></pre>
+<p><strong>app/<strong>main</strong>.py Template</strong>:</p>
+<pre><code class="language-python">from app.server import create_app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(host='0.0.0.0', port=5000)
+</code></pre>
+<h3 id="befunge-projects"><a class="header" href="#befunge-projects">Befunge Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>app/main.bf</code></p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>app/main.bf</code></li>
+</ul>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>befunge-project/
+└── app/
+    └── main.bf
+</code></pre>
+<h2 id="optional-files"><a class="header" href="#optional-files">Optional Files</a></h2>
+<h3 id="custom-dockerfile"><a class="header" href="#custom-dockerfile">Custom Dockerfile</a></h3>
+<p>If you need custom dependencies or build steps:</p>
+<pre><code class="language-dockerfile">FROM whanos-python:latest
+# ONBUILD instructions from base image will run here
+
+# Add custom steps
+RUN pip install additional-package
+ENV CUSTOM_VAR=value
+CMD ["python", "-m", "app"]
+</code></pre>
+<p><strong>Important</strong>: Must start with <code>FROM whanos-&lt;language&gt;:latest</code></p>
+<h3 id="whanosyml"><a class="header" href="#whanosyml">whanos.yml</a></h3>
+<p>Configure Kubernetes deployment:</p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 5000
+    - 8080
+</code></pre>
+<p>See <a href="user-guide/../kubernetes/whanos-yml.html">whanos.yml Configuration</a> for details.</p>
+<h2 id="validation-checklist"><a class="header" href="#validation-checklist">Validation Checklist</a></h2>
+<p>Before linking your project to Whanos:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Application code is in <code>app/</code> directory</li>
+<li><input disabled="" type="checkbox"/>
+Language detection file present (Makefile, pom.xml, package.json, requirements.txt, or main.bf)</li>
+<li><input disabled="" type="checkbox"/>
+Application builds successfully locally</li>
+<li><input disabled="" type="checkbox"/>
+Application runs successfully locally</li>
+<li><input disabled="" type="checkbox"/>
+(Optional) Custom Dockerfile uses whanos base image</li>
+<li><input disabled="" type="checkbox"/>
+(Optional) whanos.yml is valid YAML</li>
+</ul>
+<h2 id="testing-locally"><a class="header" href="#testing-locally">Testing Locally</a></h2>
+<h3 id="test-build"><a class="header" href="#test-build">Test Build</a></h3>
+<pre><code class="language-bash"># For Python
+cd your-repo
+docker build -f /path/to/whanos/images/python/Dockerfile.standalone -t test .
+
+# Run
+docker run --rm test
+</code></pre>
+<h3 id="test-with-base-image"><a class="header" href="#test-with-base-image">Test with Base Image</a></h3>
+<pre><code class="language-bash"># Build base image first
+docker build -t whanos-python - &lt; /path/to/whanos/images/python/Dockerfile.base
+
+# Create test Dockerfile
+cat &gt; Dockerfile.test &lt;&lt;EOF
+FROM whanos-python:latest
+CMD ["python", "-m", "app"]
+EOF
+
+# Build and run
+docker build -t test -f Dockerfile.test .
+docker run --rm test
+</code></pre>
+<h2 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h2>
+<h3 id="-app-code-not-in-app-directory"><a class="header" href="#-app-code-not-in-app-directory">❌ App code not in app/ directory</a></h3>
+<pre><code>wrong-repo/
+├── src/              # ❌ Should be app/
+│   └── main.py
+└── requirements.txt
+</code></pre>
+<h3 id="-detection-file-in-wrong-location"><a class="header" href="#-detection-file-in-wrong-location">❌ Detection file in wrong location</a></h3>
+<pre><code>wrong-repo/
+├── app/
+│   ├── pom.xml      # ❌ Should be app/pom.xml for Java
+│   └── src/
+└── Makefile         # ❌ C projects need app/ directory too
+</code></pre>
+<h3 id="-wrong-compiled-output-name-c"><a class="header" href="#-wrong-compiled-output-name-c">❌ Wrong compiled output name (C)</a></h3>
+<pre><code class="language-makefile"># ❌ Wrong
+output: main.c
+	gcc main.c -o myapp
+
+# ✅ Correct
+compiled-app: main.c
+	gcc main.c -o compiled-app
+</code></pre>
+<h3 id="-java-output-not-appjar"><a class="header" href="#-java-output-not-appjar">❌ Java output not app.jar</a></h3>
+<pre><code class="language-xml">&lt;!-- ❌ Wrong --&gt;
+&lt;build&gt;
+    &lt;finalName&gt;myapp&lt;/finalName&gt;
+&lt;/build&gt;
+
+&lt;!-- ✅ Correct --&gt;
+&lt;build&gt;
+    &lt;finalName&gt;app&lt;/finalName&gt;
+&lt;/build&gt;
+</code></pre>
+<h2 id="example-repositories"><a class="header" href="#example-repositories">Example Repositories</a></h2>
+<p>Working examples are provided in the <code>test-apps/</code> directory:</p>
+<ul>
+<li><code>test-apps/c-app/</code></li>
+<li><code>test-apps/java-app/</code></li>
+<li><code>test-apps/javascript-app/</code></li>
+<li><code>test-apps/python-app/</code></li>
+<li><code>test-apps/befunge-app/</code></li>
+</ul>
+<h2 id="next-steps-4"><a class="header" href="#next-steps-4">Next Steps</a></h2>
+<p>Once your repository is compatible:</p>
+<ol>
+<li><a href="user-guide/./linking-project.html">Link the Project</a> to Whanos</li>
+<li><a href="user-guide/./configuring-deployment.html">Configure Deployment</a> with whanos.yml</li>
+<li><a href="user-guide/./monitoring.html">Monitor the Build</a> in Jenkins</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="linking-a-project"><a class="header" href="#linking-a-project">Linking a Project</a></h1>
+<ol>
+<li>Go to link-project job</li>
+<li>Build with Parameters</li>
+<li>Fill in repository URL and name</li>
+<li>Build</li>
+</ol>
+<p>See <a href="user-guide/./compatible-repo.html">Creating a Compatible Repository</a> first.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-deployment"><a class="header" href="#configuring-deployment">Configuring Deployment</a></h1>
+<p>Create whanos.yml in repository root.</p>
+<p>See <a href="user-guide/../kubernetes/whanos-yml.html">whanos.yml Configuration</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-private-repositories"><a class="header" href="#working-with-private-repositories">Working with Private Repositories</a></h1>
+<p>Whanos fully supports private Git repositories. This guide explains how to configure Git credentials in Jenkins and use them with your private repositories.</p>
+<h2 id="overview-4"><a class="header" href="#overview-4">Overview</a></h2>
+<p>Private repositories require authentication to clone and access code. Whanos integrates with Jenkins’ credential management system to securely store and use Git credentials.</p>
+<p><strong>Supported authentication methods:</strong></p>
+<ul>
+<li>Username and Password</li>
+<li>Personal Access Tokens (recommended)</li>
+<li>SSH Keys</li>
+</ul>
+<h2 id="why-use-personal-access-tokens"><a class="header" href="#why-use-personal-access-tokens">Why Use Personal Access Tokens?</a></h2>
+<p>Personal access tokens (PATs) are more secure than passwords because:</p>
+<ul>
+<li>They can be scoped with specific permissions</li>
+<li>They can be revoked individually without changing your password</li>
+<li>They expire automatically (on most platforms)</li>
+<li>Many platforms (GitHub, GitLab) now require PATs instead of passwords</li>
+</ul>
+<h2 id="creating-personal-access-tokens"><a class="header" href="#creating-personal-access-tokens">Creating Personal Access Tokens</a></h2>
+<h3 id="github"><a class="header" href="#github">GitHub</a></h3>
+<ol>
+<li>Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
+<li>Click “Generate new token (classic)”</li>
+<li>Give it a descriptive name (e.g., “Whanos CI/CD”)</li>
+<li>Set expiration (90 days recommended, or custom)</li>
+<li>Select scopes:
+<ul>
+<li><code>repo</code> (full control of private repositories)</li>
+<li><code>read:org</code> (if using organization repositories)</li>
+</ul>
+</li>
+<li>Click “Generate token”</li>
+<li><strong>Copy the token immediately</strong> (you won’t see it again)</li>
+</ol>
+<p><strong>Token format:</strong> <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></p>
+<h3 id="gitlab"><a class="header" href="#gitlab">GitLab</a></h3>
+<ol>
+<li>Go to GitLab Preferences → Access Tokens</li>
+<li>Enter token name (e.g., “Whanos”)</li>
+<li>Set expiration date (optional but recommended)</li>
+<li>Select scopes:
+<ul>
+<li><code>read_repository</code></li>
+<li><code>write_repository</code></li>
+</ul>
+</li>
+<li>Click “Create personal access token”</li>
+<li><strong>Copy the token immediately</strong></li>
+</ol>
+<p><strong>Token format:</strong> <code>glpat-xxxxxxxxxxxxxxxxxxxx</code></p>
+<h3 id="bitbucket"><a class="header" href="#bitbucket">Bitbucket</a></h3>
+<ol>
+<li>Go to Bitbucket Settings → Personal access tokens</li>
+<li>Click “Create token”</li>
+<li>Enter label (e.g., “Whanos CI/CD”)</li>
+<li>Set permissions:
+<ul>
+<li>Repositories: Read, Write</li>
+</ul>
+</li>
+<li>Click “Create”</li>
+<li><strong>Copy the token immediately</strong></li>
+</ol>
+<h2 id="adding-credentials-to-jenkins"><a class="header" href="#adding-credentials-to-jenkins">Adding Credentials to Jenkins</a></h2>
+<h3 id="method-1-jenkins-web-ui-recommended"><a class="header" href="#method-1-jenkins-web-ui-recommended">Method 1: Jenkins Web UI (Recommended)</a></h3>
+<ol>
+<li>
+<p><strong>Access Jenkins:</strong></p>
+<pre><code class="language-bash"># Open Jenkins in your browser
+http://localhost:8080
+</code></pre>
+</li>
+<li>
+<p><strong>Navigate to Credentials:</strong></p>
+<ul>
+<li>Click “Manage Jenkins” (left sidebar)</li>
+<li>Click “Credentials”</li>
+<li>Click “(global)” under “Stores scoped to Jenkins”</li>
+<li>Click “Add Credentials” (left sidebar)</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Credential:</strong></p>
+<p><strong>For Personal Access Token (recommended):</strong></p>
+<ul>
+<li>Kind: <code>Username with password</code></li>
+<li>Scope: <code>Global (Jenkins, nodes, items, all child items, etc)</code></li>
+<li>Username: Your Git username (e.g., <code>johndoe</code>)</li>
+<li>Password: Your personal access token (paste the token you copied)</li>
+<li>ID: A unique identifier (e.g., <code>github-whanos</code>, <code>gitlab-private-repo</code>)</li>
+<li>Description: Human-readable description (e.g., “GitHub PAT for private repos”)</li>
+</ul>
+<p><strong>For SSH Key:</strong></p>
+<ul>
+<li>Kind: <code>SSH Username with private key</code></li>
+<li>Scope: <code>Global</code></li>
+<li>ID: Unique identifier (e.g., <code>github-ssh</code>)</li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Choose “Enter directly” and paste your private SSH key</li>
+<li>Passphrase: If your key is encrypted, enter passphrase</li>
+<li>Description: Description of the credential</li>
+</ul>
+</li>
+<li>
+<p><strong>Click “Create”</strong></p>
+</li>
+</ol>
+<h3 id="method-2-jenkins-configuration-as-code-jcasc"><a class="header" href="#method-2-jenkins-configuration-as-code-jcasc">Method 2: Jenkins Configuration as Code (JCasC)</a></h3>
+<p>You can also pre-configure credentials in <code>jenkins/config/jenkins.yaml</code>:</p>
+<pre><code class="language-yaml">credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "github-whanos"
+              username: "your-username"
+              password: "{AQAAABAAAAAw...}"  # Encrypted secret
+              description: "GitHub Personal Access Token"
+
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: "github-ssh"
+              username: "git"
+              privateKeySource:
+                directEntry:
+                  privateKey: "{AQAAABAAAAAw...}"  # Encrypted key
+              description: "GitHub SSH Key"
+</code></pre>
+<p><strong>Note:</strong> Secrets should be encrypted using Jenkins secret encryption. For simplicity, use the Web UI method.</p>
+<h2 id="using-credentials-in-link-project-job"><a class="header" href="#using-credentials-in-link-project-job">Using Credentials in link-project Job</a></h2>
+<p>When creating a new project via the <code>link-project</code> job, you specify the credential ID:</p>
+<h3 id="via-jenkins-ui"><a class="header" href="#via-jenkins-ui">Via Jenkins UI</a></h3>
+<ol>
+<li>
+<p><strong>Go to the link-project job:</strong></p>
+<pre><code>http://localhost:8080/job/Whanos/job/link-project/
+</code></pre>
+</li>
+<li>
+<p><strong>Click “Build with Parameters”</strong></p>
+</li>
+<li>
+<p><strong>Fill in the parameters:</strong></p>
+<ul>
+<li><strong>DISPLAY_NAME:</strong> Project name (e.g., <code>my-private-app</code>)</li>
+<li><strong>GIT_URL:</strong> Private repository URL
+<ul>
+<li>HTTPS: <code>https://github.com/username/private-repo.git</code></li>
+<li>SSH: <code>git@github.com:username/private-repo.git</code></li>
+</ul>
+</li>
+<li><strong>CREDENTIAL_ID:</strong> The ID you created in Jenkins (e.g., <code>github-whanos</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Click “Build”</strong></p>
+</li>
+</ol>
+<h3 id="via-jenkins-cliapi"><a class="header" href="#via-jenkins-cliapi">Via Jenkins CLI/API</a></h3>
+<pre><code class="language-bash"># Using Jenkins CLI
+java -jar jenkins-cli.jar -s http://localhost:8080/ build link-project \
+  -p DISPLAY_NAME="my-private-app" \
+  -p GIT_URL="https://github.com/username/private-repo.git" \
+  -p CREDENTIAL_ID="github-whanos"
+
+# Using curl
+curl -X POST 'http://localhost:8080/job/Whanos/job/link-project/buildWithParameters' \
+  --user admin:admin \
+  --data-urlencode DISPLAY_NAME="my-private-app" \
+  --data-urlencode GIT_URL="https://github.com/username/private-repo.git" \
+  --data-urlencode CREDENTIAL_ID="github-whanos"
+</code></pre>
+<h3 id="what-happens-next"><a class="header" href="#what-happens-next">What Happens Next</a></h3>
+<ol>
+<li>Jenkins creates a new job under <code>Whanos/Projects/</code></li>
+<li>The job is configured with your credential ID</li>
+<li>On the first build, Jenkins clones the private repository using the credentials</li>
+<li>The pipeline executes normally (detect language, build, test, deploy)</li>
+</ol>
+<h2 id="repository-url-formats"><a class="header" href="#repository-url-formats">Repository URL Formats</a></h2>
+<h3 id="https-use-with-personal-access-tokens"><a class="header" href="#https-use-with-personal-access-tokens">HTTPS (Use with Personal Access Tokens)</a></h3>
+<pre><code># GitHub
+https://github.com/username/repo.git
+
+# GitLab
+https://gitlab.com/username/repo.git
+
+# Bitbucket
+https://bitbucket.org/username/repo.git
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Works through corporate firewalls</li>
+<li>Easier to set up</li>
+<li>Token-based authentication</li>
+</ul>
+<h3 id="ssh-use-with-ssh-keys"><a class="header" href="#ssh-use-with-ssh-keys">SSH (Use with SSH Keys)</a></h3>
+<pre><code># GitHub
+git@github.com:username/repo.git
+
+# GitLab
+git@gitlab.com:username/repo.git
+
+# Bitbucket
+git@bitbucket.org:username/repo.git
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>More secure (key-based)</li>
+<li>No password prompts</li>
+<li>Common in enterprise environments</li>
+</ul>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>SSH key pair generated</li>
+<li>Public key added to Git platform</li>
+<li>Private key added to Jenkins</li>
+</ul>
+<h2 id="ssh-key-setup"><a class="header" href="#ssh-key-setup">SSH Key Setup</a></h2>
+<p>If you prefer SSH authentication:</p>
+<h3 id="1-generate-ssh-key-pair"><a class="header" href="#1-generate-ssh-key-pair">1. Generate SSH Key Pair</a></h3>
+<pre><code class="language-bash"># On your local machine or Jenkins server
+ssh-keygen -t ed25519 -C "whanos-jenkins" -f ~/.ssh/whanos_key
+
+# This creates:
+# - ~/.ssh/whanos_key (private key - add to Jenkins)
+# - ~/.ssh/whanos_key.pub (public key - add to Git platform)
+</code></pre>
+<h3 id="2-add-public-key-to-git-platform"><a class="header" href="#2-add-public-key-to-git-platform">2. Add Public Key to Git Platform</a></h3>
+<p><strong>GitHub:</strong></p>
+<ol>
+<li>Go to Settings → SSH and GPG keys → New SSH key</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+<li>Click “Add SSH key”</li>
+</ol>
+<p><strong>GitLab:</strong></p>
+<ol>
+<li>Go to Preferences → SSH Keys</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+<li>Click “Add key”</li>
+</ol>
+<p><strong>Bitbucket:</strong></p>
+<ol>
+<li>Go to Personal settings → SSH keys</li>
+<li>Click “Add key”</li>
+<li>Paste content of <code>~/.ssh/whanos_key.pub</code></li>
+</ol>
+<h3 id="3-add-private-key-to-jenkins"><a class="header" href="#3-add-private-key-to-jenkins">3. Add Private Key to Jenkins</a></h3>
+<ol>
+<li>
+<p>Copy the <strong>private key</strong> content:</p>
+<pre><code class="language-bash">cat ~/.ssh/whanos_key
+</code></pre>
+</li>
+<li>
+<p>In Jenkins:</p>
+<ul>
+<li>Manage Jenkins → Credentials → Add Credentials</li>
+<li>Kind: <code>SSH Username with private key</code></li>
+<li>ID: <code>github-ssh</code></li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Choose “Enter directly”, paste the private key</li>
+<li>Click “Create”</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-use-ssh-url-in-link-project"><a class="header" href="#4-use-ssh-url-in-link-project">4. Use SSH URL in link-project</a></h3>
+<p>Use the SSH format URL (e.g., <code>git@github.com:username/repo.git</code>) and specify your SSH credential ID.</p>
+<h2 id="testing-credentials"><a class="header" href="#testing-credentials">Testing Credentials</a></h2>
+<h3 id="test-from-jenkins-script-console"><a class="header" href="#test-from-jenkins-script-console">Test from Jenkins Script Console</a></h3>
+<p>You can verify credentials work before creating projects:</p>
+<ol>
+<li>Go to Manage Jenkins → Script Console</li>
+<li>Run this Groovy script:</li>
+</ol>
+<pre><code class="language-groovy">import jenkins.model.Jenkins
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.common.*
+import com.cloudbees.plugins.credentials.domains.*
+
+// List all credentials
+def credentials = CredentialsProvider.lookupCredentials(
+    StandardCredentials.class,
+    Jenkins.instance,
+    null,
+    null
+)
+
+credentials.each { c -&gt;
+    println("ID: ${c.id}, Description: ${c.description}")
+}
+</code></pre>
+<p>This lists all available credentials to ensure yours was created correctly.</p>
+<h3 id="test-with-a-manual-git-clone"><a class="header" href="#test-with-a-manual-git-clone">Test with a Manual Git Clone</a></h3>
+<ol>
+<li>
+<p>Access the Jenkins container:</p>
+<pre><code class="language-bash">docker exec -it whanos-jenkins bash
+</code></pre>
+</li>
+<li>
+<p>Test HTTPS clone with token:</p>
+<pre><code class="language-bash">git clone https://USERNAME:TOKEN@github.com/username/private-repo.git /tmp/test-clone
+</code></pre>
+</li>
+<li>
+<p>Test SSH clone:</p>
+<pre><code class="language-bash"># First, add SSH key to ssh-agent
+eval $(ssh-agent)
+ssh-add /path/to/private/key
+
+# Then clone
+git clone git@github.com:username/private-repo.git /tmp/test-ssh-clone
+</code></pre>
+</li>
+</ol>
+<h2 id="troubleshooting-1"><a class="header" href="#troubleshooting-1">Troubleshooting</a></h2>
+<h3 id="error-authentication-failed"><a class="header" href="#error-authentication-failed">Error: “Authentication failed”</a></h3>
+<p><strong>Cause:</strong> Invalid credentials or expired token</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify the token/password is correct</li>
+<li>Check if the token has expired</li>
+<li>Ensure the token has correct permissions (<code>repo</code> scope for GitHub)</li>
+<li>Regenerate the token if necessary</li>
+<li>Update the credential in Jenkins</li>
+</ol>
+<h3 id="error-repository-not-found"><a class="header" href="#error-repository-not-found">Error: “Repository not found”</a></h3>
+<p><strong>Causes:</strong></p>
+<ul>
+<li>Repository URL is incorrect</li>
+<li>Credentials don’t have access to the repository</li>
+<li>Repository name changed</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify the repository URL is correct</li>
+<li>Check that the Git user has access to the repository</li>
+<li>Ensure credential ID is specified in link-project parameters</li>
+</ol>
+<h3 id="error-permission-denied-publickey"><a class="header" href="#error-permission-denied-publickey">Error: “Permission denied (publickey)”</a></h3>
+<p><strong>Cause:</strong> SSH key not recognized</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify public key is added to Git platform</li>
+<li>Check private key is correctly added to Jenkins</li>
+<li>Ensure username is <code>git</code> (not your Git username)</li>
+<li>Test SSH connection:
+<pre><code class="language-bash">ssh -T git@github.com
+# Should output: Hi username! You've successfully authenticated...
+</code></pre>
+</li>
+</ol>
+<h3 id="error-host-key-verification-failed"><a class="header" href="#error-host-key-verification-failed">Error: “Host key verification failed”</a></h3>
+<p><strong>Cause:</strong> Jenkins doesn’t trust the Git host’s SSH key</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Add Git host to Jenkins known_hosts:
+<pre><code class="language-bash">docker exec -it whanos-jenkins bash
+ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+ssh-keyscan gitlab.com &gt;&gt; ~/.ssh/known_hosts
+ssh-keyscan bitbucket.org &gt;&gt; ~/.ssh/known_hosts
+</code></pre>
+</li>
+</ol>
+<h3 id="credential-not-found-in-job"><a class="header" href="#credential-not-found-in-job">Credential Not Found in Job</a></h3>
+<p><strong>Symptoms:</strong> Job shows “Credential not found” or uses anonymous clone</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify credential ID matches exactly (case-sensitive)</li>
+<li>Ensure credential scope is “Global”</li>
+<li>Check that the credential exists:
+<ul>
+<li>Manage Jenkins → Credentials</li>
+</ul>
+</li>
+<li>Re-run link-project with correct CREDENTIAL_ID parameter</li>
+</ol>
+<h3 id="token-permissions-insufficient"><a class="header" href="#token-permissions-insufficient">Token Permissions Insufficient</a></h3>
+<p><strong>Symptoms:</strong> Clone works but push fails, or certain operations fail</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li><strong>GitHub:</strong> Ensure token has <code>repo</code> scope (full control)</li>
+<li><strong>GitLab:</strong> Ensure token has <code>write_repository</code> scope</li>
+<li><strong>Bitbucket:</strong> Ensure token has “Repositories: Write” permission</li>
+</ul>
+<h2 id="security-best-practices"><a class="header" href="#security-best-practices">Security Best Practices</a></h2>
+<h3 id="1-use-tokens-not-passwords"><a class="header" href="#1-use-tokens-not-passwords">1. Use Tokens, Not Passwords</a></h3>
+<p>Always use personal access tokens instead of your actual password:</p>
+<ul>
+<li>Tokens can be revoked without changing your password</li>
+<li>Tokens can have limited scopes</li>
+<li>Many platforms now require tokens for API access</li>
+</ul>
+<h3 id="2-set-token-expiration"><a class="header" href="#2-set-token-expiration">2. Set Token Expiration</a></h3>
+<p>Configure tokens to expire after a reasonable time:</p>
+<ul>
+<li>90 days for active development</li>
+<li>30 days for testing/experimentation</li>
+<li>Set calendar reminders to rotate tokens before expiration</li>
+</ul>
+<h3 id="3-minimum-scope-principle"><a class="header" href="#3-minimum-scope-principle">3. Minimum Scope Principle</a></h3>
+<p>Only grant the minimum permissions needed:</p>
+<ul>
+<li>For read-only deployments: read access only</li>
+<li>For CI/CD: read + write to specific repos</li>
+<li>Avoid <code>admin</code> or <code>delete</code> permissions unless absolutely necessary</li>
+</ul>
+<h3 id="4-rotate-credentials-regularly"><a class="header" href="#4-rotate-credentials-regularly">4. Rotate Credentials Regularly</a></h3>
+<p>Rotate tokens and SSH keys periodically:</p>
+<ul>
+<li>Every 90 days for production</li>
+<li>Immediately if a credential may have been compromised</li>
+<li>After team member departures</li>
+</ul>
+<h3 id="5-use-organization-level-tokens"><a class="header" href="#5-use-organization-level-tokens">5. Use Organization-Level Tokens</a></h3>
+<p>For team projects, consider:</p>
+<ul>
+<li>GitHub: Use deploy keys or GitHub Apps instead of personal tokens</li>
+<li>GitLab: Use project access tokens</li>
+<li>Bitbucket: Use workspace access tokens</li>
+</ul>
+<p>This ensures credentials aren’t tied to a single person.</p>
+<h3 id="6-audit-credential-usage"><a class="header" href="#6-audit-credential-usage">6. Audit Credential Usage</a></h3>
+<p>Regularly review:</p>
+<ul>
+<li>Which credentials are configured in Jenkins</li>
+<li>Which jobs use which credentials</li>
+<li>When credentials were last used</li>
+<li>Remove unused credentials</li>
+</ul>
+<h3 id="7-encrypt-credentials-in-jcasc"><a class="header" href="#7-encrypt-credentials-in-jcasc">7. Encrypt Credentials in JCasC</a></h3>
+<p>If using Jenkins Configuration as Code:</p>
+<pre><code class="language-bash"># Encrypt secrets using Jenkins CLI
+echo -n 'my-secret-token' | java -jar jenkins-cli.jar -s http://localhost:8080/ \
+  groovy = &lt;&lt;&lt; "println(hudson.util.Secret.fromString(System.in.text).getEncryptedValue())"
+</code></pre>
+<p>Use the encrypted value in <code>jenkins.yaml</code>.</p>
+<h3 id="8-network-level-security"><a class="header" href="#8-network-level-security">8. Network-Level Security</a></h3>
+<p>For production deployments:</p>
+<ul>
+<li>Use HTTPS for Jenkins access</li>
+<li>Enable Jenkins authentication and authorization</li>
+<li>Restrict network access to Jenkins (firewall rules)</li>
+<li>Use VPN for Jenkins access if handling sensitive repos</li>
+</ul>
+<h2 id="multiple-credentials"><a class="header" href="#multiple-credentials">Multiple Credentials</a></h2>
+<p>You can create multiple credentials for different repositories or organizations:</p>
+<pre><code>github-public-repos     → Your public GitHub projects
+github-private-work     → Company private repositories
+gitlab-personal         → Personal GitLab projects
+bitbucket-team          → Team Bitbucket workspace
+</code></pre>
+<p>When running link-project, specify the appropriate credential ID for each project.</p>
+<h2 id="advanced-credential-binding-in-pipelines"><a class="header" href="#advanced-credential-binding-in-pipelines">Advanced: Credential Binding in Pipelines</a></h2>
+<p>The Whanos Jenkinsfile template already handles credentials, but for custom modifications:</p>
+<pre><code class="language-groovy">// In Jenkinsfile
+checkout([
+    $class: 'GitSCM',
+    branches: [[name: "*/${env.GIT_BRANCH}"]],
+    userRemoteConfigs: [[
+        url: env.GIT_URL,
+        credentialsId: env.CREDENTIAL_ID  // Passed from link-project
+    ]]
+])
+</code></pre>
+<p>This is already configured in the Whanos template, so you don’t need to modify it.</p>
+<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<h3 id="example-1-github-private-repository-with-token"><a class="header" href="#example-1-github-private-repository-with-token">Example 1: GitHub Private Repository with Token</a></h3>
+<ol>
+<li>
+<p><strong>Create Token:</strong> GitHub Settings → Developer settings → Personal access tokens</p>
+<ul>
+<li>Scopes: <code>repo</code></li>
+<li>Copy token: <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Add to Jenkins:</strong></p>
+<ul>
+<li>ID: <code>github-myapp</code></li>
+<li>Username: <code>johndoe</code></li>
+<li>Password: <code>ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>DISPLAY_NAME: <code>my-backend</code></li>
+<li>GIT_URL: <code>https://github.com/johndoe/my-backend-app.git</code></li>
+<li>CREDENTIAL_ID: <code>github-myapp</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="example-2-gitlab-private-repository-with-ssh"><a class="header" href="#example-2-gitlab-private-repository-with-ssh">Example 2: GitLab Private Repository with SSH</a></h3>
+<ol>
+<li>
+<p><strong>Generate SSH Key:</strong></p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -f ~/.ssh/gitlab_whanos
+</code></pre>
+</li>
+<li>
+<p><strong>Add Public Key to GitLab:</strong></p>
+<ul>
+<li>Copy: <code>cat ~/.ssh/gitlab_whanos.pub</code></li>
+<li>GitLab → Preferences → SSH Keys → Add key</li>
+</ul>
+</li>
+<li>
+<p><strong>Add Private Key to Jenkins:</strong></p>
+<ul>
+<li>Kind: SSH Username with private key</li>
+<li>ID: <code>gitlab-ssh</code></li>
+<li>Username: <code>git</code></li>
+<li>Private Key: Content of <code>~/.ssh/gitlab_whanos</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>DISPLAY_NAME: <code>my-frontend</code></li>
+<li>GIT_URL: <code>git@gitlab.com:username/my-frontend.git</code></li>
+<li>CREDENTIAL_ID: <code>gitlab-ssh</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="example-3-organization-repository"><a class="header" href="#example-3-organization-repository">Example 3: Organization Repository</a></h3>
+<p>For company/organization repositories:</p>
+<ol>
+<li>
+<p><strong>Create Organization Token</strong> (preferred over personal tokens)</p>
+<ul>
+<li>GitHub: Settings → Developer settings → Personal access tokens → Fine-grained tokens</li>
+<li>Limit to specific organization/repositories</li>
+<li>Set resource owner to organization</li>
+</ul>
+</li>
+<li>
+<p><strong>Add to Jenkins:</strong></p>
+<ul>
+<li>ID: <code>company-repos</code></li>
+<li>Username: Service account username</li>
+<li>Password: Organization token</li>
+</ul>
+</li>
+<li>
+<p><strong>Link Project:</strong></p>
+<ul>
+<li>GIT_URL: <code>https://github.com/mycompany/backend-service.git</code></li>
+<li>CREDENTIAL_ID: <code>company-repos</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="next-steps-5"><a class="header" href="#next-steps-5">Next Steps</a></h2>
+<ul>
+<li><a href="user-guide/./compatible-repo.html">Creating Compatible Repositories</a> - How to structure your app for Whanos</li>
+<li><a href="user-guide/./deployment.html">Deployment Workflow</a> - Understanding the CI/CD pipeline</li>
+<li><a href="user-guide/../troubleshooting/common-issues.html">Troubleshooting</a> - Common issues and solutions</li>
+</ul>
+<h2 id="summary-2"><a class="header" href="#summary-2">Summary</a></h2>
+<p>To use private repositories with Whanos:</p>
+<ol>
+<li>✅ Create a personal access token on your Git platform</li>
+<li>✅ Add credentials to Jenkins (Manage Jenkins → Credentials)</li>
+<li>✅ Note the credential ID you create</li>
+<li>✅ Run link-project job with the credential ID</li>
+<li>✅ Your private repository will be automatically deployed</li>
+</ol>
+<p><strong>Remember:</strong> Keep your tokens secure, rotate them regularly, and use the minimum required permissions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="monitoring-builds"><a class="header" href="#monitoring-builds">Monitoring Builds</a></h1>
+<p>Monitor builds in Jenkins UI:</p>
+<ul>
+<li>View console output</li>
+<li>Check build status</li>
+<li>View Kubernetes deployments:</li>
+</ul>
+<pre><code class="language-bash">kubectl get pods -n whanos
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployment-with-terraform"><a class="header" href="#deployment-with-terraform">Deployment with Terraform</a></h1>
+<p>Whanos uses Terraform for infrastructure deployment.</p>
+<p>Location: terraform/environments/dev/</p>
+<p>Modules:</p>
+<ul>
+<li>jenkins</li>
+<li>registry</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="infrastructure-management"><a class="header" href="#infrastructure-management">Infrastructure Management</a></h1>
+<p>Managing Whanos infrastructure.</p>
+<h2 id="deploy"><a class="header" href="#deploy">Deploy</a></h2>
+<pre><code class="language-bash">./scripts/deploy.sh
+</code></pre>
+<h2 id="destroy"><a class="header" href="#destroy">Destroy</a></h2>
+<pre><code class="language-bash">./scripts/destroy.sh
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="backup-and-recovery"><a class="header" href="#backup-and-recovery">Backup and Recovery</a></h1>
+<p>Backup Jenkins data:</p>
+<pre><code class="language-bash">docker cp whanos-jenkins:/var/jenkins_home ./jenkins-backup
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scaling"><a class="header" href="#scaling">Scaling</a></h1>
+<p>Add more k3d agent nodes:</p>
+<pre><code class="language-bash">k3d node create agent-2 --cluster whanos-cluster
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="common-issues"><a class="header" href="#common-issues">Common Issues</a></h1>
+<p>Solutions to the most frequently encountered problems.</p>
+<h2 id="quick-diagnostics"><a class="header" href="#quick-diagnostics">Quick Diagnostics</a></h2>
+<p>Run this script to check system health:</p>
+<pre><code class="language-bash">#!/bin/bash
+echo "=== Whanos Health Check ==="
+
+# Check Docker
+echo "Docker:"
+docker ps --filter "name=whanos" --format "{{.Names}}: {{.Status}}" || echo "❌ Docker error"
+
+# Check k3d
+echo -e "\nKubernetes Cluster:"
+k3d cluster list || echo "❌ k3d not installed"
+
+# Check registries
+echo -e "\nDocker Registries:"
+curl -s http://localhost:5000/v2/_catalog | jq . || echo "❌ whanos-registry not accessible"
+curl -s http://localhost:5001/v2/_catalog | jq . || echo "❌ k3d-registry not accessible"
+
+# Check Jenkins
+echo -e "\nJenkins:"
+curl -s http://localhost:8080 &gt; /dev/null &amp;&amp; echo "✅ Jenkins accessible" || echo "❌ Jenkins not accessible"
+
+# Check Kubernetes
+echo -e "\nKubernetes Nodes:"
+export KUBECONFIG=$(k3d kubeconfig write whanos-cluster 2&gt;/dev/null)
+kubectl get nodes 2&gt;/dev/null || echo "❌ Cannot connect to cluster"
+</code></pre>
+<h2 id="jenkins-issues"><a class="header" href="#jenkins-issues">Jenkins Issues</a></h2>
+<h3 id="jenkins-container-keeps-crashing"><a class="header" href="#jenkins-container-keeps-crashing">Jenkins Container Keeps Crashing</a></h3>
+<p><strong>Symptoms</strong>: <code>docker ps</code> shows Jenkins with status <code>Exited</code></p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">docker logs whanos-jenkins --tail 50
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Out of Memory</strong>:</p>
+<pre><code class="language-bash"># Increase Docker memory limit
+# Docker Desktop: Settings → Resources → Memory (increase to 4GB+)
+
+# Restart Jenkins
+docker restart whanos-jenkins
+</code></pre>
+</li>
+<li>
+<p><strong>Port Conflict</strong>:</p>
+<pre><code class="language-bash"># Check what's using port 8080
+lsof -i :8080
+
+# Kill conflicting process or change Jenkins port
+docker stop whanos-jenkins
+docker rm whanos-jenkins
+# Re-deploy with different port in terraform
+</code></pre>
+</li>
+<li>
+<p><strong>Corrupted Data</strong>:</p>
+<pre><code class="language-bash"># Backup and reset
+docker stop whanos-jenkins
+docker cp whanos-jenkins:/var/jenkins_home ./jenkins-backup
+docker rm whanos-jenkins
+# Re-deploy
+./scripts/deploy.sh
+</code></pre>
+</li>
+</ol>
+<h3 id="cannot-access-jenkins-ui"><a class="header" href="#cannot-access-jenkins-ui">Cannot Access Jenkins UI</a></h3>
+<p><strong>Symptoms</strong>: Browser shows “Connection refused” on http://localhost:8080</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash"># Check if container is running
+docker ps --filter "name=whanos-jenkins"
+
+# Check logs
+docker logs whanos-jenkins | grep "Jenkins is fully up"
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Wait for Startup</strong> (can take 1-2 minutes):</p>
+<pre><code class="language-bash">docker logs -f whanos-jenkins
+# Wait for: "Jenkins is fully up and running"
+</code></pre>
+</li>
+<li>
+<p><strong>Check Port Mapping</strong>:</p>
+<pre><code class="language-bash">docker port whanos-jenkins
+# Should show: 8080/tcp -&gt; 0.0.0.0:8080
+</code></pre>
+</li>
+<li>
+<p><strong>Firewall Issues</strong>:</p>
+<pre><code class="language-bash"># Allow port 8080
+sudo ufw allow 8080
+</code></pre>
+</li>
+</ol>
+<h3 id="build-fails-no-such-image"><a class="header" href="#build-fails-no-such-image">Build Fails: “No such image”</a></h3>
+<p><strong>Symptoms</strong>: Pipeline fails with “pull access denied” or “image not found”</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash"># Check if base images exist
+docker exec whanos-jenkins docker images | grep whanos
+</code></pre>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash"># Build base images
+# In Jenkins UI: Whanos base images → Build all base images → Build Now
+# Wait for all jobs to complete
+
+# Verify
+docker exec whanos-jenkins docker images | grep whanos
+# Should show: whanos-c, whanos-java, whanos-javascript, whanos-python, whanos-befunge
+</code></pre>
+<h2 id="kubernetes-issues"><a class="header" href="#kubernetes-issues">Kubernetes Issues</a></h2>
+<h3 id="kubectl-connection-refused-1"><a class="header" href="#kubectl-connection-refused-1">kubectl: Connection Refused</a></h3>
+<p><strong>Symptoms</strong>: <code>kubectl get nodes</code> returns connection error</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">echo $KUBECONFIG
+k3d cluster list
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Set Correct Kubeconfig</strong>:</p>
+<pre><code class="language-bash">export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+kubectl get nodes
+</code></pre>
+</li>
+<li>
+<p><strong>Cluster Not Running</strong>:</p>
+<pre><code class="language-bash">k3d cluster list
+# If stopped:
+k3d cluster start whanos-cluster
+</code></pre>
+</li>
+<li>
+<p><strong>Wrong Cluster Context</strong>:</p>
+<pre><code class="language-bash">kubectl config get-contexts
+kubectl config use-context k3d-whanos-cluster
+</code></pre>
+</li>
+</ol>
+<h3 id="pods-stuck-in-imagepullbackoff"><a class="header" href="#pods-stuck-in-imagepullbackoff">Pods Stuck in ImagePullBackOff</a></h3>
+<p><strong>Symptoms</strong>: <code>kubectl get pods -n whanos</code> shows ImagePullBackOff</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">kubectl describe pod &lt;pod-name&gt; -n whanos
+# Look for: "Failed to pull image"
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Wrong Registry URL</strong>:
+Check Jenkinsfile.template has:</p>
+<pre><code class="language-groovy">REGISTRY_URL = "${env.REGISTRY_URL ?: 'k3d-whanos-registry:5000'}"
+</code></pre>
+</li>
+<li>
+<p><strong>Image Not Pushed</strong>:</p>
+<pre><code class="language-bash"># Check registry contents
+curl http://localhost:5001/v2/_catalog
+
+# Rebuild and push
+# Trigger Jenkins build again
+</code></pre>
+</li>
+<li>
+<p><strong>Registry Not Connected to Cluster</strong>:</p>
+<pre><code class="language-bash"># Verify k3d cluster uses registry
+k3d cluster list -o json | grep registry
+</code></pre>
+</li>
+</ol>
+<h3 id="deployment-not-created"><a class="header" href="#deployment-not-created">Deployment Not Created</a></h3>
+<p><strong>Symptoms</strong>: After successful build, no deployment in Kubernetes</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">kubectl get deployments -n whanos
+kubectl get pods -n whanos
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Missing whanos.yml</strong>:</p>
+<pre><code class="language-bash"># Check if whanos.yml exists in repo
+# Add whanos.yml:
+cat &gt; whanos.yml &lt;&lt;EOF
+deployment:
+  replicas: 1
+  ports:
+    - 5000
+EOF
+</code></pre>
+</li>
+<li>
+<p><strong>Invalid whanos.yml</strong>:</p>
+<pre><code class="language-bash"># Validate YAML syntax
+python3 -c "import yaml; yaml.safe_load(open('whanos.yml'))"
+</code></pre>
+</li>
+<li>
+<p><strong>Namespace Doesn’t Exist</strong>:</p>
+<pre><code class="language-bash">kubectl create namespace whanos
+</code></pre>
+</li>
+</ol>
+<h2 id="docker-issues"><a class="header" href="#docker-issues">Docker Issues</a></h2>
+<h3 id="registry-not-accessible"><a class="header" href="#registry-not-accessible">Registry Not Accessible</a></h3>
+<p><strong>Symptoms</strong>: <code>curl http://localhost:5000/v2/_catalog</code> fails</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">docker ps --filter "name=registry"
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Container Not Running</strong>:</p>
+<pre><code class="language-bash">docker start whanos-registry
+docker start k3d-whanos-registry
+</code></pre>
+</li>
+<li>
+<p><strong>Port Conflict</strong>:</p>
+<pre><code class="language-bash">lsof -i :5000
+lsof -i :5001
+# Stop conflicting services
+</code></pre>
+</li>
+</ol>
+<h3 id="cannot-connect-to-docker-daemon"><a class="header" href="#cannot-connect-to-docker-daemon">“Cannot connect to Docker daemon”</a></h3>
+<p><strong>Symptoms</strong>: Docker commands fail with daemon connection error</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Start Docker</strong>:</p>
+<pre><code class="language-bash"># Linux
+sudo systemctl start docker
+
+# macOS/Windows
+# Start Docker Desktop
+</code></pre>
+</li>
+<li>
+<p><strong>Permission Denied</strong>:</p>
+<pre><code class="language-bash">sudo usermod -aG docker $USER
+newgrp docker
+</code></pre>
+</li>
+<li>
+<p><strong>WSL2 Issues</strong> (Windows):</p>
+<pre><code class="language-bash">wsl --shutdown
+# Restart WSL
+</code></pre>
+</li>
+</ol>
+<h2 id="network-issues"><a class="header" href="#network-issues">Network Issues</a></h2>
+<h3 id="jenkins-cannot-connect-to-k3d-cluster"><a class="header" href="#jenkins-cannot-connect-to-k3d-cluster">Jenkins Cannot Connect to k3d Cluster</a></h3>
+<p><strong>Symptoms</strong>: Pipeline fails at Kubernetes deployment with connection error</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">docker network inspect k3d-whanos-cluster | grep whanos-jenkins
+</code></pre>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash"># Connect Jenkins to k3d network
+docker network connect k3d-whanos-cluster whanos-jenkins
+
+# Restart Jenkins
+docker restart whanos-jenkins
+</code></pre>
+<h3 id="cannot-access-deployed-application"><a class="header" href="#cannot-access-deployed-application">Cannot Access Deployed Application</a></h3>
+<p><strong>Symptoms</strong>: Application deployed but not accessible from browser</p>
+<p><strong>Diagnosis</strong>:</p>
+<pre><code class="language-bash">kubectl get svc -n whanos
+kubectl get pods -n whanos
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Service Not Created</strong>:
+Add ports to whanos.yml:</p>
+<pre><code class="language-yaml">deployment:
+  ports:
+    - 5000
+</code></pre>
+</li>
+<li>
+<p><strong>Access via LoadBalancer</strong>:</p>
+<pre><code class="language-bash"># Applications are exposed on port 8081
+curl http://localhost:8081
+</code></pre>
+</li>
+<li>
+<p><strong>Port Forward for Testing</strong>:</p>
+<pre><code class="language-bash">kubectl port-forward -n whanos &lt;pod-name&gt; 8080:5000
+curl http://localhost:8080
+</code></pre>
+</li>
+</ol>
+<h2 id="build-issues"><a class="header" href="#build-issues">Build Issues</a></h2>
+<h3 id="language-not-detected"><a class="header" href="#language-not-detected">Language Not Detected</a></h3>
+<p><strong>Symptoms</strong>: Pipeline fails with “No supported language detected”</p>
+<p><strong>Diagnosis</strong>:
+Check for language marker files:</p>
+<pre><code class="language-bash"># C: Makefile at root
+ls Makefile
+
+# Java: pom.xml in app/
+ls app/pom.xml
+
+# JavaScript: package.json at root
+ls package.json
+
+# Python: requirements.txt at root
+ls requirements.txt
+
+# Befunge: main.bf in app/
+ls app/main.bf
+</code></pre>
+<p><strong>Solution</strong>: Add the appropriate detection file</p>
+<h3 id="compilation-fails"><a class="header" href="#compilation-fails">Compilation Fails</a></h3>
+<p><strong>Symptoms</strong>: Build fails during compilation step</p>
+<p><strong>Solutions by Language</strong>:</p>
+<p><strong>C</strong>:</p>
+<pre><code class="language-bash"># Test locally
+make
+./compiled-app
+
+# Check Makefile output
+# Must create 'compiled-app' at root
+</code></pre>
+<p><strong>Java</strong>:</p>
+<pre><code class="language-bash">cd app
+mvn clean package
+# Check for target/app.jar
+</code></pre>
+<p><strong>JavaScript</strong>:</p>
+<pre><code class="language-bash">npm install
+node app
+</code></pre>
+<p><strong>Python</strong>:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+python -m app
+</code></pre>
+<h2 id="terraform-issues"><a class="header" href="#terraform-issues">Terraform Issues</a></h2>
+<h3 id="terraform-state-locked"><a class="header" href="#terraform-state-locked">Terraform State Locked</a></h3>
+<p><strong>Symptoms</strong>: <code>terraform apply</code> fails with state lock error</p>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash">cd terraform/environments/dev
+terraform force-unlock &lt;lock-id&gt;
+</code></pre>
+<h3 id="terraform-apply-fails"><a class="header" href="#terraform-apply-fails">Terraform Apply Fails</a></h3>
+<p><strong>Symptoms</strong>: Infrastructure deployment fails</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Destroy and Recreate</strong>:</p>
+<pre><code class="language-bash">terraform destroy
+terraform apply
+</code></pre>
+</li>
+<li>
+<p><strong>Check Docker</strong>:</p>
+<pre><code class="language-bash">docker ps
+# Ensure Docker is running
+</code></pre>
+</li>
+</ol>
+<h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
+<p>If issues persist:</p>
+<ol>
+<li>
+<p><strong>Check Logs</strong>:</p>
+<pre><code class="language-bash"># Jenkins
+docker logs whanos-jenkins --tail 100
+
+# Kubernetes
+kubectl logs -n whanos &lt;pod-name&gt;
+
+# k3d
+k3d cluster list
+docker logs k3d-whanos-cluster-server-0
+</code></pre>
+</li>
+<li>
+<p><strong>Restart Everything</strong>:</p>
+<pre><code class="language-bash">./scripts/destroy.sh
+./scripts/deploy.sh
+</code></pre>
+</li>
+<li>
+<p><strong>Clean Install</strong>:</p>
+<pre><code class="language-bash"># Remove all Whanos resources
+docker stop $(docker ps -a --filter "name=whanos" -q)
+docker rm $(docker ps -a --filter "name=whanos" -q)
+k3d cluster delete whanos-cluster
+k3d registry delete whanos-registry
+
+# Fresh install
+./scripts/deploy.sh
+</code></pre>
+</li>
+</ol>
+<h2 id="see-also"><a class="header" href="#see-also">See Also</a></h2>
+<ul>
+<li><a href="troubleshooting/./jenkins.html">Jenkins Problems</a></li>
+<li><a href="troubleshooting/./docker.html">Docker Issues</a></li>
+<li><a href="troubleshooting/./kubernetes.html">Kubernetes Issues</a></li>
+<li><a href="troubleshooting/./network.html">Network Problems</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jenkins-problems"><a class="header" href="#jenkins-problems">Jenkins Problems</a></h1>
+<p>Detailed Jenkins troubleshooting.</p>
+<p>See <a href="troubleshooting/./common-issues.html">Common Issues</a> for quick fixes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-issues-1"><a class="header" href="#docker-issues-1">Docker Issues</a></h1>
+<p>Docker-specific problems.</p>
+<p>See <a href="troubleshooting/./common-issues.html">Common Issues</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kubernetes-issues-1"><a class="header" href="#kubernetes-issues-1">Kubernetes Issues</a></h1>
+<p>Kubernetes troubleshooting.</p>
+<p>See <a href="troubleshooting/./common-issues.html">Common Issues</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="network-problems"><a class="header" href="#network-problems">Network Problems</a></h1>
+<p>Network connectivity issues.</p>
+<p>Check Docker networks and port mappings.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="environment-variables-1"><a class="header" href="#environment-variables-1">Environment Variables</a></h1>
+<h2 id="jenkins-pipeline"><a class="header" href="#jenkins-pipeline">Jenkins Pipeline</a></h2>
+<ul>
+<li>REGISTRY_URL: k3d-whanos-registry:5000</li>
+<li>APP_NAME: Extracted from job name</li>
+<li>IMAGE_TAG: Build number</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuration-files-1"><a class="header" href="#configuration-files-1">Configuration Files</a></h1>
+<ul>
+<li>jenkins/config/jenkins.yaml: JCasC configuration</li>
+<li>terraform/environments/dev/: Terraform configs</li>
+<li>whanos.yml: Kubernetes deployment config</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cli-commands"><a class="header" href="#cli-commands">CLI Commands</a></h1>
+<h2 id="deployment"><a class="header" href="#deployment">Deployment</a></h2>
+<pre><code class="language-bash">./scripts/deploy.sh
+./scripts/destroy.sh
+</code></pre>
+<h2 id="kubernetes"><a class="header" href="#kubernetes">Kubernetes</a></h2>
+<pre><code class="language-bash">kubectl get pods -n whanos
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api-reference"><a class="header" href="#api-reference">API Reference</a></h1>
+<h2 id="docker-registry-api"><a class="header" href="#docker-registry-api">Docker Registry API</a></h2>
+<pre><code class="language-bash">curl http://localhost:5000/v2/_catalog
+</code></pre>
+<h2 id="jenkins-api"><a class="header" href="#jenkins-api">Jenkins API</a></h2>
+<p>Jenkins REST API available at /api/</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="faq"><a class="header" href="#faq">FAQ</a></h1>
+<h2 id="q-can-i-use-other-languages"><a class="header" href="#q-can-i-use-other-languages">Q: Can I use other languages?</a></h2>
+<p>A: Yes, extend the system by adding new base images.</p>
+<h2 id="q-can-i-deploy-to-cloud"><a class="header" href="#q-can-i-deploy-to-cloud">Q: Can I deploy to cloud?</a></h2>
+<p>A: Yes, modify Terraform to use cloud providers.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="glossary"><a class="header" href="#glossary">Glossary</a></h1>
+<ul>
+<li><strong>Base Image</strong>: Docker image with ONBUILD instructions</li>
+<li><strong>Standalone Image</strong>: Complete image including app</li>
+<li><strong>JCasC</strong>: Jenkins Configuration as Code</li>
+<li><strong>k3d</strong>: Lightweight Kubernetes in Docker</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
+<p>Contributions are welcome!</p>
+<ol>
+<li>Fork the repository</li>
+<li>Create a feature branch</li>
+<li>Submit a pull request</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="license"><a class="header" href="#license">License</a></h1>
+<p>Whanos is an educational project.</p>
+<p>Check repository for license details.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+deployment:
+  replicas: 2
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+  ports:
+    - 5000

@@ -1,0 +1,66 @@
+# Python / Django
+**/__pycache__/
+*.py[cod]
+*.pyc
+*.sqlite3
+db.sqlite3
+env/
+venv/
+.venv/
+
+# Package lock files
+package-lock.json
+**/package-lock.json
+
+# Environment files (IMPORTANT: Keep these secure!)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# React / Create React App
+frontend/build/
+frontend/.pnp/
+frontend/.pnp.cjs
+frontend/.pnp.js
+frontend/.parcel-cache/
+frontend/.eslintcache
+frontend/.cache/
+frontend/.turbo/
+frontend/.vite/
+frontend/tsconfig.tsbuildinfo
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# Local env variant files (keep base .env tracked if desired)
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / Editor junk
+.DS_Store
+.vscode/
+*.swp
+*.log
+coverage/
+
+# Node modules (root level)
+node_modules/
+dist/
+build/
+
+# IDE
+.idea/
+
+# Template files that SHOULD be committed
+!.env.production.example
+!.env.example

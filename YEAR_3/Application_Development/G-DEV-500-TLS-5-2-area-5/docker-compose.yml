@@ -1,0 +1,143 @@
+services:
+  database:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: area_db
+      POSTGRES_USER: area_user
+      POSTGRES_PASSWORD: area_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - area-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U area_user -d area_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - area-net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=area_db
+      - DB_USER=area_user
+      - DB_PASSWORD=area_password
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    networks:
+      - area-net
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    entrypoint: []
+    command: [ "sh", "-c", "until pg_isready -h database -p 5432 -U area_user; do sleep 1; done && celery -A celery_app worker --loglevel=info" ]
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      server:
+        condition: service_started
+    env_file:
+      - ./backend/.env
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=area_db
+      - DB_USER=area_user
+      - DB_PASSWORD=area_password
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    networks:
+      - area-net
+
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    entrypoint: []
+    command: [ "sh", "-c", "until pg_isready -h database -p 5432 -U area_user; do sleep 1; done && celery -A celery_app beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler" ]
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      server:
+        condition: service_started
+    env_file:
+      - ./backend/.env
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=area_db
+      - DB_USER=area_user
+      - DB_PASSWORD=area_password
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    networks:
+      - area-net
+
+  client_web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - server
+    volumes:
+      - shared_apk:/apk
+    networks:
+      - area-net
+
+  client_mobile:
+    build:
+      context: ./mobile
+      dockerfile: Dockerfile
+    volumes:
+      - shared_apk:/apk
+    networks:
+      - area-net
+
+volumes:
+  shared_apk:
+  pgdata:
+
+
+networks:
+  area-net:
+    driver: bridge

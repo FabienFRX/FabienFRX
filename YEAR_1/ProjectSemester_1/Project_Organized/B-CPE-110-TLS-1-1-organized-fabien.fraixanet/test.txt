@@ -1,0 +1,4 @@
+add WIRE w, SENSOR s, ACTUATOR a
+disp
+del 2
+exit

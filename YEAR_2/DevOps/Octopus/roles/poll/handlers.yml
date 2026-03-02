@@ -1,0 +1,5 @@
+---
+- name: Restart Poll service
+  service:
+    name: poll
+    state: restarted

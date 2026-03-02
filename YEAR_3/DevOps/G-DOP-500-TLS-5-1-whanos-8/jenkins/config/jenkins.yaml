@@ -1,0 +1,182 @@
+jenkins:
+  systemMessage: "Whanos Jenkins - Automatically Deploy Nearly Anything!"
+  numExecutors: 2
+  mode: NORMAL
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          name: "Admin"
+          password: "admin"
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"
+    adminAddress: "admin@whanos.local"
+
+jobs:
+  - script: >
+      folder('Whanos base images') {
+        displayName('Whanos base images')
+        description('Build jobs for Whanos base Docker images')
+      }
+
+  - script: >
+      folder('Projects') {
+        displayName('Projects')
+        description('Automatically created project jobs')
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/whanos-c') {
+        description('Build whanos-c base image')
+        steps {
+          shell('docker build -t whanos-c:latest -f /var/jenkins_home/whanos-images/c/Dockerfile.base /var/jenkins_home/whanos-images/c/')
+        }
+        logRotator { numToKeep(10) }
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/whanos-java') {
+        description('Build whanos-java base image')
+        steps {
+          shell('docker build -t whanos-java:latest -f /var/jenkins_home/whanos-images/java/Dockerfile.base /var/jenkins_home/whanos-images/java/')
+        }
+        logRotator { numToKeep(10) }
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/whanos-javascript') {
+        description('Build whanos-javascript base image')
+        steps {
+          shell('docker build -t whanos-javascript:latest -f /var/jenkins_home/whanos-images/javascript/Dockerfile.base /var/jenkins_home/whanos-images/javascript/')
+        }
+        logRotator { numToKeep(10) }
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/whanos-python') {
+        description('Build whanos-python base image')
+        steps {
+          shell('docker build -t whanos-python:latest -f /var/jenkins_home/whanos-images/python/Dockerfile.base /var/jenkins_home/whanos-images/python/')
+        }
+        logRotator { numToKeep(10) }
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/whanos-befunge') {
+        description('Build whanos-befunge base image')
+        steps {
+          shell('docker build -t whanos-befunge:latest -f /var/jenkins_home/whanos-images/befunge/Dockerfile.base /var/jenkins_home/whanos-images/befunge/')
+        }
+        logRotator { numToKeep(10) }
+      }
+
+  - script: >
+      freeStyleJob('Whanos base images/Build all base images') {
+        displayName('Build all base images')
+        description('Trigger all base image builds')
+
+        steps {
+          downstreamParameterized {
+            trigger('Whanos base images/whanos-c, Whanos base images/whanos-java, Whanos base images/whanos-javascript, Whanos base images/whanos-python, Whanos base images/whanos-befunge') {
+              block {
+                buildStepFailure('FAILURE')
+                failure('FAILURE')
+                unstable('UNSTABLE')
+              }
+            }
+          }
+        }
+
+        logRotator {
+          numToKeep(10)
+        }
+      }
+
+  - script: >
+      freeStyleJob('link-project') {
+        displayName('link-project')
+        description('Link a Git repository to Whanos infrastructure')
+
+        parameters {
+          stringParam('REPOSITORY_URL', '', 'Git repository URL (https://github.com/user/repo.git)')
+          stringParam('PROJECT_NAME', '', 'Project name (will be used as job name)')
+          stringParam('GIT_CREDENTIALS_ID', '', 'Jenkins credentials ID for private repos (leave empty for public)')
+          stringParam('DEFAULT_BRANCH', 'main', 'Default branch to monitor')
+        }
+
+        steps {
+          dsl {
+            text('''
+              def repoUrl = binding.variables.REPOSITORY_URL
+              def projectName = binding.variables.PROJECT_NAME
+              def credentialsId = binding.variables.GIT_CREDENTIALS_ID
+              def branch = binding.variables.DEFAULT_BRANCH ?: 'main'
+
+              if (!repoUrl || !projectName) {
+                throw new Exception("REPOSITORY_URL and PROJECT_NAME are required!")
+              }
+
+              pipelineJob("Projects/${projectName}") {
+                displayName(projectName)
+                description("Auto-deployed project from ${repoUrl}")
+
+                properties {
+                  pipelineTriggers {
+                    triggers {
+                      scm('* * * * *') {
+                        ignorePostCommitHooks(false)
+                      }
+                    }
+                  }
+                }
+
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          url(repoUrl)
+                          if (credentialsId) {
+                            credentials(credentialsId)
+                          }
+                        }
+                        branches(branch)
+                      }
+                    }
+                    scriptPath('Jenkinsfile')
+                    lightweight(false)
+                  }
+                }
+
+                logRotator {
+                  numToKeep(20)
+                  artifactNumToKeep(5)
+                }
+              }
+            ''')
+            removeAction('DELETE')
+            removeViewAction('DELETE')
+          }
+
+          shell('''
+            echo "✅ Project ${PROJECT_NAME} has been linked to Whanos!"
+            echo "📁 Repository: ${REPOSITORY_URL}"
+            echo "🌿 Branch: ${DEFAULT_BRANCH}"
+            echo "📋 Job created at: Projects/${PROJECT_NAME}"
+            echo ""
+            echo "The job will check for changes every minute."
+          ''')
+        }
+
+        logRotator {
+          numToKeep(50)
+        }
+      }

@@ -1,0 +1,66 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - python3
+      - python3-pip
+      - python3-dev
+    state: present
+
+- name: Create poll application directory
+  file:
+    path: /opt/poll
+    state: directory
+    mode: '0755'
+
+- name: Check if poll.tar exists locally
+  local_action: stat path=poll.tar
+  register: poll_tar_stat
+  become: no
+
+- name: Display poll.tar status
+  debug:
+    msg: "Poll tarball exists: {{ poll_tar_stat.stat.exists }}, Size: {{ poll_tar_stat.stat.size | default('Unknown') }} bytes"
+  
+- name: Copy poll.tar to remote server
+  copy:
+    src: "{{ playbook_dir }}/poll.tar"
+    dest: /tmp/poll.tar
+    mode: '0644'
+  when: poll_tar_stat.stat.exists and poll_tar_stat.stat.size > 0
+
+- name: Extract poll application tarball
+  unarchive:
+    src: /tmp/poll.tar
+    dest: /opt/poll
+    remote_src: yes
+    creates: /opt/poll/app.py
+  when: poll_tar_stat.stat.exists and poll_tar_stat.stat.size > 0
+
+- name: Install Python requirements
+  pip:
+    requirements: /opt/poll/requirements.txt
+    state: present
+
+- name: Template systemd service file
+  template:
+    src: poll.service
+    dest: /etc/systemd/system/poll.service
+    mode: '0644'
+  notify: Restart Poll service
+
+- name: Allow Poll service through firewall
+  ufw:
+    rule: allow
+    port: "{{ poll_port }}"
+    proto: tcp
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Ensure Poll service is running and enabled
+  service:
+    name: poll
+    state: started
+    enabled: yes

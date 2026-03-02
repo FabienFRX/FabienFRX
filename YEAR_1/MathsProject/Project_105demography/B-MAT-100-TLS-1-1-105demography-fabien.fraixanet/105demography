@@ -1,0 +1,209 @@
+#!/usr/bin/env python3
+
+import sys
+import math
+import csv
+
+yearTab = []
+popTab = []
+fileInfo = []
+country = []
+meanPop = 0
+meanYear = 0
+
+def display_h(returnValue = 0):
+    print("USAGE:\n\t./105demography [code]+\n")
+    print("DESCRIPTION:\n\tcode\tcountry code\n")
+    sys.exit(returnValue)
+
+def errorHandling():
+    for arg in sys.argv[1:]:
+        if len(arg) != 3:
+                return False
+        for c in arg:
+            if c.isalpha() == 0 or c.isupper() == False:
+                return False
+    return True
+
+def getYearTab():
+    global yearTab, fileInfo
+    for line in range(0, 1):
+        for data in range(2, len(fileInfo[line])):
+            yearTab.append(fileInfo[line][data])
+
+def getPopTab():
+    global fileInfo, country, popTab
+    res = []
+    avg = 0
+    try:
+        for code in sys.argv[1:]:
+            for idx in range(1, len(fileInfo)):
+                if code == fileInfo[idx][1]:
+                    country.append(fileInfo[idx][0])
+                    res.append(fileInfo[idx][2:])
+        for i in range(0, 58):
+            for data in res:
+                avg += float(data[i])
+            popTab.append(avg)
+            avg = 0
+    except (ValueError, IndexError) as e:
+        print("ERROR detected: {}".format(e), file=sys.stderr)
+
+def openFile():
+    try:
+        global fileInfo
+        with open('105demography_data.csv', 'r') as csvfile:
+            r = csv.reader(csvfile, delimiter=';')
+            for row in r:
+                fileInfo.append(row)
+            return True
+    except IOError:
+        print("Error: File 105demography_data.csv does not exist\n", file=sys.stderr)
+        return False
+
+def calcMeanYear():
+    global yearTab, meanYear
+    res = 0
+    try:
+        for i in yearTab:
+            res += float(i)
+        meanYear = res / len(yearTab)
+    except (ValueError, ZeroDivisionError):
+        meanYear = 0
+
+def calcVarYear():
+    global yearTab, meanYear
+    sd = 0
+    try:
+        for year in yearTab:
+            sd += (float(year) - meanYear) ** 2
+        sd = math.sqrt(sd / len(yearTab))
+        return sd ** 2
+    except (ValueError, ZeroDivisionError):
+        return 0
+
+def calcVarPop():
+    global popTab, meanPop
+    sd = 0
+    try:
+        for data in popTab:
+            sd += ((float(data) / 1000000) - meanPop) ** 2
+        sd = math.sqrt(sd / len(popTab))
+        return sd ** 2
+    except (ValueError, ZeroDivisionError):
+        return 0
+
+def calcMeanPop():
+    global popTab, meanPop
+    meaning = 0
+    try:
+        for value in popTab:
+            meaning += float(value) / 1000000
+        meanPop = meaning / len(popTab)
+    except (ValueError, ZeroDivisionError):
+        meanPop = 0
+
+def calcCovar():
+    global yearTab, popTab, meanYear, meanPop
+    covar = 0
+    try:
+        for i in range(0, 58):
+            covar += ((float(popTab[i]) / 1000000) - meanPop) * (float(yearTab[i]) - meanYear)
+        return covar / len(popTab)
+    except (ValueError, ZeroDivisionError, IndexError):
+        return 0
+
+def calcCoefYear():
+    try:
+        return calcCovar() / calcVarYear()
+    except ZeroDivisionError:
+        return 0
+
+def calcCoefPop():
+    try:
+        return calcCovar() / calcVarPop()
+    except ZeroDivisionError:
+        return 0
+
+def calcOriginYear():
+    global meanYear, meanPop
+    return meanPop - meanYear * calcCoefYear()
+
+def calcOriginPop():
+    global meanPop, meanYear
+    return meanYear - meanPop * calcCoefPop()
+
+def rootmeansquareYear():
+    global yearTab, popTab
+    tmp = []
+    for i in range(0, len(yearTab)):
+        tmp.append(math.pow((float(popTab[i]) / 1000000) - (((float(yearTab[i]) * calcCoefYear()) + calcOriginYear())), 2))
+    return math.sqrt(sum(tmp) / len(yearTab))
+
+def rootmeansquarePop():
+    global yearTab, popTab
+    tmp = []
+    for i in range(0, len(yearTab)):
+        tmp.append(math.pow((float(popTab[i]) / 1000000) - ((((float(yearTab[i]) - calcOriginPop()) / calcCoefPop()))), 2))
+    return math.sqrt(sum(tmp) / len(yearTab))
+
+def calc2050Year():
+    return calcCoefYear() * 2050 + calcOriginYear()
+
+def calc2050Pop():
+    try:
+        return (2050 - calcOriginPop()) / calcCoefPop()
+    except ZeroDivisionError:
+        return 0
+
+def calcCorrelation():
+    return math.sqrt(calcCoefPop() * calcCoefYear())
+
+def initProcess():
+    getYearTab()
+    getPopTab()
+    calcMeanYear()
+    calcMeanPop()
+
+def process():
+    global fileInfo, yearTab, popTab, country
+    initProcess()
+    print("Country: ", ", ".join(country))
+    print(f"Fit1\n\tY = {calcCoefYear():.2f} X", end="")
+    originYear = calcOriginYear()
+    if (originYear < 0):
+        print(f" - {originYear * -1:.2f}")
+    else:
+        print(f" + {originYear:.2f}")
+    print("\tRoot-mean-square deviation: %.2f"%rootmeansquareYear())
+    print(f"\tPopulation in 2050: {calc2050Year():.2f}")
+    print(f"Fit2\n\tX = {calcCoefPop():.2f} Y", end="")
+    originPop = calcOriginPop()
+    if (originPop < 0):
+        print(f" - {originPop * -1:.2f}")
+    else:
+        print(f" + {originPop:.2f}")
+    print("\tRoot-mean-square deviation: %.2f"%rootmeansquarePop())
+    print(f"\tPopulation in 2050: {calc2050Pop():.2f}")
+    print(f"Correlation: {calcCorrelation():.4f}")
+
+def main():
+    try:
+        if len(sys.argv) < 2:
+            sys.exit(84)
+        if "-h" in sys.argv:
+                display_h(0)
+        elif not openFile():
+            sys.exit(84)
+        elif not errorHandling():
+            print("ERROR: bad arguments given", file=sys.stderr)
+            sys.exit(84)
+        else:
+            process()
+            sys.exit(0)
+    except (IOError, ValueError, OverflowError):
+        print("an error occured, please retry or do ./105demography -h", file=sys.stderr)
+        sys.exit(84)
+
+if __name__ == "__main__":
+    main()

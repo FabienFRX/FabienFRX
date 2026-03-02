@@ -1,0 +1,5 @@
+true
+[KoalaBot] Bob-01
+	[Parts] Arms A-01 status : OK
+	[Parts] Legs L-01 status : OK
+	[Parts] Head H-01 status : OK

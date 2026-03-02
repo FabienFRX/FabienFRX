@@ -1,0 +1,152 @@
+WHANOS - BOOTSTRAP_
+< SAY HELLO TO THE ALMIGHTY WHALE />
+WHANOS - BOOTSTRAP
+Well well well... here we are! The last bootstrap of the DevOps track! Do not be sad please :(
+
+As you might have seen, the Whanos project is pretty complex, so what and how could we start taking on
+this project? Well, let us see together!
+
+
+
+
+   If you have not read the project's subject, please do it first.
+
+
+This bootstrap is less strict in terms of what to produce, as the project itself will leave you quite a deal of
+freedom.
+
+
+
+
+Step 1 - Thinking about infrastructure
+During the DevOps track, you have seen 5 different technologies: Docker, GitHub Actions, Jenkins, Ansible,
+and Kubernetes.
+
+And you will now have to use (most of) them together.
+
+You might have guessed that these different technologies will need to be correctly organized in order to
+work together. And you would be right! This is where important architecture decisions must be made.
+
+For each technology, there are several points about which attention must be given before starting the
+project.
+
+Next page are some points that you should think about.
+
+
+
+
+                                                      1
+Version used
+
+Which version of the technology will you use?
+
+If there exists a Long-Term Support (a.k.a. LTS) version and a more frequently updated version, why choos-
+ing one instead of the other?
+
+If not choosing a LTS or more frequently updated version, what are the strong points supporting your
+choice?
+
+
+
+Hosting
+
+Where will the different parts of the project be hosted?
+
+Will you use your own hosting solution? Or will they be hosted on the cloud? (Or maybe a mixture of the
+two?)
+
+If hosting on the cloud, which cloud provider or providers will you choose? And why?
+
+Will the different parts be hosted on the same machine? If not, where will each part be hosted?
+
+
+
+
+   It is obvious that the infrastructure you are going to set up cannot include your own computer as a
+   part of it.
+   There must be a single source of truth accessible by everyone in your group, and by the evaluator.
+
+
+
+
+Ease of use
+
+Thinking about the previous points is important. Ensuring that the infrastructure is easy to use and operate
+is equally important. Think about what one would need to perform on the infrastructure, as well as how
+one would need to proceed to do such actions.
+
+
+
+Security
+
+How are your infrastructure and different technologies going to be securely configured?
+
+How will you ensure that only authorized access is possible? How will you manage secrets?
+
+
+
+
+                                                     2
+Step 2 - Documenting the infrastructure
+Memory fails, and the human one more frequently than computers', so it is important to have an exhaustive
+documentation about how your infrastructure is, well... structured.
+
+In the repository of the project, create a docs directory which will contain the results of your thoughts on
+the infrastructure.
+
+They can be documented in the form of one or several Markdown files, images, or whatever you see fit.
+
+Be sure to include, the what, the why, and the how of the different decisions.
+
+
+
+
+Step 3 - Setting up the infrastructure
+Now that you have a clear and documented idea of what your infrastructure will look like, it is time for you
+to set it up!
+
+Install the different technologies where needed, and ensure they are working properly (e.g.: try to run the
+hello-world image for Docker).
+
+
+
+
+   It is also the time where you have to start thinking, if you have not started before, about the ability
+   to easily deploy, but especially redeploy your infrastructure.
+
+   With Jenkins, for example, you can use the plug-ins you know and love: Configuration as Code and
+   Job DSL.
+
+
+
+
+                                                     3
+Step 4 - Automate the deployment of the
+infrastructure
+Now, you should have an idea of which operations to perform in order to deploy your infrastructure.
+
+Choose an appropriate technology (such as Ansible) to write configuration files with to ensure that your
+infrastructure can be easily redeployed and updated.
+
+
+
+
+That's all folks!
+And that is the end of this final bootstrap.
+
+I hope that you are not too sad. :(
+
+You should now have an infrastructure ready to be operated in order to set up the almighty Whanos infras-
+tructure.
+
+So here it is, it is now time for you to start the final project of your DevOps track! Please have fun while
+doing it, you will learn valuable knowledge, and you will have a very useful infrastructure at the end.
+
+Good luck, and may Whanos guide you!
+
+
+
+
+                                                     4
+v3
+

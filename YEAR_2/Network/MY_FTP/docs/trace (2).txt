@@ -1,0 +1,149 @@
+my_ftp
+
+
+
+Basic tests
+
+  01 - Preliminaries - 4 tests
+    00 - Minimal functions: OK
+      PASSED
+    01 - several successive connections: OK
+      PASSED
+    02 - several simultaneous connections: Crashed
+      Crashed - Timed out after 5s
+    03 - Simple authentication with USER + PASS command: Crashed
+      Crashed - Timed out after 5s
+  
+  05 - Authentication - 2 tests
+    01 - Sending request before authentication: Crashed
+      Crashed - Timed out after 5s
+    02 - Wrong user authentication: Crashed
+      Crashed - Timed out after 5s
+  
+  08 - Various tests - 4 tests
+    01 - Wrong command: Crashed
+      Crashed - Timed out after 5s
+    02 - Only spaces: Crashed
+      Crashed - Timed out after 5s
+    03 - No operation: Crashed
+      Crashed - Timed out after 5s
+    04 - Help: Crashed
+      Crashed - Timed out after 5s
+  
+
+
+Advanced tests
+
+  02 - Error management - 2 tests
+    01 - Wrong number of parameter: OK
+      PASSED
+    02 - Non-existing home directory: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Process did not exit
+
+The following outputs might not be accurate, your prints might not be flushed!
+----- stdout -----
+Server started on port 60853
+
+----- stderr -----
+
+
+KO
+'
+  
+  03 - Architecture - 1 test
+    01 - Only 1 process for severall clients: Crashed
+      Crashed - Timed out after 5s
+  
+  04 - Buffer management - 2 tests
+    Multi-parted data: Crashed
+      Crashed - Timed out after 5s
+    Multi-parted data 2: Crashed
+      Crashed - Timed out after 5s
+  
+  06 - Working directory - 7 tests
+    01 - print: Simple test: Crashed
+      Crashed - Timed out after 5s
+    02 - print: Testing in a different directory: Crashed
+      Crashed - Timed out after 5s
+    03 - change: Empty test: Crashed
+      Crashed - Timed out after 5s
+    04 - change: Wrong path: Crashed
+      Crashed - Timed out after 5s
+    05 - change: Valid directory: Crashed
+      Crashed - Timed out after 5s
+    06 - change: Parent directory using CDUP: Crashed
+      Crashed - Timed out after 5s
+    07 - change: Parent directory using CWD: Crashed
+      Crashed - Timed out after 5s
+  
+  09 - Directory Listing - 3 tests
+    01 - Using passive mode: Crashed
+      Crashed - Timed out after 5s
+    02 - Using active mode: Crashed
+      Crashed - Timed out after 5s
+    03 - No mode selected: Crashed
+      Crashed - Timed out after 5s
+  
+  10 - Downloading file - 4 tests
+    01 - Simple file (passive mode): Crashed
+      Crashed - Timed out after 5s
+    02 - Simple file (active mode): Crashed
+      Crashed - Timed out after 5s
+    03 - Non existing file (passive mode): Crashed
+      Crashed - Timed out after 5s
+    04 - Existing file without rights: Crashed
+      Crashed - Timed out after 5s
+  
+  11 - Deleting file - 4 tests
+    01 - Existing file: Crashed
+      Crashed - Timed out after 5s
+    02 - Non existing file: Crashed
+      Crashed - Timed out after 5s
+    03 - Existing full path file: Crashed
+      Crashed - Timed out after 5s
+    04 - Existing file without right: Crashed
+      Crashed - Timed out after 5s
+  
+  12 - Uploading file - 2 tests
+    01 - Passive mode: Crashed
+      Crashed - Timed out after 5s
+    02 - Active mode: Crashed
+      Crashed - Timed out after 5s
+  
+
+
+=== BUILD LOG ===
+
+make: Entering directory '/usr/local/bugs/delivery'
+-e [1;3;4;35m 	Removed object files [00m
+-e [1;32m [OK] [1;36m   Done :  fclean [00m
+-e [1;32m [OK]  [00m [1;36m src/Main.cpp [00m  ----->  [1;32m src/Main.o [00m
+-e [1;32m [OK]  [00m [1;36m src/Server.cpp [00m  ----->  [1;32m src/Server.o [00m
+-e [1;32m [OK]  [00m [1;36m src/ClientHandler.cpp [00m  ----->  [1;32m src/ClientHandler.o [00m
+-e [1;32m [OK]  [00m [1;36m src/CommandParser.cpp [00m  ----->  [1;32m src/CommandParser.o [00m
+-e [1;32m [OK]  [00m [1;36m src/DataTransfer.cpp [00m  ----->  [1;32m src/DataTransfer.o [00m
+-e [1;32m [OK] [1;36m  Done :  all [00m
+make: Leaving directory '/usr/local/bugs/delivery'
+Build status: OK
+
+
+=== CODING STYLE ===
+
+C-F3 rule has been violated 1 times: line of more than 80 columns
+
+
+
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: .
+------------------------------------------------------------------------------
+File                                       Lines    Exec  Cover   Missing
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+TOTAL                                          0       0    --%
+------------------------------------------------------------------------------
+lines: 0.0% (0 out of 0)
+functions: 0.0% (0 out of 0)
+branches: 0.0% (0 out of 0)
+calls: 0.0% (0 out of 0)

@@ -1,0 +1,8 @@
+a = 21, b = 42
+min(a, b) = 21
+max(a, b) = 42
+clamp(0, a, b) = 21
+c = abc, d = ghi
+min(c, d) = abc
+max(c, d) = ghi
+clamp("def", c, d) = def

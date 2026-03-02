@@ -1,0 +1,60 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - openjdk-17-jdk
+      - maven
+    state: present
+
+- name: Create worker application directory
+  file:
+    path: /opt/worker
+    state: directory
+    mode: '0755'
+
+- name: Check if worker.tar exists locally
+  local_action: stat path=worker.tar
+  register: worker_tar_stat
+  become: no
+
+- name: Display worker.tar status
+  debug:
+    msg: "Worker tarball exists: {{ worker_tar_stat.stat.exists }}, Size: {{ worker_tar_stat.stat.size | default('Unknown') }} bytes"
+  
+- name: Copy worker.tar to remote server
+  copy:
+    src: "{{ playbook_dir }}/worker.tar"
+    dest: /tmp/worker.tar
+    mode: '0644'
+  when: worker_tar_stat.stat.exists and worker_tar_stat.stat.size > 0
+
+- name: Extract worker application tarball
+  unarchive:
+    src: /tmp/worker.tar
+    dest: /opt/worker
+    remote_src: yes
+    creates: /opt/worker/pom.xml
+  when: worker_tar_stat.stat.exists and worker_tar_stat.stat.size > 0
+
+- name: Build worker with Maven
+  command: mvn -B clean package
+  args:
+    chdir: /opt/worker
+    creates: /opt/worker/target/worker-jar-with-dependencies.jar
+
+- name: Template systemd service file
+  template:
+    src: worker.service
+    dest: /etc/systemd/system/worker.service
+    mode: '0644'
+  notify: Restart Worker service
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Ensure Worker service is running and enabled
+  service:
+    name: worker
+    state: started
+    enabled: yes

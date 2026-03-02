@@ -1,0 +1,24 @@
+/*
+** EPITECH PROJECT, 2024
+** B-SYN-200-TLS-2-1-sbmlparser-fabien.fraixanet
+** File description:
+** my_strcmp
+*/
+
+#include "../include/syn.h"
+
+int my_strcmp(char const *s1, char const *s2)
+{
+    int i = 0;
+
+    while (s1[i] == s2[i] && (s1[i] != '\0' || s2[i] != '\0')) {
+        i = i + 1;
+    }
+    if (s1[i] < s2[i]) {
+        return (-1);
+    }
+    if (s1[i] > s2[i]) {
+        return (1);
+    }
+    return (0);
+}

@@ -1,0 +1,19 @@
+EVAN :
+
+Setup React + Routing + UI Base
+Docker web
+
+MARCEAU : 
+
+Setup Django + PostgreSQL
+Docker backend
+API signup / login
+
+FABIEN : 
+
+Setup Flutter + Android Build
+Docker Flutter (build APK)
+
+ANDI :
+Creation github projet
+Find good style for web + mobile

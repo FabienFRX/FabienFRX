@@ -1,0 +1,14 @@
+fn fibonacci(n) {
+    if (n < 2) {
+        return n
+    } else {
+        a = fibonacci(n - 1)
+        b = fibonacci(n - 2)
+        return a + b
+    }
+}
+
+fn main() {
+    result = fibonacci(10)
+    return result
+}

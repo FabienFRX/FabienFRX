@@ -1,0 +1,194 @@
+B-SYN-200 FASTAtools
+
+
+
+Basic tests
+
+  0 - Requirement - 1 test
+    my_strcapitalize_synthesis: OK
+      PASSED
+  
+  1 - FASTA format - 4 tests
+    1A: OK
+      PASSED
+    1B: OK
+      PASSED
+    1C: OK
+      PASSED
+    1D: OK
+      PASSED
+  
+
+
+Advanced tests
+
+  2 - ARN - 2 tests
+    2A: OK
+      PASSED
+    2B: OK
+      PASSED
+  
+  3 - Reverse Complement - 2 tests
+    3A: OK
+      PASSED
+    3B: OK
+      PASSED
+  
+  4 - k-mers - 3 tests
+    4A: KO
+      Invalid exit status 84
+    4B: KO
+      Invalid exit status 84
+    4C: KO
+      Invalid exit status 84
+  
+  5 - Coding sequence - 2 tests
+    5A: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+ATGAAA
+ATGACTCTGAACTGG
+ATGGAGGTGTTTTATATCTTCCTGAGGGCATACTGGGATGACTTCTCCCTATTTCAT
+ATGTCCATC
+ATGTGCTCC
+ATGTGGCAGGTGACCCTCAATCTTAATGTTTTCTGGGTTCCTGTCAGGAGCACATGGAGGTGTTTTATATCTTCC
+ATGTTTTCTGGGTTCCTGTCAGGAGCACATGGAGGTGTTTTATATCTTCCTGAGGGCATACTGGGA
+====================
+But got:
+====================
+A
+ATGCCCTCAGGAAGATA
+ATGTGCTCC
+ATGG
+A
+====================
+'
+    5B: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+ATG
+ATGCATACA
+ATGCATGGCGTGCGA
+ATGCATGGCGTGCGA
+ATGGCGTGCGATAGACGTCAT
+ATGGCGTGCGATAGACGTCAT
+ATGGCGTGCGATAGACGTCAT
+ATGTATGCATGGCGTGCGATAGACGTCATTAGT
+====================
+But got:
+====================
+ATGGCGTGCGA
+ATGTATGCATGGCGTGCGA
+ATGTATGCATGGCGTGCGA
+====================
+'
+  
+  6 - Amino acids - 2 tests
+    6A: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+MCS
+MEVFYIFLRAYWDDFSLFH
+MFSGFLSGAHGGVLYLPEGILG
+MK
+MSI
+MTLNW
+MWQVTLNLNVFWVPVRSTWRCFISS
+====================
+But got:
+====================
+====================
+'
+    6B: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+M
+MACDRRH
+MACDRRH
+MACDRRH
+MHGVR
+MHGVR
+MHT
+MYAWRAIDVIS
+====================
+But got:
+====================
+====================
+'
+  
+  7 - Alignment - 2 tests
+    7A: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+7
+====================
+But got:
+====================
+====================
+'
+    7B: KO
+      Test failure: The output must match the regular expression '^OK
+$', but it was 'KO: output differs.
+Expected:
+====================
+16
+====================
+But got:
+====================
+====================
+'
+  
+  8 - Error management - 3 tests
+    8A - no argument: OK
+      PASSED
+    8B - bad option: Crashed
+      Crashed - Timed out after 10s
+    8C - bad argument: Crashed
+      Crashed - Timed out after 10s
+  
+
+
+=== BUILD LOG ===
+
+make: Entering directory '/usr/local/bugs/delivery'
+cc    -c -o src/main.o src/main.c
+cc    -c -o src/display_help.o src/display_help.c
+cc    -c -o src/file_handle.o src/file_handle.c
+cc    -c -o src/option.o src/option.c
+cc    -c -o src/option_2.o src/option_2.c
+cc    -c -o src/option_3.o src/option_3.c
+cc    -c -o src/option_5.o src/option_5.c
+cc    -c -o src/function_base.o src/function_base.c
+gcc src/main.o src/display_help.o src/file_handle.o src/option.o src/option_2.o src/option_3.o src/option_5.o src/function_base.o -o FASTAtools -Iinclude -Wall
+make: Leaving directory '/usr/local/bugs/delivery'
+Build status: OK
+
+
+=== CODING STYLE ===
+
+
+
+
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: .
+------------------------------------------------------------------------------
+File                                       Lines    Exec  Cover   Missing
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+TOTAL                                          0       0    --%
+------------------------------------------------------------------------------
+lines: 0.0% (0 out of 0)
+functions: 0.0% (0 out of 0)
+branches: 0.0% (0 out of 0)
+calls: 0.0% (0 out of 0)

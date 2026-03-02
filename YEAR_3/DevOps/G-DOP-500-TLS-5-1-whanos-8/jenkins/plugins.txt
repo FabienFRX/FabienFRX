@@ -1,0 +1,17 @@
+# Jenkins Plugins for Whanos
+# Using latest compatible versions
+
+configuration-as-code
+job-dsl
+workflow-aggregator
+git
+docker-workflow
+kubernetes
+pipeline-utility-steps
+credentials
+credentials-binding
+parameterized-trigger
+matrix-auth
+timestamper
+ws-cleanup
+ansicolor

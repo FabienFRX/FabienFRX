@@ -1,0 +1,10 @@
+FROM nginx:alpine
+
+# Supprimer la configuration par défaut
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copier notre configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Exposer les ports
+EXPOSE 80 443

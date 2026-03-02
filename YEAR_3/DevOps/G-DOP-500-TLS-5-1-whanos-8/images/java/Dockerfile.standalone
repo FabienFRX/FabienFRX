@@ -1,0 +1,11 @@
+FROM maven:3.9-eclipse-temurin-21 AS builder
+WORKDIR /build
+COPY app/pom.xml .
+RUN mvn dependency:go-offline
+COPY app/src ./src
+RUN mvn package
+
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
+COPY --from=builder /build/target/app.jar .
+CMD ["java", "-jar", "app.jar"]

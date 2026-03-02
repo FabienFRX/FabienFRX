@@ -1,0 +1,11 @@
+O'Neill is alive
+O'Neill is touched
+3
+Carter is alive
+1
+Carter is touched
+0
+Jackson is alive
+O'Neill is dead
+Carter is dead
+Jackson is dead

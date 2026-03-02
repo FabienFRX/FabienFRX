@@ -1,0 +1,15 @@
+KreogCom 0 initialized
+KreogCom 1 initialized
+KreogCom 2 initialized
+KreogCom 3 initialized
+KreogCom 4 initialized
+Bang
+Bang
+Bang
+Bang
+Bang
+KreogCom 0 shutting down
+KreogCom 1 shutting down
+KreogCom 2 shutting down
+KreogCom 3 shutting down
+KreogCom 4 shutting down

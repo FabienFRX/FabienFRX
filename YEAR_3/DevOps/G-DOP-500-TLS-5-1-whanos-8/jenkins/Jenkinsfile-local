@@ -1,0 +1,176 @@
+pipeline {
+  agent any
+  
+  environment {
+    REGISTRY_URL = 'localhost:5000'
+    K3D_REGISTRY_URL = 'k3d-whanos-registry:5001'
+    PROJECT_NAME = "${env.JOB_NAME}".split('/')[0]
+    BUILD_NUMBER = "${env.BUILD_NUMBER}"
+  }
+  
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    
+    stage('Detect Language') {
+      steps {
+        script {
+          if (fileExists('Makefile')) {
+            env.LANGUAGE = 'c'
+          } else if (fileExists('app/pom.xml')) {
+            env.LANGUAGE = 'java'
+          } else if (fileExists('package.json')) {
+            env.LANGUAGE = 'javascript'
+          } else if (fileExists('requirements.txt')) {
+            env.LANGUAGE = 'python'
+          } else if (fileExists('app/main.bf')) {
+            env.LANGUAGE = 'befunge'
+          } else {
+            error('Unable to detect project language. No compatible files found.')
+          }
+          echo "✅ Detected language: ${env.LANGUAGE}"
+        }
+      }
+    }
+    
+    stage('Build Image') {
+      steps {
+        script {
+          env.IMAGE_TAG = "${REGISTRY_URL}/${PROJECT_NAME}:${BUILD_NUMBER}"
+          env.IMAGE_LATEST = "${REGISTRY_URL}/${PROJECT_NAME}:latest"
+          env.K3D_IMAGE_TAG = "${K3D_REGISTRY_URL}/${PROJECT_NAME}:${BUILD_NUMBER}"
+          
+          if (fileExists('Dockerfile')) {
+            echo "📦 Using custom Dockerfile"
+            sh "docker build -t ${IMAGE_TAG} ."
+          } else {
+            echo "📦 Using Whanos ${LANGUAGE} standalone image"
+            sh """
+              docker build \\
+                -f /var/jenkins_home/whanos-images/${LANGUAGE}/Dockerfile.standalone \\
+                -t ${IMAGE_TAG} .
+            """
+          }
+          echo "✅ Image built: ${IMAGE_TAG}"
+        }
+      }
+    }
+    
+    stage('Push to Registry') {
+      steps {
+        script {
+          // Push to local registry
+          sh "docker push ${IMAGE_TAG}"
+          sh "docker tag ${IMAGE_TAG} ${IMAGE_LATEST}"
+          sh "docker push ${IMAGE_LATEST}"
+          
+          // Also push to k3d registry
+          sh "docker tag ${IMAGE_TAG} ${K3D_IMAGE_TAG}"
+          sh "docker push ${K3D_IMAGE_TAG}"
+          
+          echo "✅ Image pushed to registries"
+        }
+      }
+    }
+    
+    stage('Deploy to Kubernetes') {
+      when {
+        expression { fileExists('whanos.yml') }
+      }
+      steps {
+        script {
+          def whanosConfig = readYaml file: 'whanos.yml'
+          def replicas = whanosConfig.deployment?.replicas ?: 1
+          def port = whanosConfig.deployment?.port ?: 8080
+          
+          echo "🚀 Deploying to Kubernetes..."
+          echo "   Replicas: ${replicas}"
+          echo "   Port: ${port}"
+          
+          sh """
+            kubectl create namespace whanos --dry-run=client -o yaml | kubectl apply -f -
+            
+            cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${PROJECT_NAME}
+  namespace: whanos
+  labels:
+    app: ${PROJECT_NAME}
+spec:
+  replicas: ${replicas}
+  selector:
+    matchLabels:
+      app: ${PROJECT_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${PROJECT_NAME}
+    spec:
+      containers:
+      - name: ${PROJECT_NAME}
+        image: ${K3D_IMAGE_TAG}
+        ports:
+        - containerPort: ${port}
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${PROJECT_NAME}
+  namespace: whanos
+spec:
+  selector:
+    app: ${PROJECT_NAME}
+  ports:
+  - protocol: TCP
+    port: ${port}
+    targetPort: ${port}
+  type: LoadBalancer
+EOF
+          """
+          
+          echo "✅ Deployment completed"
+        }
+      }
+    }
+    
+    stage('Verify Deployment') {
+      when {
+        expression { fileExists('whanos.yml') }
+      }
+      steps {
+        script {
+          sh """
+            echo "📊 Deployment Status:"
+            kubectl get deployment ${PROJECT_NAME} -n whanos
+            kubectl get pods -n whanos -l app=${PROJECT_NAME}
+            kubectl get svc ${PROJECT_NAME} -n whanos
+          """
+        }
+      }
+    }
+  }
+  
+  post {
+    success {
+      echo "✅ Pipeline completed successfully!"
+      echo "📦 Image: ${IMAGE_TAG}"
+      script {
+        if (fileExists('whanos.yml')) {
+          sh """
+            echo "🌐 Application URL: http://localhost:8081"
+            echo "   (Access via k3d loadbalancer)"
+          """
+        }
+      }
+    }
+    failure {
+      echo "❌ Pipeline failed!"
+    }
+  }
+}

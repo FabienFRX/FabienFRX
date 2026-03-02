@@ -1,0 +1,9 @@
+CALENDAR
+
+Parse file -> str to word array = ' '
+to read instruction on standard input
+
+
+display on standard input from arg
+
+

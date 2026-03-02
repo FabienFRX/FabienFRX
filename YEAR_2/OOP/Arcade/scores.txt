@@ -1,0 +1,5 @@
+dsqdqsd minesweeper 340
+fab minesweeper 325
+dd minesweeper 205
+s snake 30
+fa snake 10

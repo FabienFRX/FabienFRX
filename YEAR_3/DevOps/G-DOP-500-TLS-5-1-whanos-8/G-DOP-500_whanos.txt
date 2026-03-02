@@ -1,0 +1,583 @@
+      WHANOS_
+< AUTOMATICALLY DEPLOY (NEARLY)
+    ANYTHING WITH A SNAP />
+WHANOS
+DevOps is a collection of great notions and technologies that allows oneself to have a truly great control
+over the lifecycle of an application.
+
+Mastering one notion or technology is like owning an Infinity Stone: you become very powerful.
+
+Now, imagine owning several Infinity Stones at the same time, what a powerful programmer you would
+become!
+
+This dream is about to come true. You have started your DevOps journey two years ago, and up to now,
+have collected 4 Infinity Stones:
+
+
+  3   the Containerization Stone with Docker;
+  3   the Task Automation Stone with GitHub Actions and Jenkins;
+  3   the Configuration Management Stone with Ansible;
+  3   and the Orchestration Stone with Kubernetes.
+
+
+You started your journey with Moby Dock, the Docker whale.
+
+
+
+
+And you are going to finish it with another one, very knowledgeable about Infinity Stones: Whanos.
+
+
+
+
+                                                    1
+Mastering individual DevOps notions and technologies is a good thing, and it is even better mastering them
+in combination with each other.
+
+This is what this project is about: you will have to combine your knowledge of the four technologies previ-
+ously seen to set up an infrastructure using all of them.
+
+You will go further into each technologies, with new features you (probably) did not see during the projects
+their respective technologies were each introduced in.
+
+
+
+
+General description
+As you might have guessed, Whanos is a powerful being, and wants you to set up an as-powerful Whanos
+infrastructure that allows any developer to automatically deploy an application into a cluster, just by a push
+to their Git repository.
+
+Following a push to a Whanos-compatible repository, it will perform the following steps:
+
+
+  1. Fetches the Git repository.
+  2. Analyses its content to determine its technology.
+  3. Containerizes the application into an image, based on both a Whanos image, and an eventual user-
+     provided image customization.
+  4. Pushes the image into a Docker registry.
+  5. If a valid whanos.yml file exists, deploys the image into a cluster following the given configuration.
+
+
+
+
+   More information on these points is given below.
+
+
+To tackle on this great task, you will use the 4 Infinity Stones you acquired so far.
+
+
+
+
+   If particular settings or elements are not specified or addressed in the subject, you are free to do
+   as you please with them. However, if in any doubt, ask your local teacher.
+
+
+
+
+                                                      2
+Whanos-compatible repository specifications
+In order for a repository to be usable within the Whanos infrastructure, it must contain a single application
+(written in a supported language), whose source code and resources are in an app directory placed at the
+root of the repository.
+
+
+
+
+   This section details the structure of the repositories that are considered compatible with the in-
+   frastructure to be created, not the delivery repository in which you will have to turn your project
+   in.
+
+
+
+
+Supported languages
+
+The following languages must be supported by your Whanos infrastructure:
+
+
+  3   C;
+  3   Java;
+  3   JavaScript;
+  3   Python;
+  3   Befunge.
+
+
+
+
+                                                     3
+The commands below are all expected to be executed from the root of the repository.
+
+
+
+    C
+
+
+3 Default compiler: GNU Compiler Collection 13.2.
+
+3 Criteria of detection: Has a Makefile file at the root of the repository.
+
+3 Dependency system: None.
+
+3 Compilation: Using ”make”.
+
+3 Execution: With the resulting compiled binary.
+
+3 Base image name: whanos-c.
+
+
+
+
+Whanos-compatible C applications are expected to be compiled into an executable compiled-app file,
+placed at the root of the repository.
+
+
+
+    Java
+
+
+3 Default version: Java SE 21.
+
+3 Criteria of detection: Has a pom.xml file in the app repository.
+
+3 Dependency system: Maven.
+
+3 Compilation: Using ”mvn package”.
+
+3 Execution: Using ”java -jar app.jar”.
+
+3 Base image name: whanos-java.
+
+
+
+
+Whanos-compatible Java applications are expected to be compiled into an executable app.jar file,
+placed in a target subdirectory.
+The use of the target directory is a well-established convention when using Maven.
+
+
+
+
+                                                   4
+    JavaScript
+
+
+3 Default version: Node.js 20.9.
+
+3 Criteria of detection: Has a package.json file at the root of the repository.
+
+3 Dependency system: npm.
+
+3 Compilation: Not applicable.
+
+3 Execution: Using ”node .”.
+
+3 Base image name: whanos-javascript.
+
+
+    Python
+
+
+3 Default version: 3.12.
+
+3 Criteria of detection: Has a requirements.txt file at the root of the repository.
+
+3 Dependency system: pip.
+
+3 Compilation: Not applicable.
+
+3 Execution: Using ”python -m app”.
+
+3 Base image name: whanos-python.
+
+
+
+
+                                                   5
+    Befunge
+
+
+3 Default version: Befunge-93.
+
+3 Criteria of detection: Has a single main.bf file in the app directory.
+
+3 Dependency system: Not applicable.
+
+3 Compilation: Free choice.
+
+3 Execution: Free choice, from the root of the repository.
+
+3 Base image name: whanos-befunge.
+
+
+
+
+A single Whanos-compatible repository cannot match multiple detection criterion at the same time.
+
+When encountering a repository that is not, regardless of the reason, Whanos-compatible,
+the handling is left free.
+Triggering a build error is a recommended way to proceed.
+
+It is not your duty to make a repository Whanos-compatible if it is not in the first place.
+
+
+
+
+                                                    6
+Whanos images specifications
+The Whanos images are the images on which all application running on the Whanos infrastructure are
+based on.
+
+They must have the following characteristics:
+
+
+  3 themselves based on an official image;
+  3 use the Bourne-Again shell for all image build instructions;
+  3 work in an app directory at the root of the image;
+  3 (if applicable) copy the dependency file(s) and install the dependencies;
+  3 copy (re)sources;
+  3 (if applicable) compile the application and get rid of the sources and other unnecessary files, in order
+    to only leave what is needed for execution;
+  3 sets the execution command based on the one defined for the language (in the previous section).
+
+
+
+
+   An image is only considered official if marked as such on Docker Hub.
+   esolang/befunge93 is not an official image. ;)
+
+
+
+
+   Make sure to leave in the resulting image only what is needed for the execution of the application.
+   For example, source files are not at all needed when a C application has been compiled.
+
+
+
+
+Image types
+
+Two different types of Whanos images have to be created for each language, corresponding to two different
+types of use.
+
+
+       Standalone images
+
+
+Applications that do not need to configure their runtime environment further than the default configuration
+above will use standalone images.
+
+These images must allow for the application to run smoothly without external modification.
+
+Such applications will have no Dockerfile at the root of their repository.
+
+
+
+
+                                                      7
+      Base images
+
+
+Some applications will need to configure their runtime environment further than the default configuration
+described above, but they will still be based on Whanos images; as such, they will be based on another
+type of image: the base images.
+
+These images must set the environment up just like the standalone images, but you have to keep in mind
+that they will be referenced by the FROM instruction of a custom Dockerfile.
+
+Applications that use base images instead of standalone images will have their own Dockerfile at the root
+of their repository, starting with a FROM instruction referencing the image they want to base them on.
+
+
+
+
+   The base images must be able to be built on their own, without any application code, resource,
+   or dependancy information available.
+
+   Such elements will only be available when building the custom image based on the Whanos
+   base image, you must keep this in mind.
+
+   Your base image must be able to be built with the following command:
+    ∇                                    Terminal                                             -+x
+    $> docker build -t whanos-something - < Dockerfile.base
+
+
+
+
+   Have a look at the example applications, you can gather valuable information about the way the
+   Whanos infrastructure is expected to work.
+
+
+
+
+                                                   8
+Jenkins instance
+In order for the applications to be automatically containerized and deployed, you will use Jenkins.
+
+
+
+
+   The Jenkins Configuration as Code approach, which you used in the my_marvin project, is not
+   mandatory for this project, but is still a great approach for you to use. ;)
+
+
+The Jenkins instance must meet the specifications detailled below.
+
+
+
+
+   Private Git repositories must be supported.
+   That means all private Git repositories, not just those on GitHub or GitLab.
+
+   The way for the user to provide the necessary credentials is left free, but must be documented.
+
+
+
+
+Users
+
+Signing up must be disallowed.
+
+A user named Admin must be created with an admin id and all the rights.
+
+Further users can be created if desired.
+
+
+
+Folders
+
+      Whanos base images
+
+
+  3 Is named Whanos base images.
+  3 Is at root.
+
+
+      Projects
+
+
+  3 Is named Projects.
+  3 Is at root.
+
+
+                                                    9
+Jobs
+
+Each of the following jobs is expected to be enabled and to be a freestyle job.
+
+
+       Whanos base images build jobs
+
+
+For each supported language, a job must be created, and must:
+
+
+  3 be named like the language's base image name (e.g.: whanos-haskell);
+  3 be in the Whanos base images folder;
+  3 build the corresponding base image so that it is available for the Jenkins instance host to use.
+
+
+       Build all base images
+
+
+  3 Is named Build all base images.
+  3 Is located in the Whanos base images folder.
+  3 When executed, triggers all base images build jobs.
+
+
+       link-project
+
+
+  3   Is named link-project.
+  3   Is at root.
+  3   Has the necessary parameters to perform its task.
+  3   When executed, links the specified project in the parameters to the Whanos infrastructure by creat-
+      ing a job with the specifications listed below.
+
+
+       Jobs created by the link-project job
+
+
+Each job created by the link-project job:
+
+
+  3 Is in the Projects folder.
+  3 Checks every minute for changes in the repository.
+  3 When a change is detected on the default branch:
+       – containerizes the respository's application according to the specifications described in the Whanos
+          images specifications section;
+       – if applicable, deploys the application into a Kubernetes cluster (see below).
+
+
+
+
+                                                    10
+Kubernetes cluster
+Automatically containerizing applications is nice, but automatically deploying them is even better! ;)
+
+If a repository has a whanos.yml file at its root, and that this file contains a deployment root property, it is the
+sign that the application has to be deployed into a Kubernetes cluster.
+
+
+
+whanos.yml contents
+
+The whanos.yml file can contain a deployment root property, which itself can contain:
+
+
+   3 replicas -> number of replicas to have (default: 1; 2 replicas means that 2 instances of the resulting
+     pod must be running at the same time in the cluster);
+   3 resources -> resource needs, corresponding to Kubernetes' own resource specifications (default: no
+     specifications; the syntax expected here is the same as the given link);
+   3 ports -> an integer list of ports needed by the container to be forwarded to it (default: no ports for-
+     warded).
+
+
+
+Accessing the application from the outside world
+
+If the whanos.yml file defines ports, they must be accessible from the outside world (not necessarily on the
+same port; e.g.: if an application needs to have its port 80 accessible, it is not necessarily needed for the
+host machine that the application is going to be accessed through to bind it to its own 80 port).
+
+
+
+
+   This last part is the one with which you have the most freedom in regards to the way to proceed.
+   The methods are left free, but they must be documented.
+
+
+
+
+   There must be at least 2 nodes in the cluster.
+
+
+
+
+                                                        11
+Deploying your infrastructure
+Your instance must be deployed online, and must use an appropriate technology to do so.
+
+The recommended technology is Ansible, but you are free to use another one (or several ones) if you want
+to.
+
+The ideal situation is to only have to fill in the necessary environment variables and launch a command, in
+order to then have a completely deployed and working infrastructure.
+
+
+
+
+   If a part of your infrastructure is not deployed with an appropriate technology, you will be asked for
+   justification.
+
+
+
+
+The usual good practices are expected to be followed. For example, with Ansible, you need to have an
+idempotent playbook, and use modules as much as possible.
+
+
+
+
+   You are allowed to use Ansible Galaxy and community-made modules.
+
+
+
+
+                                                    12
+Evaluation
+The project will be evaluated during a defense.
+
+The functional aspect will obviously be taken into account, but the respect of good practices and the
+cleanliness of your work will also weight into your mark.
+
+The infrastructure you will set up will need to be deployed online and accessible by the evaluator during
+the defense.
+
+
+
+   Previously seen notions, such as ”redeployability” (i.e.: the ability to easily redeploy an infrastruc-
+   ture), are obviously going to be taken into account.
+
+
+
+
+Delivery repository structure
+
+You will have to place your Dockerfiles in an images directory, itself placed at the root of your repository.
+
+Each language's Dockerfiles will be named Dockerfile.base and Dockerfile.standalone, respectively for the base
+and the standalone images, placed in a directory bearing the name of the language, in the following fashion:
+∇                                                Terminal                                               -+x
+$> ls images
+befunge c java javascript python
+$> ls images/javascript
+Dockerfile.base Dockerfile.standalone
+
+
+Documentation must be placed in a docs directory, itself placed at the root of your repository.
+
+If you have any usable files related to Jenkins, Kubernetes, or other technologies you use (e.g.: helper
+scripts, configuration files for easy redeployment of the infrastructure), they need to be placed in your
+repository. You are free to decide the file structure.
+
+
+
+
+   Any file not present in the repository will be considered to be the equivalent of ”hard-coded” into
+   your infrastructure.
+   Some files (such as secrets, or generated configuration files that are specific to each instance) will
+   obviously not, and must not, be in the repository, but other files (such as eventual deployment
+   templates or Jenkins Configuration as Code files) must be in your repository if you want to benefit
+   from them during the defense.
+
+
+
+
+                                                      13
+Tips and tricks
+You will have to go further into each of the technologies you have seen until now in order to succeed,
+especially Docker and Jenkins; so immerse yourself in their documentation to find the magic features you
+want!
+
+Doing the project with only Docker, Jenkins, Ansible, and Kubernetes is difficult; in order to help you, you
+may need to write helper scripts, as well as setting up other elements, such as a Docker registry. The
+choice is yours!
+
+
+
+
+   Docker provides an official image of a Docker registry. Handy, is it not?
+
+
+
+
+   Dreaming about installing a Kubernetes cluster with Ansible? Your dream can come true with kube-
+   spray ;)
+
+
+
+
+   Using Docker in Jenkins is a good idea.
+   Using Docker in Jenkins in Docker is a very bad idea.
+
+
+
+
+Want to go further?
+Whanos loves that!
+
+If you want to be blessed with the power of DevOps, you can for example:
+
+
+  3   support more languages (e.g.: C++, Go, Rust, or Brainfuck);
+  3   handle other branches than the default one;
+  3   display a Whanos ASCII art when launching a job;
+  3   extend the configuration capabilities.
+
+
+
+
+                                                    14
+v 3.1
+

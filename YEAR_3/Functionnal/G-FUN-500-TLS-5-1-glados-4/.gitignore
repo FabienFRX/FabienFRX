@@ -1,0 +1,96 @@
+# Haskell build artifacts
+dist/
+dist-newstyle/
+.stack-work/
+*.hi
+*.o
+*.dyn_hi
+*.dyn_o
+*.prof
+*.aux
+*.hp
+*.ps
+*.tix
+*.eventlog
+cabal-dev/
+.cabal-sandbox/
+cabal.sandbox.config
+.hpc/
+
+# Stack specific
+.stack-work/
+stack.yaml.lock
+
+# Cabal specific
+dist/
+dist-newstyle/
+cabal.project.local
+cabal.project.local~
+.ghc.environment.*
+
+# Executables
+glados
+*.exe
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+
+# Build directories
+build/
+out/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
+
+# Test artifacts
+test-results/
+*.test
+
+lambdananas

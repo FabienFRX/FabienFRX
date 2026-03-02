@@ -1,0 +1,9 @@
+fn main() {
+    x = 15
+
+    if (x < 10) {
+        return 100
+    } else {
+        return 200
+    }
+}

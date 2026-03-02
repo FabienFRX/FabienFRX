@@ -1,0 +1,11 @@
+FROM node:20.9-alpine AS builder
+WORKDIR /build
+COPY package*.json ./
+RUN npm ci --only=production
+COPY app/ ./app/
+
+FROM node:20.9-alpine
+WORKDIR /app
+COPY --from=builder /build/node_modules ./node_modules
+COPY --from=builder /build/app/ ./app/
+CMD ["node", "app"]

@@ -1,0 +1,23 @@
+Google :
+
+A new calendar event is created
+A calendar event is starting soon
+A new file is uploaded to Drive
+
+
+Dropbox :
+
+Trigger when a new file is added to a specific folder
+Trigger when a file is modified
+
+
+Timer :
+
+The current time is HH:MM
+Trigger on specific day of the week
+Trigger every X seconds
+Trigger every X minutes
+Trigger every X hours
+
+LinkedIn : 
+USER SHARED A NEW POST

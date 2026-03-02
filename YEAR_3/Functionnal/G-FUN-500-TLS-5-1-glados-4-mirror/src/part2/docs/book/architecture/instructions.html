@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Instruction Set - GLaDOS Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">GLaDOS Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="instruction-set"><a class="header" href="#instruction-set">Instruction Set</a></h1>
+<p>The GLaDOS VM uses a stack-based instruction set for bytecode execution.</p>
+<h2 id="instruction-reference"><a class="header" href="#instruction-reference">Instruction Reference</a></h2>
+<h3 id="stack-operations"><a class="header" href="#stack-operations">Stack Operations</a></h3>
+<h4 id="push"><a class="header" href="#push">Push</a></h4>
+<pre><code class="language-haskell">Push Value
+</code></pre>
+<p>Pushes a value onto the stack.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>Push (VInt 42)      -- Push integer 42
+Push (VBool True)   -- Push boolean true
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[...]</code></li>
+<li>Stack after: <code>[value, ...]</code></li>
+<li>PC: <code>PC + 1</code></li>
+</ul>
+<h4 id="pop"><a class="header" href="#pop">Pop</a></h4>
+<pre><code class="language-haskell">Pop
+</code></pre>
+<p>Removes the top value from the stack.</p>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[value, ...]</code></li>
+<li>Stack after: <code>[...]</code></li>
+<li>PC: <code>PC + 1</code></li>
+</ul>
+<h3 id="variable-operations"><a class="header" href="#variable-operations">Variable Operations</a></h3>
+<h4 id="loadvar"><a class="header" href="#loadvar">LoadVar</a></h4>
+<pre><code class="language-haskell">LoadVar String
+</code></pre>
+<p>Loads a variable's value onto the stack.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>LoadVar "x"
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack: <code>[vars[name], ...]</code></li>
+<li>PC: <code>PC + 1</code></li>
+<li>Error if variable not found</li>
+</ul>
+<h4 id="storevar"><a class="header" href="#storevar">StoreVar</a></h4>
+<pre><code class="language-haskell">StoreVar String
+</code></pre>
+<p>Stores the top of stack in a variable.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>StoreVar "x"
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[value, ...]</code></li>
+<li>Stack after: <code>[...]</code></li>
+<li>Variables: <code>vars[name] = value</code></li>
+<li>PC: <code>PC + 1</code></li>
+</ul>
+<h3 id="binary-operations"><a class="header" href="#binary-operations">Binary Operations</a></h3>
+<h4 id="binop"><a class="header" href="#binop">BinOp</a></h4>
+<pre><code class="language-haskell">BinOp Op
+</code></pre>
+<p>Performs a binary operation on the top two stack values.</p>
+<p><strong>Operators</strong>:</p>
+<ul>
+<li><code>Add</code>, <code>Sub</code>, <code>Mul</code>, <code>Div</code> (arithmetic)</li>
+<li><code>Eq</code>, <code>NotEq</code>, <code>Less</code>, <code>Greater</code>, <code>LessEq</code>, <code>GreaterEq</code> (comparison)</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code>BinOp Add
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[right, left, ...]</code></li>
+<li>Stack after: <code>[result, ...]</code></li>
+<li>PC: <code>PC + 1</code></li>
+<li>Error on type mismatch or division by zero</li>
+</ul>
+<p><strong>Operations</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Operation</th><th>Left</th><th>Right</th><th>Result</th><th>Description</th></tr></thead><tbody>
+<tr><td>Add</td><td>Int</td><td>Int</td><td>Int</td><td>Addition</td></tr>
+<tr><td>Sub</td><td>Int</td><td>Int</td><td>Int</td><td>Subtraction</td></tr>
+<tr><td>Mul</td><td>Int</td><td>Int</td><td>Int</td><td>Multiplication</td></tr>
+<tr><td>Div</td><td>Int</td><td>Int</td><td>Int</td><td>Division (truncated)</td></tr>
+<tr><td>Eq</td><td>Int</td><td>Int</td><td>Bool</td><td>Equality</td></tr>
+<tr><td>NotEq</td><td>Int</td><td>Int</td><td>Bool</td><td>Inequality</td></tr>
+<tr><td>Less</td><td>Int</td><td>Int</td><td>Bool</td><td>Less than</td></tr>
+<tr><td>Greater</td><td>Int</td><td>Int</td><td>Bool</td><td>Greater than</td></tr>
+<tr><td>LessEq</td><td>Int</td><td>Int</td><td>Bool</td><td>Less or equal</td></tr>
+<tr><td>GreaterEq</td><td>Int</td><td>Int</td><td>Bool</td><td>Greater or equal</td></tr>
+</tbody></table>
+</div>
+<h3 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h3>
+<h4 id="jumpiffalse"><a class="header" href="#jumpiffalse">JumpIfFalse</a></h4>
+<pre><code class="language-haskell">JumpIfFalse Int
+</code></pre>
+<p>Conditional jump: jumps forward if top of stack is false or zero.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>JumpIfFalse 5
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[condition, ...]</code></li>
+<li>Stack after: <code>[...]</code></li>
+<li>If false/zero: <code>PC = PC + offset + 1</code></li>
+<li>If true/non-zero: <code>PC = PC + 1</code></li>
+</ul>
+<p><strong>Truthiness</strong>:</p>
+<ul>
+<li><code>VBool False</code> → jump</li>
+<li><code>VBool True</code> → don't jump</li>
+<li><code>VInt 0</code> → jump</li>
+<li><code>VInt n</code> (n ≠ 0) → don't jump</li>
+</ul>
+<h4 id="jump"><a class="header" href="#jump">Jump</a></h4>
+<pre><code class="language-haskell">Jump Int
+</code></pre>
+<p>Unconditional jump forward.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>Jump 10
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>PC: <code>PC + offset + 1</code></li>
+</ul>
+<h3 id="function-operations"><a class="header" href="#function-operations">Function Operations</a></h3>
+<h4 id="callfunc"><a class="header" href="#callfunc">CallFunc</a></h4>
+<pre><code class="language-haskell">CallFunc String Int
+</code></pre>
+<p>Calls a function with N arguments.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>CallFunc "add" 2
+</code></pre>
+<p><strong>Effect</strong>:</p>
+<ol>
+<li>Pops N arguments from stack (in reverse order)</li>
+<li>Looks up function in function table</li>
+<li>Binds arguments to parameters</li>
+<li>Executes function body</li>
+<li>Pushes return value onto stack</li>
+<li>PC: <code>PC + 1</code></li>
+</ol>
+<p><strong>Errors</strong>:</p>
+<ul>
+<li>Function not found</li>
+<li>Argument count mismatch</li>
+</ul>
+<h4 id="return"><a class="header" href="#return">Return</a></h4>
+<pre><code class="language-haskell">Return
+</code></pre>
+<p>Returns from a function with the value on top of stack.</p>
+<p><strong>Effect</strong>:</p>
+<ul>
+<li>Stack before: <code>[return_value, ...]</code></li>
+<li>Returns <code>return_value</code> to caller</li>
+<li>In main context: terminates program</li>
+</ul>
+<h2 id="instruction-summary-table"><a class="header" href="#instruction-summary-table">Instruction Summary Table</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Instruction</th><th>Operands</th><th>Stack Effect</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>Push</code></td><td>Value</td><td><code>[] → [v]</code></td><td>Push value</td></tr>
+<tr><td><code>Pop</code></td><td>-</td><td><code>[v] → []</code></td><td>Pop value</td></tr>
+<tr><td><code>LoadVar</code></td><td>String</td><td><code>[] → [value]</code></td><td>Load variable</td></tr>
+<tr><td><code>StoreVar</code></td><td>String</td><td><code>[v] → []</code></td><td>Store variable</td></tr>
+<tr><td><code>BinOp</code></td><td>Op</td><td><code>[r, l] → [result]</code></td><td>Binary operation</td></tr>
+<tr><td><code>JumpIfFalse</code></td><td>Int</td><td><code>[cond] → []</code></td><td>Conditional jump</td></tr>
+<tr><td><code>Jump</code></td><td>Int</td><td>-</td><td>Unconditional jump</td></tr>
+<tr><td><code>CallFunc</code></td><td>String, Int</td><td><code>[args...] → [result]</code></td><td>Call function</td></tr>
+<tr><td><code>Return</code></td><td>-</td><td><code>[v] → returns v</code></td><td>Return from function</td></tr>
+</tbody></table>
+</div>
+<h2 id="example-instruction-sequences"><a class="header" href="#example-instruction-sequences">Example Instruction Sequences</a></h2>
+<h3 id="simple-addition"><a class="header" href="#simple-addition">Simple Addition</a></h3>
+<p>Source: <code>10 + 20</code></p>
+<p>Bytecode:</p>
+<pre><code>Push (VInt 10)
+Push (VInt 20)
+BinOp Add
+</code></pre>
+<p>Execution:</p>
+<pre><code>PC=0: Push 10    → Stack: [10]
+PC=1: Push 20    → Stack: [20, 10]
+PC=2: BinOp Add  → Stack: [30]
+</code></pre>
+<h3 id="if-else"><a class="header" href="#if-else">If-Else</a></h3>
+<p>Source: <code>if (x &gt; 0) return 1 else return 0</code></p>
+<p>Bytecode:</p>
+<pre><code>LoadVar "x"
+Push (VInt 0)
+BinOp Greater
+JumpIfFalse 2
+Push (VInt 1)
+Return
+Jump 2
+Push (VInt 0)
+Return
+</code></pre>
+<h3 id="function-call"><a class="header" href="#function-call">Function Call</a></h3>
+<p>Source: <code>add(10, 20)</code></p>
+<p>Bytecode:</p>
+<pre><code>Push (VInt 10)
+Push (VInt 20)
+CallFunc "add" 2
+</code></pre>
+<h2 id="instruction-encoding"><a class="header" href="#instruction-encoding">Instruction Encoding</a></h2>
+<p>Instructions are encoded in binary format:</p>
+<pre><code>┌─────────────────┬──────────────────────┐
+│ Tag (1 byte)    │ Data (variable)      │
+├─────────────────┼──────────────────────┤
+│ 0: Push         │ Value                │
+│ 1: Pop          │ -                    │
+│ 2: LoadVar      │ String               │
+│ 3: StoreVar     │ String               │
+│ 4: BinOp        │ Op tag               │
+│ 5: JumpIfFalse  │ Int                  │
+│ 6: Jump         │ Int                  │
+│ 7: CallFunc     │ String, Int          │
+│ 8: Return       │ -                    │
+└─────────────────┴──────────────────────┘
+</code></pre>
+<h2 id="error-conditions"><a class="header" href="#error-conditions">Error Conditions</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Instruction</th><th>Error Conditions</th></tr></thead><tbody>
+<tr><td><code>Push</code></td><td>None</td></tr>
+<tr><td><code>Pop</code></td><td>Stack underflow</td></tr>
+<tr><td><code>LoadVar</code></td><td>Variable not found</td></tr>
+<tr><td><code>StoreVar</code></td><td>Stack underflow</td></tr>
+<tr><td><code>BinOp</code></td><td>Stack underflow, type error, division by zero</td></tr>
+<tr><td><code>JumpIfFalse</code></td><td>Stack underflow</td></tr>
+<tr><td><code>Jump</code></td><td>None</td></tr>
+<tr><td><code>CallFunc</code></td><td>Function not found, stack underflow, arg count mismatch</td></tr>
+<tr><td><code>Return</code></td><td>Stack underflow</td></tr>
+</tbody></table>
+</div>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li>Learn about the <a href="./vm.html">VM</a> that executes these instructions</li>
+<li>Understand the <a href="./execution.html">execution model</a></li>
+<li>See the <a href="./bytecode.html">bytecode format</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../architecture/bytecode.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../architecture/execution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../architecture/bytecode.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../architecture/execution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

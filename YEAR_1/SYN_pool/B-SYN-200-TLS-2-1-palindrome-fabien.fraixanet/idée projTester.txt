@@ -1,0 +1,17 @@
+Searching TRD : tree structure of repository in alpha order
+-> try scanf
+-> removed hiden file and hiden dir
+-> sort in alpha by letters and not ascii value
+-> don't forget to print '-'
+
+
+BFT : in param, search for it in current directory, then in $PATH, if not found quit cleanly with error message
+
+Arguments : path of file in params and print what's in there 
+if just dir and echo print all type of file and what'in there on same line by file
+
+Input : print what'in dir and TDF when there is 2 line with INPUT:file as syntax
+
+Output : 
+
+Awaited result : 

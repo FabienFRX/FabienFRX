@@ -1,0 +1,13 @@
+fn main() {
+    a = 10
+    b = 20
+
+    is_equal = a == b
+    is_less = a < b
+
+    if (is_less) {
+        return 1
+    } else {
+        return 0
+    }
+}

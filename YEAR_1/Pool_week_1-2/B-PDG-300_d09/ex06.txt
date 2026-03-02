@@ -1,0 +1,7 @@
+Gildas goes for an adventure.
+Gildas: 100HP, 42 PP.
+Gildas has been poisoned.
+Gildas: 50HP, 42 PP.
+Gildas drinks a mysterious potion.
+Gildas: 100HP, 42 PP.
+Gildas is back to his crops.

@@ -1,0 +1,31 @@
+Gildas goes for an adventure.$
+Arthur goes for an adventure.$
+Arthur vows to protect the kingdom.$
+Merlin goes for an adventure.$
+Merlin learns magic from his spellbook.$
+Trichelieu goes for an adventure.$
+Trichelieu learns magic from his spellbook.$
+Trichelieu enters in the order.$
+Uther goes for an adventure.$
+Uther vows to protect the kingdom.$
+Uther learns magic from his spellbook.
+Uther enters in the order.
+Uther fights for the light.
+Gildas tosses a stone.
+Arthur is out of power.
+Merlin meditates.
+Trichelieu takes 21 damage.
+Uther: 100 health points, 99 power points.
+Gildas is back to his crops.
+Arthur takes off his armor.
+Arthur is back to his crops.
+Merlin closes his spellbook.
+Merlin is back to his crops.
+Trichelieu finds peace.
+Trichelieu closes his spellbook.
+Trichelieu is back to his crops.
+Uther is blessed.
+Uther finds peace.
+Uther closes his spellbook.
+Uther takes off his armor.
+Uther is back to his crops.

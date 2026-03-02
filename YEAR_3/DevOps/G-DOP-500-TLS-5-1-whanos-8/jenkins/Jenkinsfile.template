@@ -1,0 +1,260 @@
+// This is the template Jenkinsfile used by all Whanos-linked projects
+// It will be injected into dynamically created jobs by link-project
+
+pipeline {
+    agent any
+
+    environment {
+        REGISTRY_URL = "${env.REGISTRY_URL ?: 'k3d-whanos-registry:5000'}"
+        APP_NAME = "${env.JOB_NAME.split('/')[1]}"  // Extract name from "Projects/name"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+        K3D_CLUSTER = "${env.K3D_CLUSTER_NAME ?: 'whanos-cluster'}"
+    }
+
+    stages {
+        stage('Detect Language') {
+            steps {
+                script {
+                    echo "🔍 Detecting project language..."
+
+                    if (fileExists('requirements.txt')) {
+                        env.LANGUAGE = 'python'
+                        env.BASE_IMAGE = 'whanos-python'
+                    } else if (fileExists('package.json')) {
+                        env.LANGUAGE = 'javascript'
+                        env.BASE_IMAGE = 'whanos-javascript'
+                    } else if (fileExists('app/pom.xml')) {
+                        env.LANGUAGE = 'java'
+                        env.BASE_IMAGE = 'whanos-java'
+                    } else if (fileExists('Makefile')) {
+                        env.LANGUAGE = 'c'
+                        env.BASE_IMAGE = 'whanos-c'
+                    } else if (fileExists('app/main.bf')) {
+                        env.LANGUAGE = 'befunge'
+                        env.BASE_IMAGE = 'whanos-befunge'
+                    } else {
+                        error "❌ No supported language detected!"
+                    }
+
+                    echo "✅ Detected language: ${env.LANGUAGE}"
+                    echo "📦 Using base image: ${env.BASE_IMAGE}"
+                }
+            }
+        }
+
+        stage('Build Application Image') {
+            steps {
+                script {
+                    echo "🔨 Building application image..."
+
+                    // Check if custom Dockerfile exists
+                    if (fileExists('Dockerfile')) {
+                        echo "📄 Using custom Dockerfile from repository"
+
+                        sh """
+                            docker build \
+                                -t ${env.APP_NAME}:${env.IMAGE_TAG} \
+                                -t ${env.APP_NAME}:latest \
+                                .
+                        """
+                    } else {
+                        echo "📦 Using Whanos standalone image for ${env.LANGUAGE}"
+
+                        // Use standalone Dockerfile
+                        sh """
+                            docker build \
+                                -f /var/jenkins_home/whanos-images/${env.LANGUAGE}/Dockerfile.standalone \
+                                -t ${env.APP_NAME}:${env.IMAGE_TAG} \
+                                -t ${env.APP_NAME}:latest \
+                                .
+                        """
+                    }
+
+                    echo "✅ Application image built successfully"
+                }
+            }
+        }
+
+        stage('Push to Registry') {
+            steps {
+                script {
+                    echo "📤 Pushing to registry..."
+
+                    sh """
+                        docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${env.REGISTRY_URL}/${env.APP_NAME}:${env.IMAGE_TAG}
+                        docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${env.REGISTRY_URL}/${env.APP_NAME}:latest
+                        docker push ${env.REGISTRY_URL}/${env.APP_NAME}:${env.IMAGE_TAG}
+                        docker push ${env.REGISTRY_URL}/${env.APP_NAME}:latest
+                    """
+
+                    echo "✅ Images pushed to registry"
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            when {
+                expression {
+                    return fileExists('whanos.yml')
+                }
+            }
+            steps {
+                script {
+                    echo "🚀 Deploying to Kubernetes..."
+
+                    // Read whanos.yml configuration
+                    def config = readYaml file: 'whanos.yml'
+
+                    // Check if deployment is configured
+                    if (!config.deployment) {
+                        echo "⚠️  whanos.yml exists but no deployment section found. Skipping deployment."
+                        return
+                    }
+
+                    def replicas = config.deployment?.replicas ?: 1
+                    def ports = config.deployment?.ports ?: []
+                    def resources = config.deployment?.resources ?: [:]
+
+                    // Build resources section for Kubernetes
+                    def resourcesYaml = ""
+                    if (resources) {
+                        resourcesYaml = """
+        resources:"""
+                        if (resources.requests) {
+                            resourcesYaml += """
+          requests:"""
+                            resources.requests.each { key, value ->
+                                resourcesYaml += """
+            ${key}: "${value}\""""
+                            }
+                        }
+                        if (resources.limits) {
+                            resourcesYaml += """
+          limits:"""
+                            resources.limits.each { key, value ->
+                                resourcesYaml += """
+            ${key}: "${value}\""""
+                            }
+                        }
+                    }
+
+                    // Build ports section
+                    def portsYaml = ""
+                    def servicePorts = ""
+                    if (ports) {
+                        portsYaml = """
+        ports:"""
+                        ports.each { port ->
+                            portsYaml += """
+        - containerPort: ${port}"""
+                        }
+
+                        servicePorts = ports.collect { port ->
+                            """
+  - protocol: TCP
+    port: ${port}
+    targetPort: ${port}"""
+                        }.join('')
+                    }
+
+                    // Create Kubernetes manifests
+                    def k8sManifest = """
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${env.APP_NAME}
+  namespace: whanos
+  labels:
+    app: ${env.APP_NAME}
+spec:
+  replicas: ${replicas}
+  selector:
+    matchLabels:
+      app: ${env.APP_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${env.APP_NAME}
+    spec:
+      containers:
+      - name: ${env.APP_NAME}
+        image: ${env.REGISTRY_URL}/${env.APP_NAME}:${env.IMAGE_TAG}${portsYaml}${resourcesYaml}
+"""
+
+                    // Add service if ports are defined
+                    if (ports) {
+                        k8sManifest += """
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${env.APP_NAME}
+  namespace: whanos
+spec:
+  selector:
+    app: ${env.APP_NAME}
+  ports:${servicePorts}
+  type: ClusterIP
+"""
+                    }
+
+                    writeFile file: 'k8s-deployment.yaml', text: k8sManifest
+
+                    // Fix kubeconfig and apply to cluster
+                    sh """
+                        cp /root/.kube/config /tmp/kubeconfig || true
+                        sed -i 's|server: https://0.0.0.0:6443|server: https://k3d-whanos-cluster-server-0:6443|g' /tmp/kubeconfig
+                        export KUBECONFIG=/tmp/kubeconfig
+                        kubectl apply -f k8s-deployment.yaml
+                        kubectl rollout status deployment/${env.APP_NAME} -n whanos --timeout=120s
+                    """
+
+                    echo "✅ Deployment successful!"
+                    echo "📊 Application: ${env.APP_NAME}"
+                    echo "🔢 Build: ${env.IMAGE_TAG}"
+                    echo "📦 Replicas: ${replicas}"
+                    if (ports) {
+                        echo "🔌 Ports: ${ports.join(', ')}"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def deployStatus = fileExists('whanos.yml') ? "Deployed to Kubernetes ✓" : "Image built (no deployment configured)"
+                echo """
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║     ✅ WHANOS PIPELINE COMPLETED SUCCESSFULLY!                ║
+║                                                                ║
+║     Application: ${env.APP_NAME}
+║     Build: ${env.IMAGE_TAG}
+║     Language: ${env.LANGUAGE}
+║     Status: ${deployStatus}
+║                                                                ║
+║     📦 Image: ${env.REGISTRY_URL}/${env.APP_NAME}:${env.IMAGE_TAG}
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+"""
+            }
+        }
+        failure {
+            echo """
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║     ❌ PIPELINE FAILED!                                        ║
+║                                                                ║
+║     Check the logs above for error details.                   ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+"""
+        }
+        always {
+            // Cleanup temporary files
+            sh 'rm -f k8s-deployment.yaml || true'
+        }
+    }
+}

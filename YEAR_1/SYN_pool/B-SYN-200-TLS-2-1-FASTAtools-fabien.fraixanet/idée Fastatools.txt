@@ -1,0 +1,24 @@
+match identifiers and Dna sequences
+identifiers line start with '>'
+DNA sequences line is just below without symbols before
+
+option 1: lire un fichier .fasta sur l'entrée standard et ecrire la séquence d'adn sur la sortie standard.
+
+option 2 (RNA): lire un fichier .fasta sur l'entrée standard et ecrire la séquence d'adn sur la sortie standard en changeant les 'T' par des 'U'
+
+option 3 (REVERSE COMPLEMENT): lire un fichier .fasta sur l'entrée standard et ecrire la séquence d'adn sur la sortie standard en changeant les 'T' par des 'A' et les 'G' par des 'C' en retournant la string
+
+option 4(K-MERS): lire un fichier .fasta sur l'entrée standard et ecrire la list de tout les k-mers sur la sortie standard ligne par ligne avec k en argument en séparant la string le nombre de valeur donnée et/ou avec le nombre de lettre donnée dans l'ordre alphabétique
+
+option 5(CODING SEQUENCE): lire un fichier .fasta sur l'entrée standard et ecrire la list de toutes les sequences codée lign par ligne sur la sortie standard dans l'ordre alphabétique
+- ATG debute la séquence
+- TAA, TAG, TGA arrêtent la séquence
+
+option 6(AMINO ACIDS): lire un fichier .fasta sur l'entrée standard et écrire la liste des amino acids ligne par ligne dans l'ordre alphabetique 
+
+option 7 (DNA SEQUENCES ALIGNMENT): lire un fichier .fasta sur l'entrée standard contenant exactement 2 sequences, aligner les et écrire le résultat sur la sortie standard
+
+
+line[i] == 'A' ||
+            line[i] == 'T' || line[i] == 'C' || line[i] == 'G' ||
+            line[i] == 'N'

@@ -1,0 +1,5 @@
+FROM node:20.9-alpine AS base
+WORKDIR /app
+ONBUILD COPY package*.json ./
+ONBUILD RUN npm ci --only=production
+ONBUILD COPY app/ ./app/

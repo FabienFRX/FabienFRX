@@ -1,0 +1,12 @@
+fn max(a, b) {
+    if (a < b) {
+        return b
+    } else {
+        return a
+    }
+}
+
+fn main() {
+    result = max(42, 17)
+    return result
+}

@@ -1,0 +1,9 @@
+KreogCom 101010 initialized
+KreogCom 65 initialized
+KreogCom 51 initialized
+KreogCom 51 currently at 73 34
+KreogCom 65 currently at 56 25
+KreogCom 101010 currently at 42 42
+KreogCom 51 shutting down
+KreogCom 65 shutting down
+KreogCom 101010 shutting down

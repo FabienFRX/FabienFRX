@@ -1,0 +1,9 @@
+*.a
+*.o
+*.sh
+*.gch
+*.log
+*.exe
+*.out
+*.gcore
+*.vscode

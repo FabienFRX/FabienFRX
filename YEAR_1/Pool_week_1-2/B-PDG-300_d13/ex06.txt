@@ -1,0 +1,10 @@
+> *push 4.56*
+> *push abc*
+Invalid conversion
+> *push 42*
+> *div*
+> *display*
+9.21053
+> *mul*
+Not enough operands
+> *CTRL+D* End of input

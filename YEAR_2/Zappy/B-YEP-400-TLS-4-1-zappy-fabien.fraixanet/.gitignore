@@ -1,0 +1,40 @@
+# Compiled files
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+# Binaries
+zappy_server
+zappy_gui
+zappy_ai
+
+# Log files
+*.log
+ai*.log
+coding-style-reports.log
+
+# Temporary files
+*~
+#*#
+.DS_Store
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+build/
+dist/
+
+# Test scripts
+*.sh
+test_*.sh
+run_test.sh
+tests/*
+
+# Documentation files
+*.pdf 

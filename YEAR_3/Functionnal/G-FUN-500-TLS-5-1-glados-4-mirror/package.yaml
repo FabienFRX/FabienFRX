@@ -1,0 +1,90 @@
+name:                glados
+version:             0.1.0.0
+github:              "EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4"
+license:             BSD-3-Clause
+author:              "Gobijan Nathakrishnan"
+maintainer:          "gobijan.nathakrishnan@epitech.eu"
+copyright:           "2025 EPITECH"
+
+extra-source-files:
+- README.md
+
+# Metadata used when publishing your package
+# synopsis:            GLaDOS functional programming project
+# category:            Education
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- parsec >= 3.1 && < 4
+- containers >= 0.6 && < 1
+- binary >= 0.8 && < 1
+- bytestring >= 0.10 && < 1
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+library:
+  source-dirs:
+    - src/part2/Compiler
+    - src/part2/VM
+  exposed-modules:
+    - Parser
+    - AST
+    - Compiler
+    - CompilerInterface
+    - Types
+    - VM
+
+executables:
+  glados-compiler:
+    main:                CompilerMain.hs
+    source-dirs:         src/part2/App
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - glados
+    - filepath >= 1.4 && < 2
+    other-modules: []
+
+  glados-vm:
+    main:                VMMain.hs
+    source-dirs:         src/part2/App
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - glados
+    other-modules: []
+
+tests:
+  glados-test:
+    main:                TestMain.hs
+    source-dirs:         src/part2/tests
+    other-modules:
+      - ParserTests
+      - CompilerTests
+      - VMTests
+      - IntegrationTests
+    dependencies:
+    - glados
+    - HUnit >= 1.6 && < 2
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N

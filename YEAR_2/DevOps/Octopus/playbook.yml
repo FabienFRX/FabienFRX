@@ -1,0 +1,66 @@
+---
+- name: Apply base configuration to all servers
+  hosts: all
+  become: yes
+  roles:
+    - base
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
+
+- name: Configure Redis server
+  hosts: redis
+  become: yes
+  roles:
+    - redis
+  handlers:
+    - name: Restart Redis
+      service:
+        name: redis-server
+        state: restarted
+
+- name: Configure PostgreSQL server
+  hosts: postgresql
+  become: yes
+  roles:
+    - postgresql
+  handlers:
+    - name: Restart PostgreSQL
+      service:
+        name: postgresql
+        state: restarted
+
+- name: Configure Poll service
+  hosts: poll
+  become: yes
+  roles:
+    - poll
+  handlers:
+    - name: Restart Poll service
+      service:
+        name: poll
+        state: restarted
+
+- name: Configure Worker service
+  hosts: worker
+  become: yes
+  roles:
+    - worker
+  handlers:
+    - name: Restart Worker service
+      service:
+        name: worker
+        state: restarted
+
+- name: Configure Result service
+  hosts: result
+  become: yes
+  roles:
+    - result
+  handlers:
+    - name: Restart Result service
+      service:
+        name: result
+        state: restarted

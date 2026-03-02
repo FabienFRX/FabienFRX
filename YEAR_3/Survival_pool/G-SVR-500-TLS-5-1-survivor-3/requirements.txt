@@ -1,0 +1,12 @@
+Django==5.2.5
+djangorestframework==3.16.1
+django-filter==25.1
+python-decouple==3.8
+psycopg2-binary==2.9.9
+requests==2.31.0
+django-cors-headers==4.3.1
+Pillow==10.4.0
+reportlab==4.2.2
+weasyprint==62.3
+cffi==1.16.0
+cairocffi==1.6.1

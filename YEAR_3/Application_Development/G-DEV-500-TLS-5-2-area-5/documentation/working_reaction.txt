@@ -1,0 +1,15 @@
+Google :
+
+Send an email via Gmail
+Create a new calendar event
+
+
+Dropbox :
+
+Create a new folder in Dropbox
+Move a file to another location
+Copy a file to another location
+Delete a file from Dropbox
+
+LinkedIn :
+SHARE A TEXT POST ON LINEKDIN

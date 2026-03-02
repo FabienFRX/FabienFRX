@@ -1,0 +1,12 @@
+DroidMemory '1804289357', 42
+DroidMemory '1804289357', 126
+DroidMemory '846930886', 84
+Droid 'rudolf' Activated
+Droid 'gaston' Activated
+Droid 'rudolf', take a coffee - Failed!, 80
+Droid 'rudolf', Run Away - Completed!, 50
+Droid 'rudolf', Shoot some ennemies - Completed!, 30
+Droid 'rudolf', Shoot some ennemies - Completed!, 10
+Droid 'rudolf', Battery Low, 0
+Droid 'gaston' Destroyed
+Droid 'rudolf' Destroyed

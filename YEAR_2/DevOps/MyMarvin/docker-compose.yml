@@ -1,0 +1,17 @@
+services:
+  jenkins:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./my_marvin.yml:/var/jenkins_home/jenkins.yaml
+      - ./job_dsl.groovy:/var/jenkins_home/job_dsl.groovy
+    environment:
+      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/jenkins.yaml
+      - USER_CHOCOLATEEN_PASSWORD=${USER_CHOCOLATEEN_PASSWORD}
+      - USER_VAUGIE_G_PASSWORD=${USER_VAUGIE_G_PASSWORD}
+      - USER_I_DONT_KNOW_PASSWORD=${USER_I_DONT_KNOW_PASSWORD}
+      - USER_NASSO_PASSWORD=${USER_NASSO_PASSWORD}
+    env_file:
+      - .env

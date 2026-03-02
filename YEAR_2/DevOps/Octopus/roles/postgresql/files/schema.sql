@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS votes (
+  id VARCHAR(255) NOT NULL UNIQUE,
+  vote VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS votes_id_idx ON votes (id);
+CREATE INDEX IF NOT EXISTS votes_vote_idx ON votes (vote);

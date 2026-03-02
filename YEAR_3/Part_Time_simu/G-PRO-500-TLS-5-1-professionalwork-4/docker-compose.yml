@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: quizlab
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    networks:
+      - quizlab-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d quizlab"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://user:user@db:5432/quizlab"
+      JWT_SECRET: "your-super-secret-jwt-key-change-this-in-production"
+      PORT: 3000
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - quizlab-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - quizlab-network
+
+volumes:
+  dbdata:
+
+networks:
+  quizlab-network:
+    driver: bridge

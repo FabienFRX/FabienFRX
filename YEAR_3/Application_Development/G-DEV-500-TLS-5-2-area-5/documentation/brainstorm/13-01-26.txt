@@ -1,0 +1,17 @@
+EVAN :
+
+set timer action working
+add event calendar + send Email
+send Email
+all action + reaction google 
+
+MARCEAU : 
+
+add github services
+add some action
++ some reaction
+
+FABIEN : 
+
+make the same as web for mobile
+

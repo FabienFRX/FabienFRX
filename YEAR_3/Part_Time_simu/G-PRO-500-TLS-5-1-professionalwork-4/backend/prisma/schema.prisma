@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  email                String    @unique @db.Citext
+  username             String    @unique
+  displayName          String?
+  passwordHash         String?
+  avatarUrl            String?
+  birthYear            Int?
+  country              String?   @db.VarChar(2)
+  roles                Role[]    @default([USER])
+  oauthProvider        String?
+  oauthSub             String?
+  lastLoginAt          DateTime?
+  ageGroup             AgeGroup?
+  defaultLevel         Level?
+  favoriteTopics       String[]  @default([])
+  trickyAnswersEnabled Boolean   @default(false)
+  isDeleted            Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  // Relations Daily Challenge
+  dailyChallengeAttempts DailyChallengeAttempt[]
+  dailyChallengeStats    DailyChallengeStats?
+
+  // Relations Messages
+  sentMessages  Message[]                 @relation("SentMessages")
+  conversations ConversationParticipant[]
+
+  @@index([email])
+  @@index([username])
+}
+
+// Daily Challenge: un défi quotidien unique pour tous les joueurs
+model DailyChallenge {
+  id         String   @id @default(uuid())
+  date       DateTime @unique @db.Date // Date du challenge (une par jour)
+  theme      String // history, science, geography, etc.
+  difficulty Level // easy, medium, hard
+  questions  Json // Array de questions avec réponses
+  xpReward   Int // XP de base (multiplié selon performance)
+  createdAt  DateTime @default(now())
+
+  // Relations
+  attempts DailyChallengeAttempt[]
+
+  @@index([date])
+}
+
+// Tentatives des utilisateurs sur les Daily Challenges
+model DailyChallengeAttempt {
+  id             String   @id @default(uuid())
+  userId         String
+  challengeId    String
+  score          Int // Score obtenu (0-100)
+  correctAnswers Int // Nombre de bonnes réponses
+  totalQuestions Int // Nombre total de questions
+  timeSpent      Int // Temps passé en secondes
+  xpEarned       Int // XP gagné (basé sur difficulté + performance)
+  completedAt    DateTime @default(now())
+
+  // Relations
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge DailyChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId]) // Un utilisateur ne peut faire qu'une tentative par challenge
+  @@index([userId])
+  @@index([challengeId])
+  @@index([completedAt])
+}
+
+// Stats globales Daily Challenge par utilisateur
+model DailyChallengeStats {
+  id                       String    @id @default(uuid())
+  userId                   String    @unique
+  currentStreak            Int       @default(0) // Streak actuel (jours consécutifs)
+  longestStreak            Int       @default(0) // Meilleur streak de tous les temps
+  totalChallengesCompleted Int       @default(0) // Total de challenges complétés
+  totalXpEarned            Int       @default(0) // Total XP gagné via daily challenges
+  lastCompletedDate        DateTime? @db.Date // Dernière date de complétion
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([currentStreak])
+}
+
+// Conversation: représente une discussion entre utilisateurs
+model Conversation {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@index([updatedAt])
+}
+
+// Participants d'une conversation
+model ConversationParticipant {
+  id             String   @id @default(uuid())
+  conversationId String
+  userId         String
+  lastReadAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@index([conversationId])
+}
+
+// Messages dans une conversation
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String
+  senderId       String
+  content        String   @db.Text
+  read           Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum AgeGroup {
+  CHILD
+  TEEN
+  ADULT
+}
+
+enum Level {
+  EASY
+  MEDIUM
+  HARD
+}

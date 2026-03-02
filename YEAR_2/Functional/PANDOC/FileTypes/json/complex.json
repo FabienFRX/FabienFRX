@@ -1,0 +1,86 @@
+{
+  "header": {
+    "title": "Complex JSON Document",
+    "author": "Test User",
+    "date": "2025-04-28"
+  },
+  "body": [
+    {
+      "type": "section",
+      "title": "Introduction",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "content": "This is the introduction."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Main Content",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "content": "This section has "
+            },
+            {
+              "type": "bold",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "formatted"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " text."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Item one"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Item two with "
+                },
+                {
+                  "type": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": "emphasis"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "codeblock",
+          "content": "function test() {\n  console.log(\"Hello world\");\n}"
+        }
+      ]
+    }
+  ]
+}

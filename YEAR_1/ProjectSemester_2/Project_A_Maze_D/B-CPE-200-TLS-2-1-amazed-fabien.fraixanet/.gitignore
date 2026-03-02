@@ -1,0 +1,8 @@
+.vscode/
+*.o
+*.a
+*.so
+*.exe
+*.log
+maps/
+test_bin

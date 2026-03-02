@@ -1,0 +1,12 @@
+Eccleston is alive
+Tennant is alive
+Smith is alive
+Eccleston is dead
+Tennant is touched
+Smith is touched
+Whittaker is alive
+Whittaker is dead
+Capaldi is alive
+Tennant is dead
+Capaldi is dead
+Smith is dead

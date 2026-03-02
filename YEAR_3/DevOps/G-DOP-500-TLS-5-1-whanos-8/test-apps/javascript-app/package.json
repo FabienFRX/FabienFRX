@@ -1,0 +1,12 @@
+{
+  "name": "whanos-javascript-test-app",
+  "version": "1.0.0",
+  "description": "Whanos JavaScript Test Application",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js"
+  },
+  "keywords": ["whanos", "test"],
+  "author": "Whanos Team",
+  "license": "MIT"
+}

@@ -1,0 +1,17 @@
+Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+django-allauth==0.57.0
+python-dotenv==1.0.0
+requests==2.31.0
+google-auth==2.23.4
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+google-api-python-client==2.108.0
+dropbox==11.36.2
+cryptography==41.0.7
+psycopg2-binary==2.9.9
+celery==5.3.4
+redis==5.0.1
+django-celery-beat==2.5.0
+django-celery-results==2.5.1

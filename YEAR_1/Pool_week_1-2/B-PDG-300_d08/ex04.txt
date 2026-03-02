@@ -1,0 +1,15 @@
+Droid 'wreck: 0' Activated
+Droid 'wreck: 1' Activated
+Droid 'wreck: 2' Activated
+Supply : 3, Wreck
+Droid 'wreck: 0', Standing by, 50
+Droid 'wreck: 1', Standing by, 50
+Droid 'wreck: 2', Standing by, 50
+70
+Droid 'wreck: 2', Standing by, 50
+Standing by
+0
+Supply : 70, Iron
+Droid 'wreck: 0' Destroyed
+Droid 'wreck: 2' Destroyed
+Supply : 0, Wreck

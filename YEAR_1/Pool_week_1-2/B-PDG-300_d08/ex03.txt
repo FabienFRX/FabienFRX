@@ -1,0 +1,30 @@
+Droid 'Commander' Activated$
+Droid 'Sergent' Activated$
+Droid 'Troufiont' Activated$
+Droid 'Groupie' Activated$
+Droid 'BeerHolder' Activated$
+500$
+80$
+70$
+Carrier 'HellExpress' Droid(s) on-board:
+[0] : Droid 'Commander', Standing by, 50
+[1] : Free
+[2] : Free
+[3] : Droid 'Groupie', Standing by, 50
+[4] : Droid 'BeerHolder', Standing by, 50
+Speed : 70, Energy 222
+Carrier 'HellExpress' Droid(s) on-board:
+[0] : Droid 'Commander', Standing by, 50
+[1] : Free
+[2] : Free
+[3] : Droid 'Groupie', Standing by, 50
+[4] : Droid 'BeerHolder', Standing by, 50
+Speed : 70, Energy 222
+Carrier 'HellExpress' Droid(s) on-board:
+[0] : Droid 'Commander', Standing by, 50
+[1] : Free
+[2] : Free
+[3] : Free
+[4] : Free
+Speed : 90, Energy 13
+Droid 'Commander' Destroyed

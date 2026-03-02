@@ -1,0 +1,32 @@
+option n qui prend un nombre (>= 0)
+option p qui donne le nombre qu'on veut a la fin en palindrome (pas -n et >= a 0)
+option b qui donne la base (1<b<=10) [def: 10]
+option imin i qui donne le nombre d'iteration minimale (inclue >=0) [def: 0]
+option imax i qui done le nombre d'iteration maximale (inclue >=0) [def: 100]
+
+1/ -n + -b = nb + base 
+	nb -> n(palindrome)
+   -n + NULL || -n + n'importe quoi
+   	print(invalid argument);
+
+2/ -p + -b = n(palindrome) + base
+	n(palindrome) -> factorial inverse
+	print chaque etape
+	factorial inverse = reverse
+   -p + -b + -imax = n(palindrome) + base + nombre iteration max
+   	n(palindrome) -> factorial inverse 
+   	print chaque etape
+   	factorial inverse reverse a partir du nombre d'iteration precisé jusqu'a 0
+   -p + -b + -imin = n(palindrome) + base + nombre d'iteration max
+   	n(palindrome) -> factorial inverse 
+   	print(nb leads to n(palindrome) in (...//iteration max) in -b)
+   	factorial inverse reverse
+
+error exit: if (no solution)
+	print(no solution\n)
+		on standard output (is not error)
+		
+
+commentaire: P doit recevoir un palindrome
+
+test no base and base 10: possible que l'addition des 2 nolbre soit basé sur la base donnée et donc probleme de base

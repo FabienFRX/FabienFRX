@@ -1,0 +1,626 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Control Flow - GLaDOS Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">GLaDOS Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h1>
+<p>GLaDOS provides conditional execution through if-else statements.</p>
+<h2 id="if-else-statements"><a class="header" href="#if-else-statements">If-Else Statements</a></h2>
+<p>The if-else statement is the only control flow construct in GLaDOS. It allows you to execute different code based on a condition.</p>
+<h3 id="syntax"><a class="header" href="#syntax">Syntax</a></h3>
+<pre><code class="language-glados">if (condition) {
+    // Code to execute if condition is true
+} else {
+    // Code to execute if condition is false
+}
+</code></pre>
+<p>Both the <code>if</code> branch and the <code>else</code> branch are <strong>required</strong>.</p>
+<h3 id="basic-example"><a class="header" href="#basic-example">Basic Example</a></h3>
+<pre><code class="language-glados">fn main() {
+    x = 10
+
+    if (x &gt; 5) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h2 id="conditions"><a class="header" href="#conditions">Conditions</a></h2>
+<p>The condition in an if-else statement can be:</p>
+<h3 id="boolean-condition"><a class="header" href="#boolean-condition">Boolean Condition</a></h3>
+<p>Use comparison operators to create boolean conditions:</p>
+<pre><code class="language-glados">fn main() {
+    x = 10
+    y = 20
+
+    is_less = x &lt; y
+
+    if (is_less) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h3 id="integer-condition"><a class="header" href="#integer-condition">Integer Condition</a></h3>
+<p>You can also use integers as conditions:</p>
+<ul>
+<li><code>0</code> is treated as false</li>
+<li>Any non-zero value is treated as true</li>
+</ul>
+<pre><code class="language-glados">fn main() {
+    x = 42
+
+    if (x) {           // Non-zero, treated as true
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h2 id="nested-if-else"><a class="header" href="#nested-if-else">Nested If-Else</a></h2>
+<p>You can nest if-else statements to handle multiple conditions:</p>
+<pre><code class="language-glados">fn sign(n) {
+    if (n &lt; 0) {
+        return -1
+    } else {
+        if (n &gt; 0) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+}
+
+fn main() {
+    return sign(42)    // Returns 1
+}
+</code></pre>
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h3 id="range-checking"><a class="header" href="#range-checking">Range Checking</a></h3>
+<pre><code class="language-glados">fn in_range(n, min_val, max_val) {
+    if (n &lt; min_val) {
+        return 0
+    } else {
+        if (n &gt; max_val) {
+            return 0
+        } else {
+            return 1
+        }
+    }
+}
+
+fn main() {
+    return in_range(15, 10, 20)    // Returns 1 (true)
+}
+</code></pre>
+<h3 id="multiple-conditions"><a class="header" href="#multiple-conditions">Multiple Conditions</a></h3>
+<pre><code class="language-glados">fn grade(score) {
+    if (score &gt;= 90) {
+        return 5        // A
+    } else {
+        if (score &gt;= 80) {
+            return 4    // B
+        } else {
+            if (score &gt;= 70) {
+                return 3    // C
+            } else {
+                if (score &gt;= 60) {
+                    return 2    // D
+                } else {
+                    return 1    // F
+                }
+            }
+        }
+    }
+}
+
+fn main() {
+    return grade(85)    // Returns 4 (B)
+}
+</code></pre>
+<h3 id="boolean-logic"><a class="header" href="#boolean-logic">Boolean Logic</a></h3>
+<p>Since GLaDOS doesn't have <code>&amp;&amp;</code> and <code>||</code> operators, implement them as functions:</p>
+<pre><code class="language-glados">fn and(a, b) {
+    if (a) {
+        if (b) {
+            return 1
+        } else {
+            return 0
+        }
+    } else {
+        return 0
+    }
+}
+
+fn both_positive(a, b) {
+    return and(a &gt; 0, b &gt; 0)
+}
+
+fn main() {
+    return both_positive(5, 10)    // Returns 1
+}
+</code></pre>
+<h2 id="comparison-operators-in-conditions"><a class="header" href="#comparison-operators-in-conditions">Comparison Operators in Conditions</a></h2>
+<p>All comparison operators return boolean values suitable for use in conditions:</p>
+<h3 id="equality"><a class="header" href="#equality">Equality</a></h3>
+<pre><code class="language-glados">fn is_equal(a, b) {
+    if (a == b) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h3 id="inequality"><a class="header" href="#inequality">Inequality</a></h3>
+<pre><code class="language-glados">fn is_different(a, b) {
+    if (a != b) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h3 id="ordering"><a class="header" href="#ordering">Ordering</a></h3>
+<pre><code class="language-glados">fn max(a, b) {
+    if (a &gt; b) {
+        return a
+    } else {
+        return b
+    }
+}
+
+fn min(a, b) {
+    if (a &lt; b) {
+        return a
+    } else {
+        return b
+    }
+}
+</code></pre>
+<h2 id="if-else-as-expressions"><a class="header" href="#if-else-as-expressions">If-Else as Expressions</a></h2>
+<p>In GLaDOS, if-else can be used as part of an expression by storing its result:</p>
+<pre><code class="language-glados">fn abs(n) {
+    result = 0
+    if (n &lt; 0) {
+        result = 0 - n
+    } else {
+        result = n
+    }
+    return result
+}
+
+fn main() {
+    return abs(-25)    // Returns 25
+}
+</code></pre>
+<p>However, it's more idiomatic to return directly:</p>
+<pre><code class="language-glados">fn abs(n) {
+    if (n &lt; 0) {
+        return 0 - n
+    } else {
+        return n
+    }
+}
+
+fn main() {
+    return abs(-25)
+}
+</code></pre>
+<h2 id="looping-with-recursion"><a class="header" href="#looping-with-recursion">Looping with Recursion</a></h2>
+<p>GLaDOS doesn't have traditional loop constructs. Use recursion instead:</p>
+<h3 id="counting-down"><a class="header" href="#counting-down">Counting Down</a></h3>
+<pre><code class="language-glados">fn countdown(n) {
+    if (n &lt;= 0) {
+        return 0
+    } else {
+        return n + countdown(n - 1)
+    }
+}
+
+fn main() {
+    return countdown(10)    // Returns 55 (sum of 1 to 10)
+}
+</code></pre>
+<h3 id="iteration-pattern"><a class="header" href="#iteration-pattern">Iteration Pattern</a></h3>
+<pre><code class="language-glados">fn sum_to_n(n) {
+    if (n &lt;= 0) {
+        return 0
+    } else {
+        return n + sum_to_n(n - 1)
+    }
+}
+
+fn main() {
+    return sum_to_n(100)    // Returns 5050
+}
+</code></pre>
+<h2 id="early-return-pattern"><a class="header" href="#early-return-pattern">Early Return Pattern</a></h2>
+<p>Use early returns to avoid deep nesting:</p>
+<pre><code class="language-glados">fn validate(n) {
+    if (n &lt; 0) {
+        return 0    // Invalid
+    } else {
+        if (n &gt; 100) {
+            return 0    // Invalid
+        } else {
+            return 1    // Valid
+        }
+    }
+}
+</code></pre>
+<p>Can be simplified conceptually (though GLaDOS requires explicit else blocks):</p>
+<pre><code class="language-glados">fn validate(n) {
+    if (n &lt; 0) {
+        return 0
+    } else {
+        if (n &gt; 100) {
+            return 0
+        } else {
+            return 1
+        }
+    }
+}
+</code></pre>
+<h2 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h2>
+<h3 id="missing-else-branch"><a class="header" href="#missing-else-branch">Missing Else Branch</a></h3>
+<pre><code class="language-glados">// ❌ ERROR: Missing else branch
+fn broken(x) {
+    if (x &gt; 0) {
+        return 1
+    }
+}
+
+// ✓ CORRECT: Both branches present
+fn fixed(x) {
+    if (x &gt; 0) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h3 id="type-errors-in-conditions"><a class="header" href="#type-errors-in-conditions">Type Errors in Conditions</a></h3>
+<pre><code class="language-glados">fn main() {
+    x = 10
+    y = 20
+
+    // ❌ ERROR: Cannot use arithmetic result of booleans
+    // if ((x &lt; y) + (x &gt; y)) {
+    //     return 1
+    // } else {
+    //     return 0
+    // }
+
+    // ✓ CORRECT: Use boolean directly
+    if (x &lt; y) {
+        return 1
+    } else {
+        return 0
+    }
+}
+</code></pre>
+<h2 id="advanced-patterns"><a class="header" href="#advanced-patterns">Advanced Patterns</a></h2>
+<h3 id="guarded-recursion"><a class="header" href="#guarded-recursion">Guarded Recursion</a></h3>
+<pre><code class="language-glados">fn factorial(n) {
+    if (n &lt; 2) {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+
+fn main() {
+    return factorial(5)    // Returns 120
+}
+</code></pre>
+<h3 id="multiple-base-cases"><a class="header" href="#multiple-base-cases">Multiple Base Cases</a></h3>
+<pre><code class="language-glados">fn fibonacci(n) {
+    if (n &lt; 2) {
+        return n
+    } else {
+        a = n - 1
+        b = n - 2
+        return fibonacci(a) + fibonacci(b)
+    }
+}
+
+fn main() {
+    return fibonacci(10)    // Returns 55
+}
+</code></pre>
+<h3 id="complex-conditions"><a class="header" href="#complex-conditions">Complex Conditions</a></h3>
+<pre><code class="language-glados">fn between(n, low, high) {
+    if (n &gt;= low) {
+        if (n &lt;= high) {
+            return 1
+        } else {
+            return 0
+        }
+    } else {
+        return 0
+    }
+}
+
+fn main() {
+    return between(15, 10, 20)    // Returns 1
+}
+</code></pre>
+<h2 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h2>
+<h3 id="tail-recursion"><a class="header" href="#tail-recursion">Tail Recursion</a></h3>
+<p>While GLaDOS doesn't guarantee tail call optimization, you can write tail-recursive functions:</p>
+<pre><code class="language-glados">fn sum_helper(n, acc) {
+    if (n &lt;= 0) {
+        return acc
+    } else {
+        return sum_helper(n - 1, acc + n)
+    }
+}
+
+fn sum_to_n(n) {
+    return sum_helper(n, 0)
+}
+
+fn main() {
+    return sum_to_n(100)
+}
+</code></pre>
+<h3 id="avoiding-deep-recursion"><a class="header" href="#avoiding-deep-recursion">Avoiding Deep Recursion</a></h3>
+<p>For very large inputs, deep recursion may cause stack overflow. Keep recursion depth reasonable.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<ul>
+<li><strong>Only control structure</strong>: if-else statements</li>
+<li><strong>Both branches required</strong>: Must have both if and else</li>
+<li><strong>Conditions</strong>: Can be boolean or integer (0 = false)</li>
+<li><strong>Nesting</strong>: Can nest if-else statements</li>
+<li><strong>Recursion</strong>: Use recursion instead of loops</li>
+<li><strong>Comparisons</strong>: Use comparison operators to create conditions</li>
+</ul>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li>Master <a href="./functions.html">functions</a> and recursion</li>
+<li>See <a href="../examples/basic.html">examples</a> of control flow patterns</li>
+<li>Learn about <a href="../examples/functions.html">recursion examples</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../language/operators.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../language/functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../language/operators.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../language/functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

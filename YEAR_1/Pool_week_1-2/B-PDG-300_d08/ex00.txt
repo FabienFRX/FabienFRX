@@ -1,0 +1,10 @@
+Droid '' Activated
+Droid 'Avenger' Activated
+Droid '', Standing by, 50
+Droid 'Avenger', Standing by, 50
+Droid 'Avenger', Kill Kill Kill!, 100--150
+Droid 'Avenger' Activated, Memory Dumped
+1
+Droid 'Avenger' Destroyed
+Droid 'Avenger' Destroyed
+Droid 'Rex' Destroyed

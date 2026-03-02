@@ -1,0 +1,2 @@
+[name: "strawberry", vitamins: 6, peeled: true]
+[name: "strawberry", vitamins: 1138, peeled: true]

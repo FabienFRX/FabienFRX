@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLaDOS Project - Miro Board Layout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="board-container">
+        <div class="board-header">
+            <h1 class="board-title">GLaDOS Project</h1>
+        </div>
+        
+        <div class="flow-diagram">
+            <h2 class="flow-title">Project Workflow</h2>
+            <div class="flow-steps">
+                <div class="flow-step">Parse S-Expressions</div>
+                <div class="flow-step">Build AST</div>
+                <div class="flow-step">Evaluate</div>
+                <div class="flow-step">Execute</div>
+            </div>
+        </div>
+        
+        <div class="board-grid">
+            <!-- Part 0: Testing & CI/CD -->
+            <div class="section part0">
+                <div class="section-header">
+                    <div class="section-icon">0</div>
+                    <h3 class="section-title">Testing & CI/CD</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        Build System (Stack) <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Unit Tests (HSpec) <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Integration Tests <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        GitHub Actions CI <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Code Coverage <span class="status-indicator status-progress"></span>
+                    </li>
+                    <li class="feature-item">
+                        Error Handling (84 exit code) <span class="status-indicator status-done"></span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Part 1: LISP Implementation -->
+            <div class="section part1">
+                <div class="section-header">
+                    <div class="section-icon">1</div>
+                    <h3 class="section-title">LISP Interpreter</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        S-Expression Parser <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        AST Conversion <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Basic Types (Int, Bool, Symbol) <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Define Special Form <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Lambda Functions <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        If Conditionals <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Built-in Functions (+, -, *, div, mod) <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Function Calls <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        Recursion Support <span class="status-indicator status-done"></span>
+                    </li>
+                    <li class="feature-item">
+                        REPL Mode (-i flag) <span class="status-indicator status-done"></span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Part 2: Advanced Features -->
+            <div class="section part2">
+                <div class="section-header">
+                    <div class="section-icon">2</div>
+                    <h3 class="section-title">Advanced Language</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        Security & Type Safety <span class="status-indicator status-todo"></span>
+                    </li>
+                    <li class="feature-item">
+                        Custom Syntax (Non S-Expr) <span class="status-indicator status-todo"></span>
+                    </li>
+                    <li class="feature-item">
+                        Virtual Machine <span class="status-indicator status-todo"></span>
+                    </li>
+                    <li class="feature-item">
+                        Compiler <span class="status-indicator status-todo"></span>
+                    </li>
+                    <li class="feature-item">
+                        Bytecode Generation <span class="status-indicator status-todo"></span>
+                    </li>
+                    <li class="feature-item">
+                        Documentation <span class="status-indicator status-todo"></span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Architecture -->
+            <div class="section architecture">
+                <div class="section-header">
+                    <div class="section-icon">🏗️</div>
+                    <h3 class="section-title">Architecture</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        Parser.hs - S-Expression parsing
+                    </li>
+                    <li class="feature-item">
+                        AST.hs - Data structures & conversion
+                    </li>
+                    <li class="feature-item">
+                        Evaluator.hs - Evaluation engine
+                    </li>
+                    <li class="feature-item">
+                        Main.hs - CLI interface & REPL
+                    </li>
+                    <li class="feature-item">
+                        Environment - Variable bindings
+                    </li>
+                    <li class="feature-item">
+                        Value types - Runtime values
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Current Implementation -->
+            <div class="section implementation">
+                <div class="section-header">
+                    <div class="section-icon">⚡</div>
+                    <h3 class="section-title">Current Status</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        ✅ Parsec for parsing
+                    </li>
+                    <li class="feature-item">
+                        ✅ AST with proper types
+                    </li>
+                    <li class="feature-item">
+                        ✅ Environment-based evaluation
+                    </li>
+                    <li class="feature-item">
+                        ✅ Closure support for functions
+                    </li>
+                    <li class="feature-item">
+                        ✅ Recursive function definitions
+                    </li>
+                    <li class="feature-item">
+                        ✅ Error handling with proper messages
+                    </li>
+                    <li class="feature-item">
+                        ✅ File and stdin input support
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Testing Strategy -->
+            <div class="section testing">
+                <div class="section-header">
+                    <div class="section-icon">🧪</div>
+                    <h3 class="section-title">Testing Strategy</h3>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        Parser unit tests
+                    </li>
+                    <li class="feature-item">
+                        AST conversion tests
+                    </li>
+                    <li class="feature-item">
+                        Evaluator unit tests
+                    </li>
+                    <li class="feature-item">
+                        Integration tests
+                    </li>
+                    <li class="feature-item">
+                        REPL functionality tests
+                    </li>
+                    <li class="feature-item">
+                        Error handling tests
+                    </li>
+                    <li class="feature-item">
+                        Factorial & complex examples
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <h2 class="tech-title">Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <strong>Haskell</strong><br>
+                    Core Language
+                </div>
+                <div class="tech-item">
+                    <strong>Stack</strong><br>
+                    Build Tool
+                </div>
+                <div class="tech-item">
+                    <strong>Parsec</strong><br>
+                    Parser Library
+                </div>
+                <div class="tech-item">
+                    <strong>HSpec</strong><br>
+                    Testing Framework
+                </div>
+                <div class="tech-item">
+                    <strong>GitHub Actions</strong><br>
+                    CI/CD Pipeline
+                </div>
+                <div class="tech-item">
+                    <strong>Makefile</strong><br>
+                    Build Automation
+                </div>
+            </div>
+        </div>
+        
+        <div class="section architecture">
+            <div class="section-header">
+                <div class="section-icon">📌</div>
+                <h3 class="section-title">Important Notes</h3>
+            </div>
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <strong>Part 0 (Testing) is mandatory</strong><br>
+                    <small>Provide unit, integration tests and CI. Tests are expected at every defense.</small>
+                </li>
+                <li class="feature-item">
+                    <strong>Behave like Chez-Scheme</strong><br>
+                    <small>Match grammar, evaluation rules and observable behavior for the required features.</small>
+                </li>
+                <li class="feature-item">
+                    <strong>Errors to stderr with exit code 84</strong><br>
+                    <small>Parsing/evaluation errors must not print to stdout and must exit with code 84.</small>
+                </li>
+                <li class="feature-item">
+                    <strong>Support file input and interactive REPL</strong><br>
+                    <small>Accept program files (argv/stdin) and provide an interactive mode with <code>-i</code>.</small>
+                </li>
+                <li class="feature-item">
+                    <strong>Part 2 improvements (4 axes)</strong><br>
+                    <small>Security, custom syntax, evaluation (VM/bytecode), and documentation enhancements.</small>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="flow-diagram">
+            <h2 class="flow-title">Next Steps</h2>
+            <div class="flow-steps">
+                <div class="flow-step">Complete Part 1 Testing</div>
+                <div class="flow-step">Design Custom Syntax</div>
+                <div class="flow-step">Implement VM</div>
+                <div class="flow-step">Add Security Features</div>
+                <div class="flow-step">Write Documentation</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

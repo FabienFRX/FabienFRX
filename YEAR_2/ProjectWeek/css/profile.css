@@ -1,0 +1,127 @@
+.box-setting-logo
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12%;
+    height: 100%;
+}
+
+.setting-size
+{
+    margin-top: 5px;
+    width: 70%;
+}
+
+.box-info
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 16%;
+}
+
+.box-content
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 64%;
+}
+
+.box-info-followers
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    width: 30%;
+}
+
+.box-info-followers h2,
+.box-info-followers p
+{
+    margin: 0;
+}
+
+.box-info-followers h2
+{
+    margin-bottom: 5px;
+}
+
+.box-info-pp
+{
+    height: 100%;
+    width: 30%;
+}
+
+.pp-size
+{
+    width: 100%;
+}
+
+.box-info-follow
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 60%;
+    width: 30%;
+}
+
+.box-info-follow h2,
+.box-info-follow p
+{
+    margin: 0;
+}
+
+.box-info-follow h2
+{
+    margin-bottom: 5px;
+}
+
+.box-info2
+{
+    width: 100%;
+    height: 20%;
+}
+
+.box-info-user
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    width: 100%;
+}
+
+.box-info-recettes
+{
+    display: flex;
+    justify-content: center;
+    height: 40%;
+    width: 100%;
+}
+
+.box-square-story
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 400px;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+}
+
+.story-profile-size
+{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 2px solid black;
+}

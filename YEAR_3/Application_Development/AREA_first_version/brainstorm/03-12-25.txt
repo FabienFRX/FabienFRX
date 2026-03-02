@@ -1,0 +1,19 @@
+EVAN :
+
+Fix Reload
+Classic Auth Form (WEB)
+
+MARCEAU : 
+
+Google OAuth2 Integration
+UserService model (OAuth2 storage)
+
+FABIEN : 
+
+OAuth2 Google (MOBILE)
+Classic Auth (MOBILE)
+
+ANDI :
+
+docker-compose complete
+Gestion documentation

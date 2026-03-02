@@ -1,0 +1,5 @@
+---
+- name: Restart Worker service
+  service:
+    name: worker
+    state: restarted

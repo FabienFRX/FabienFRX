@@ -1,0 +1,5 @@
+[book]
+authors = ["Goby"]
+language = "en"
+src = "src"
+title = "GLaDOS Documentation"

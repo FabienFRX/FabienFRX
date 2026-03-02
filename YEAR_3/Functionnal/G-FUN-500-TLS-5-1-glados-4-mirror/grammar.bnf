@@ -1,0 +1,62 @@
+(* GLaDOS Part 2 - Extended Backus-Naur Form (EBNF) *)
+
+(* Program Structure *)
+program          ::= statement*
+
+statement        ::= function_def
+                   | assignment
+                   | return_stmt
+                   | if_stmt
+                   | expr_stmt
+
+(* Function Definition *)
+function_def     ::= "fn" identifier "(" parameter_list? ")" "{" statement* "}"
+parameter_list   ::= identifier ("," identifier)*
+
+(* Statements *)
+assignment       ::= identifier "=" expression ";"?
+return_stmt      ::= "return" expression ";"?
+if_stmt          ::= "if" "(" expression ")" "{" statement* "}"
+                     ("else" "{" statement* "}")?
+expr_stmt        ::= expression ";"?
+
+(* Expressions - with precedence levels *)
+expression       ::= comparison
+
+comparison       ::= term (comparison_op term)?
+comparison_op    ::= "==" | "!=" | "<=" | ">=" | "<" | ">"
+
+term             ::= factor (additive_op factor)*
+additive_op      ::= "+" | "-"
+
+factor           ::= primary (multiplicative_op primary)*
+multiplicative_op ::= "*" | "/" | "%"
+
+primary          ::= function_call
+                   | int_literal
+                   | bool_literal
+                   | identifier
+                   | "(" expression ")"
+
+(* Function Call *)
+function_call    ::= identifier "(" argument_list? ")"
+argument_list    ::= expression ("," expression)*
+
+(* Literals *)
+int_literal      ::= "-"? digit+
+bool_literal     ::= "true" | "false"
+
+(* Identifiers *)
+identifier       ::= (letter | "_") (letter | digit | "_")*
+
+(* Lexical Elements *)
+letter           ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+                   | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+                   | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D"
+                   | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N"
+                   | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X"
+                   | "Y" | "Z"
+digit            ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+(* Whitespace (ignored) *)
+whitespace       ::= " " | "\t" | "\n" | "\r"

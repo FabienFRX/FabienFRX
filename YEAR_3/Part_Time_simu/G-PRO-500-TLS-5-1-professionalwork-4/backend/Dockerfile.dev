@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install PostgreSQL client for wait-for-db script
+RUN apk add --no-cache postgresql-client
+
+# Copy package files
+COPY package*.json ./
+COPY prisma.config.ts ./
+
+# Install all dependencies (including dev)
+RUN npm install
+
+# Copy prisma schema
+COPY prisma ./prisma
+
+# Copy source code
+COPY . .
+
+EXPOSE 3000
+
+# The command will be provided by docker-compose
+CMD ["sh", "-c", "npx prisma generate && npx prisma migrate deploy && npm run start:dev"]

@@ -1,0 +1,12 @@
+fn main() {
+    a = 5
+    b = 10
+    c = 3
+
+    x = a * b + c
+    y = a + b * c
+    z = (a + b) * (c + a)
+
+    result = x + y - z / 2
+    return result
+}

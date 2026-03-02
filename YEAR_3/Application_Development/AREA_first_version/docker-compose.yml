@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: area_db
+      POSTGRES_USER: area_user
+      POSTGRES_PASSWORD: area_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - area-net
+
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=area_db
+      - DB_USER=area_user
+      - DB_PASSWORD=area_password
+    networks:
+      - area-net
+
+  client_web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - server
+    volumes:
+      - shared_apk:/apk
+    networks:
+      - area-net
+
+  mobile_client:
+    build:
+      context: ./mobile
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8082:80"
+    depends_on:
+      - client_web
+    networks:
+      - area-net
+
+volumes:
+  shared_apk:
+  pgdata:
+
+
+networks:
+  area-net:
+    driver: bridge

@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+
+import sys
+import math
+
+def isNumber(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+    
+def display_h():
+    print("USAGE\n\t./104neutrinos n a h sd\n")
+    print("DESCRIPTION\n\tn\t\tnumber of values")
+    print("\ta\t\tarithmetic mean")
+    print("\th\t\tharmonic mean")
+    print("\tsd\t\tstandard deviation")
+    sys.exit(0)
+    
+def display_values(n, sd, a, quad, h):
+    print(f'\tNumbre of values:\t{n:.0f}')
+    print(f'\tStandard deviation:\t{sd:.2f}')
+    print(f'\tArithmetic mean:\t{a:.2f}')
+    print(f'\tRoot mean square:\t{quad:.2f}')
+    print(f'\tHarmonic mean:\t\t{h:.2f}\n')
+    return(0)
+
+def math_values(n, a, h, sd):
+    line = str("")
+    while (1):
+        line = input("Enter next value: ")
+        if not isNumber(line):
+            if line == "END":
+                break
+            else:
+                print("ERROR: value must be an int or a float")
+                sys.exit(84)
+        value = float(line)
+        quad =  math.sqrt(( ((math.pow(a, 2) + math.pow(sd, 2)) * n) + math.pow(value, 2)) / (n + 1))
+        sd =  math.sqrt((( ((math.pow(a, 2) + math.pow(sd, 2)) * n) + math.pow(value, 2)) / (n + 1)) - math.pow((((a * (n)) + value) / (n + 1)), 2))
+        n = n + 1
+        a = ((a * (n - 1)) + value) / n
+        h = n / ((1 / value) + ((n - 1) / h))
+        display_values(n, sd, a, quad, h)
+    return(0)
+
+def main():
+    try:
+        if sys.argv[1] == "-h":
+            display_h()
+        elif len(sys.argv) != 5:
+            sys.exit(84)
+        
+        n = float(sys.argv[1])
+        a = float(sys.argv[2])
+        h = float(sys.argv[3])
+        sd = float(sys.argv[4])
+        if n <= 0 or a <= 0 or h <= 0 or sd < 0:
+            print("value must be positive")
+            sys.exit(84)
+        math_values(n, a, h, sd)
+    except (ValueError, IndexError):
+        sys.exit(84)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,17 @@
+# --- Node / TypeScript ---
+node_modules/
+dist/
+*.log
+
+# --- Environment variables ---
+.env
+
+# --- VSCode / IDE ---
+.vscode/
+.DS_Store
+copilot-instructions.md
+
+# --- Misc ---
+*.tmp
+*.bak
+*.swp

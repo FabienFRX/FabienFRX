@@ -1,0 +1,115 @@
+.box-pp
+{
+    width: 100%;
+    height: 20%;
+}
+
+.box-pp-left
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.box-pp-left-pp
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 80%;
+}
+
+.box-pp-left-user
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 20%;
+}
+
+.pp-size-edit
+{
+    width: 60%;
+}
+
+.box-info
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+}
+
+.box-info-top
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+}
+
+.box-info-bottom
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+}
+
+.box-info-left
+{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 45%;
+    height: 90%;
+}
+
+.info-left
+{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 90%;
+    height: 10%;
+}
+
+.box-info-right
+{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 45%;
+    height: 90%;
+}
+
+.info-right
+{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-style: italic;
+    width: 90%;
+    height: 10%;
+}
+
+.box-info-delete
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 30%;
+}
+
+#delete-profil
+{
+    color: red;
+}

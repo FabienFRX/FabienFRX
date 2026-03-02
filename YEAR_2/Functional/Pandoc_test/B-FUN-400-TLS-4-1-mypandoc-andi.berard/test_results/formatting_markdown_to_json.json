@@ -1,0 +1,33 @@
+{
+  "header": {
+    "title": "Formatted Document",
+    "author": "Test User",
+    "date": "2025-04-28"
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        {"type": "text", "content": "This paragraph has "},
+        {"type": "bold", "content": [
+                  {"type": "text", "content": "bold text"}
+        ]},
+        {"type": "text", "content": ", "},
+        {"type": "italic", "content": [
+                  {"type": "text", "content": "italic text"}
+        ]},
+        {"type": "text", "content": ", and "},
+        {"type": "code", "content": "inline code"},
+        {"type": "text", "content": ".# Section with ListsHere's a paragraph before the list.- First item- Second item with "},
+        {"type": "bold", "content": [
+                  {"type": "text", "content": "bold"}
+        ]},
+        {"type": "text", "content": "- Third item with "},
+        {"type": "italic", "content": [
+                  {"type": "text", "content": "italic"}
+        ]},
+        {"type": "text", "content": "# Another Section"}
+      ]
+    }
+  ]
+}

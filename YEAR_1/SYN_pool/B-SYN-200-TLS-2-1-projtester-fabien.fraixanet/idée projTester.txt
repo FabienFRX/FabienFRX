@@ -1,0 +1,29 @@
+
+CRASH :
+
+SEARCHING THE TRD:
+-1A: test_inputs spawn before directory it's maybe file before in arg and './' before directory display on my test not TA 's test
+
+-1B: literally test of subject
+
+-1C: test_inputs spawn before directory it's maybe file before in arg
+
+
+ARGUMENTS:
+-3A: literally test of subject
+
+-3B: test of subject but '\n' at each line even for each arg
+
+
+OUTPUT:
+-5A: maybe same as ARGUMENTS
+
+-5B: maybe same as ARGUMENTS
+
+-5C - concatenation: 
+
+
+ERROR MANAGEMENT:
+-7A - no argument: return 84 for -h // DONE
+
+-7B - wrong folder: return 84 but got 0;

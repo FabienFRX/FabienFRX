@@ -1,0 +1,533 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Creating a Whanos-Compatible Repository - Whanos Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Complete documentation for the Whanos infrastructure - Automatically Deploy Nearly Anything!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Whanos Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos/edit/main/docs/src/user-guide/compatible-repo.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="creating-a-whanos-compatible-repository"><a class="header" href="#creating-a-whanos-compatible-repository">Creating a Whanos-Compatible Repository</a></h1>
+<p>Learn how to structure your repository to work seamlessly with Whanos.</p>
+<h2 id="repository-structure"><a class="header" href="#repository-structure">Repository Structure</a></h2>
+<p>A Whanos-compatible repository must follow this structure:</p>
+<pre><code>your-repository/
+├── app/                    # Your application code (REQUIRED)
+│   ├── src/               # Source files
+│   ├── __main__.py        # Entry point (Python example)
+│   └── ...
+├── Makefile               # For C projects
+├── pom.xml                # For Java projects (in app/)
+├── package.json           # For JavaScript projects
+├── requirements.txt       # For Python projects
+├── Dockerfile             # OPTIONAL: Custom Dockerfile
+├── whanos.yml             # OPTIONAL: Kubernetes configuration
+└── README.md              # Your project documentation
+</code></pre>
+<h2 id="language-specific-requirements"><a class="header" href="#language-specific-requirements">Language-Specific Requirements</a></h2>
+<h3 id="c-projects"><a class="header" href="#c-projects">C Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>Makefile</code> at repository root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>Makefile</code> at root</li>
+<li><code>app/</code> directory with source code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">make                    # Should compile
+./compiled-app          # Should be the output binary
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>c-project/
+├── Makefile
+└── app/
+    ├── main.c
+    ├── utils.c
+    └── utils.h
+</code></pre>
+<p><strong>Makefile Template</strong>:</p>
+<pre><code class="language-makefile">CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+SRC = app/main.c app/utils.c
+OBJ = $(SRC:.c=.o)
+
+compiled-app: $(OBJ)
+	$(CC) $(OBJ) -o compiled-app
+
+clean:
+	rm -f $(OBJ) compiled-app
+</code></pre>
+<h3 id="java-projects"><a class="header" href="#java-projects">Java Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>app/pom.xml</code></p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>app/pom.xml</code></li>
+<li><code>app/src/</code> with Java source code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">cd app
+mvn package
+# Output: target/app.jar
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>java-project/
+└── app/
+    ├── pom.xml
+    └── src/
+        └── main/
+            └── java/
+                └── com/
+                    └── example/
+                        └── Main.java
+</code></pre>
+<p><strong>pom.xml Template</strong>:</p>
+<pre><code class="language-xml">&lt;project&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;app&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+
+    &lt;build&gt;
+        &lt;finalName&gt;app&lt;/finalName&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+<h3 id="javascript-projects"><a class="header" href="#javascript-projects">JavaScript Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>package.json</code> at root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>package.json</code> at root</li>
+<li><code>app/</code> directory with JS code</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">npm ci --only=production
+node app
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>javascript-project/
+├── package.json
+├── package-lock.json
+└── app/
+    ├── index.js
+    └── server.js
+</code></pre>
+<p><strong>package.json Template</strong>:</p>
+<pre><code class="language-json">{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
+</code></pre>
+<h3 id="python-projects"><a class="header" href="#python-projects">Python Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>requirements.txt</code> at root</p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>requirements.txt</code> at root</li>
+<li><code>app/</code> directory as Python module</li>
+<li><code>app/__main__.py</code> as entry point</li>
+</ul>
+<p><strong>Build Expectations</strong>:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+python -m app
+</code></pre>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>python-project/
+├── requirements.txt
+└── app/
+    ├── __init__.py
+    ├── __main__.py
+    └── server.py
+</code></pre>
+<p><strong>requirements.txt Template</strong>:</p>
+<pre><code>Flask==3.0.0
+Werkzeug==3.0.1
+</code></pre>
+<p><strong>app/<strong>main</strong>.py Template</strong>:</p>
+<pre><code class="language-python">from app.server import create_app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(host='0.0.0.0', port=5000)
+</code></pre>
+<h3 id="befunge-projects"><a class="header" href="#befunge-projects">Befunge Projects</a></h3>
+<p><strong>Detection Criteria</strong>: Presence of <code>app/main.bf</code></p>
+<p><strong>Required Files</strong>:</p>
+<ul>
+<li><code>app/main.bf</code></li>
+</ul>
+<p><strong>Example Structure</strong>:</p>
+<pre><code>befunge-project/
+└── app/
+    └── main.bf
+</code></pre>
+<h2 id="optional-files"><a class="header" href="#optional-files">Optional Files</a></h2>
+<h3 id="custom-dockerfile"><a class="header" href="#custom-dockerfile">Custom Dockerfile</a></h3>
+<p>If you need custom dependencies or build steps:</p>
+<pre><code class="language-dockerfile">FROM whanos-python:latest
+# ONBUILD instructions from base image will run here
+
+# Add custom steps
+RUN pip install additional-package
+ENV CUSTOM_VAR=value
+CMD ["python", "-m", "app"]
+</code></pre>
+<p><strong>Important</strong>: Must start with <code>FROM whanos-&lt;language&gt;:latest</code></p>
+<h3 id="whanosyml"><a class="header" href="#whanosyml">whanos.yml</a></h3>
+<p>Configure Kubernetes deployment:</p>
+<pre><code class="language-yaml">deployment:
+  replicas: 2
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  ports:
+    - 5000
+    - 8080
+</code></pre>
+<p>See <a href="../kubernetes/whanos-yml.html">whanos.yml Configuration</a> for details.</p>
+<h2 id="validation-checklist"><a class="header" href="#validation-checklist">Validation Checklist</a></h2>
+<p>Before linking your project to Whanos:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Application code is in <code>app/</code> directory</li>
+<li><input disabled="" type="checkbox"/>
+Language detection file present (Makefile, pom.xml, package.json, requirements.txt, or main.bf)</li>
+<li><input disabled="" type="checkbox"/>
+Application builds successfully locally</li>
+<li><input disabled="" type="checkbox"/>
+Application runs successfully locally</li>
+<li><input disabled="" type="checkbox"/>
+(Optional) Custom Dockerfile uses whanos base image</li>
+<li><input disabled="" type="checkbox"/>
+(Optional) whanos.yml is valid YAML</li>
+</ul>
+<h2 id="testing-locally"><a class="header" href="#testing-locally">Testing Locally</a></h2>
+<h3 id="test-build"><a class="header" href="#test-build">Test Build</a></h3>
+<pre><code class="language-bash"># For Python
+cd your-repo
+docker build -f /path/to/whanos/images/python/Dockerfile.standalone -t test .
+
+# Run
+docker run --rm test
+</code></pre>
+<h3 id="test-with-base-image"><a class="header" href="#test-with-base-image">Test with Base Image</a></h3>
+<pre><code class="language-bash"># Build base image first
+docker build -t whanos-python - &lt; /path/to/whanos/images/python/Dockerfile.base
+
+# Create test Dockerfile
+cat &gt; Dockerfile.test &lt;&lt;EOF
+FROM whanos-python:latest
+CMD ["python", "-m", "app"]
+EOF
+
+# Build and run
+docker build -t test -f Dockerfile.test .
+docker run --rm test
+</code></pre>
+<h2 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h2>
+<h3 id="-app-code-not-in-app-directory"><a class="header" href="#-app-code-not-in-app-directory">❌ App code not in app/ directory</a></h3>
+<pre><code>wrong-repo/
+├── src/              # ❌ Should be app/
+│   └── main.py
+└── requirements.txt
+</code></pre>
+<h3 id="-detection-file-in-wrong-location"><a class="header" href="#-detection-file-in-wrong-location">❌ Detection file in wrong location</a></h3>
+<pre><code>wrong-repo/
+├── app/
+│   ├── pom.xml      # ❌ Should be app/pom.xml for Java
+│   └── src/
+└── Makefile         # ❌ C projects need app/ directory too
+</code></pre>
+<h3 id="-wrong-compiled-output-name-c"><a class="header" href="#-wrong-compiled-output-name-c">❌ Wrong compiled output name (C)</a></h3>
+<pre><code class="language-makefile"># ❌ Wrong
+output: main.c
+	gcc main.c -o myapp
+
+# ✅ Correct
+compiled-app: main.c
+	gcc main.c -o compiled-app
+</code></pre>
+<h3 id="-java-output-not-appjar"><a class="header" href="#-java-output-not-appjar">❌ Java output not app.jar</a></h3>
+<pre><code class="language-xml">&lt;!-- ❌ Wrong --&gt;
+&lt;build&gt;
+    &lt;finalName&gt;myapp&lt;/finalName&gt;
+&lt;/build&gt;
+
+&lt;!-- ✅ Correct --&gt;
+&lt;build&gt;
+    &lt;finalName&gt;app&lt;/finalName&gt;
+&lt;/build&gt;
+</code></pre>
+<h2 id="example-repositories"><a class="header" href="#example-repositories">Example Repositories</a></h2>
+<p>Working examples are provided in the <code>test-apps/</code> directory:</p>
+<ul>
+<li><code>test-apps/c-app/</code></li>
+<li><code>test-apps/java-app/</code></li>
+<li><code>test-apps/javascript-app/</code></li>
+<li><code>test-apps/python-app/</code></li>
+<li><code>test-apps/befunge-app/</code></li>
+</ul>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>Once your repository is compatible:</p>
+<ol>
+<li><a href="./linking-project.html">Link the Project</a> to Whanos</li>
+<li><a href="./configuring-deployment.html">Configure Deployment</a> with whanos.yml</li>
+<li><a href="./monitoring.html">Monitor the Build</a> in Jenkins</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../kubernetes/services.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../user-guide/linking-project.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../kubernetes/services.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../user-guide/linking-project.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+# Ignore incomplete/old files
+src/contexts/AuthContext_old.tsx
+src/pages/admin/AdminDashboard.tsx
+src/pages/startup/Dashboard.tsx
+
+# Ignore build output
+dist/
+build/
+
+# Ignore node_modules
+node_modules/

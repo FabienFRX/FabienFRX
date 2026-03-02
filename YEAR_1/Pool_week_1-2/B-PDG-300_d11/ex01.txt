@@ -1,0 +1,6 @@
+$> ./a.out 2>&1 | cat -e
+./test/:
+file1$
+file2$
+subdirectory$
+failure: No such file or directory$

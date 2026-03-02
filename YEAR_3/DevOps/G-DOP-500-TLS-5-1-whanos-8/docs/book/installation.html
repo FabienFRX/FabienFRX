@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Installation - Whanos Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Complete documentation for the Whanos infrastructure - Automatically Deploy Nearly Anything!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Whanos Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/your-repo/whanos/edit/main/docs/src/installation.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Complete guide to installing and deploying the Whanos infrastructure.</p>
+<h2 id="installation-methods"><a class="header" href="#installation-methods">Installation Methods</a></h2>
+<p>Whanos can be deployed using two methods:</p>
+<ol>
+<li><strong>Automated Deployment</strong> (Recommended) - Using the <code>deploy.sh</code> script</li>
+<li><strong>Manual Deployment</strong> - Using Terraform directly</li>
+</ol>
+<h2 id="method-1-automated-deployment"><a class="header" href="#method-1-automated-deployment">Method 1: Automated Deployment</a></h2>
+<h3 id="step-1-clone-the-repository"><a class="header" href="#step-1-clone-the-repository">Step 1: Clone the Repository</a></h3>
+<pre><code class="language-bash">git clone https://github.com/your-org/whanos.git
+cd whanos
+</code></pre>
+<h3 id="step-2-run-the-deployment-script"><a class="header" href="#step-2-run-the-deployment-script">Step 2: Run the Deployment Script</a></h3>
+<pre><code class="language-bash">./scripts/deploy.sh
+</code></pre>
+<p>The script will:</p>
+<ol>
+<li>✅ Check for required prerequisites (Docker, Git)</li>
+<li>✅ Install k3d if not present</li>
+<li>✅ Install kubectl if not present</li>
+<li>✅ Create a k3d Kubernetes cluster named <code>whanos-cluster</code> with:
+<ul>
+<li>1 server node (control plane)</li>
+<li>2 agent nodes (workers)</li>
+<li>Integrated Docker registry</li>
+</ul>
+</li>
+<li>✅ Deploy Jenkins using Terraform</li>
+<li>✅ Deploy Docker registries</li>
+<li>✅ Configure networking between components</li>
+<li>✅ Create Kubernetes namespace <code>whanos</code></li>
+</ol>
+<h3 id="step-3-verify-installation"><a class="header" href="#step-3-verify-installation">Step 3: Verify Installation</a></h3>
+<pre><code class="language-bash"># Check Docker containers
+docker ps --filter "name=whanos"
+
+# Check k3d cluster
+k3d cluster list
+
+# Check Kubernetes nodes
+export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+kubectl get nodes
+
+# Access Jenkins
+open http://localhost:8080
+</code></pre>
+<p>Expected containers:</p>
+<ul>
+<li><code>whanos-jenkins</code> - Jenkins CI/CD server</li>
+<li><code>whanos-registry</code> - Docker registry (port 5000)</li>
+<li><code>k3d-whanos-registry</code> - k3d internal registry (port 5001)</li>
+<li><code>k3d-whanos-cluster-server-0</code> - Kubernetes control plane</li>
+<li><code>k3d-whanos-cluster-agent-0</code> - Kubernetes worker 1</li>
+<li><code>k3d-whanos-cluster-agent-1</code> - Kubernetes worker 2</li>
+<li><code>k3d-whanos-cluster-serverlb</code> - Load balancer</li>
+</ul>
+<h2 id="method-2-manual-deployment-with-terraform"><a class="header" href="#method-2-manual-deployment-with-terraform">Method 2: Manual Deployment with Terraform</a></h2>
+<h3 id="step-1-create-k3d-cluster"><a class="header" href="#step-1-create-k3d-cluster">Step 1: Create k3d Cluster</a></h3>
+<pre><code class="language-bash"># Create k3d registry
+k3d registry create whanos-registry --port 5001
+
+# Create k3d cluster
+k3d cluster create whanos-cluster \
+  --agents 2 \
+  --registry-use k3d-whanos-registry:5001 \
+  --port "8081:80@loadbalancer" \
+  --api-port 6443 \
+  --wait
+</code></pre>
+<h3 id="step-2-deploy-with-terraform"><a class="header" href="#step-2-deploy-with-terraform">Step 2: Deploy with Terraform</a></h3>
+<pre><code class="language-bash">cd terraform/environments/dev
+
+# Initialize Terraform
+terraform init
+
+# Review the plan
+terraform plan
+
+# Apply the configuration
+terraform apply
+</code></pre>
+<h3 id="step-3-create-kubernetes-namespace"><a class="header" href="#step-3-create-kubernetes-namespace">Step 3: Create Kubernetes Namespace</a></h3>
+<pre><code class="language-bash">export KUBECONFIG=$(k3d kubeconfig write whanos-cluster)
+kubectl create namespace whanos
+</code></pre>
+<h3 id="step-4-verify-deployment"><a class="header" href="#step-4-verify-deployment">Step 4: Verify Deployment</a></h3>
+<pre><code class="language-bash"># Check Terraform state
+terraform show
+
+# Verify containers
+docker ps
+
+# Check Kubernetes
+kubectl get all -n whanos
+</code></pre>
+<h2 id="post-installation-steps"><a class="header" href="#post-installation-steps">Post-Installation Steps</a></h2>
+<h3 id="1-configure-jenkins"><a class="header" href="#1-configure-jenkins">1. Configure Jenkins</a></h3>
+<p>Get the initial admin password:</p>
+<pre><code class="language-bash">docker exec whanos-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre>
+<p>Or use the default credentials:</p>
+<ul>
+<li>Username: <code>admin</code></li>
+<li>Password: <code>admin</code></li>
+</ul>
+<h3 id="2-build-base-images"><a class="header" href="#2-build-base-images">2. Build Base Images</a></h3>
+<p>Before using Whanos, you must build the base Docker images:</p>
+<ol>
+<li>Access Jenkins at <code>http://localhost:8080</code></li>
+<li>Navigate to <strong>Whanos base images</strong></li>
+<li>Run <strong>Build all base images</strong></li>
+</ol>
+<p>This will build:</p>
+<ul>
+<li><code>whanos-c</code></li>
+<li><code>whanos-java</code></li>
+<li><code>whanos-javascript</code></li>
+<li><code>whanos-python</code></li>
+<li><code>whanos-befunge</code></li>
+</ul>
+<h3 id="3-verify-network-connectivity"><a class="header" href="#3-verify-network-connectivity">3. Verify Network Connectivity</a></h3>
+<pre><code class="language-bash"># Test Jenkins to k3d cluster
+docker exec whanos-jenkins kubectl get nodes
+
+# Test Docker registry
+curl http://localhost:5000/v2/_catalog
+curl http://localhost:5001/v2/_catalog
+</code></pre>
+<h2 id="configuration-files"><a class="header" href="#configuration-files">Configuration Files</a></h2>
+<h3 id="terraform-configuration"><a class="header" href="#terraform-configuration">Terraform Configuration</a></h3>
+<p>Located in <code>terraform/environments/dev/</code>:</p>
+<pre><code>terraform/environments/dev/
+├── main.tf          # Main configuration
+├── variables.tf     # Input variables
+└── outputs.tf       # Output values
+</code></pre>
+<h3 id="jenkins-configuration"><a class="header" href="#jenkins-configuration">Jenkins Configuration</a></h3>
+<p>Located in <code>jenkins/config/</code>:</p>
+<pre><code>jenkins/config/
+├── jenkins.yaml     # Jenkins Configuration as Code (JCasC)
+└── job-dsl/         # Job DSL scripts
+</code></pre>
+<h3 id="dockerfile-directory"><a class="header" href="#dockerfile-directory">Dockerfile Directory</a></h3>
+<p>Located in <code>images/</code>:</p>
+<pre><code>images/
+├── c/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── java/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── javascript/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+├── python/
+│   ├── Dockerfile.base
+│   └── Dockerfile.standalone
+└── befunge/
+    ├── Dockerfile.base
+    └── Dockerfile.standalone
+</code></pre>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
+<p>The deployment uses the following environment variables (optional):</p>
+<div class="table-wrapper"><table><thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>CLUSTER_NAME</code></td><td><code>whanos-cluster</code></td><td>Name of the k3d cluster</td></tr>
+<tr><td><code>REGISTRY_PORT</code></td><td><code>5000</code></td><td>External registry port</td></tr>
+<tr><td><code>JENKINS_PORT</code></td><td><code>8080</code></td><td>Jenkins UI port</td></tr>
+</tbody></table>
+</div>
+<p>Example:</p>
+<pre><code class="language-bash">export JENKINS_PORT=9090
+./scripts/deploy.sh
+</code></pre>
+<h2 id="troubleshooting-installation"><a class="header" href="#troubleshooting-installation">Troubleshooting Installation</a></h2>
+<h3 id="port-already-in-use"><a class="header" href="#port-already-in-use">Port Already in Use</a></h3>
+<pre><code class="language-bash"># Find what's using the port
+lsof -i :8080
+
+# Kill the process or change the port
+export JENKINS_PORT=9090
+</code></pre>
+<h3 id="k3d-cluster-creation-failed"><a class="header" href="#k3d-cluster-creation-failed">k3d Cluster Creation Failed</a></h3>
+<pre><code class="language-bash"># Remove existing cluster
+k3d cluster delete whanos-cluster
+
+# Try again
+k3d cluster create whanos-cluster --agents 2
+</code></pre>
+<h3 id="terraform-apply-failed"><a class="header" href="#terraform-apply-failed">Terraform Apply Failed</a></h3>
+<pre><code class="language-bash"># Check Terraform logs
+terraform apply
+
+# If state is corrupted
+terraform destroy
+terraform apply
+</code></pre>
+<h3 id="docker-permission-denied"><a class="header" href="#docker-permission-denied">Docker Permission Denied</a></h3>
+<pre><code class="language-bash"># Add user to docker group
+sudo usermod -aG docker $USER
+
+# Log out and back in, or:
+newgrp docker
+</code></pre>
+<h2 id="uninstallation"><a class="header" href="#uninstallation">Uninstallation</a></h2>
+<p>To completely remove the Whanos infrastructure:</p>
+<pre><code class="language-bash">./scripts/destroy.sh
+</code></pre>
+<p>This will:</p>
+<ol>
+<li>Stop all containers</li>
+<li>Remove Docker containers and networks</li>
+<li>Delete the k3d cluster</li>
+<li>Clean up Terraform state</li>
+</ol>
+<p>Manual cleanup:</p>
+<pre><code class="language-bash"># Stop containers
+docker stop $(docker ps -a --filter "name=whanos" -q)
+docker rm $(docker ps -a --filter "name=whanos" -q)
+
+# Delete k3d cluster
+k3d cluster delete whanos-cluster
+k3d registry delete whanos-registry
+
+# Clean Terraform
+cd terraform/environments/dev
+terraform destroy
+</code></pre>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>After successful installation:</p>
+<ol>
+<li>📚 Read the <a href="./architecture/overview.html">Architecture Overview</a></li>
+<li>🚀 Try the <a href="./quick-start.html">Quick Start</a> guide</li>
+<li>👤 Learn how to <a href="./user-guide/linking-project.html">Link a Project</a></li>
+<li>⚙️ Configure <a href="./kubernetes/whanos-yml.html">Kubernetes Deployment</a></li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="prerequisites.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="architecture/overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="prerequisites.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="architecture/overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

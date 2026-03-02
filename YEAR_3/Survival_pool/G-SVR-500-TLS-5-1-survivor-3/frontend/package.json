@@ -1,0 +1,44 @@
+{
+  "name": "jeb-incubator-platform",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "1.2.3",
+    "@types/jspdf": "2.0.0",
+    "axios": "1.11.0",
+    "bootstrap": "5.3.8",
+    "canvasjs-react-charts": "1.0.5",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "html2canvas": "1.4.1",
+    "jspdf": "3.0.2",
+    "lucide-react": "0.542.0",
+    "react": "^18.3.1",
+    "react-bootstrap": "2.10.10",
+    "react-dom": "^18.3.1",
+    "react-markdown": "10.1.0",
+    "react-router-dom": "7.8.2",
+    "rehype-highlight": "7.0.2",
+    "remark-gfm": "4.0.1",
+    "tailwind-merge": "3.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.24",
+    "@types/react-dom": "18.3.7",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "@vitejs/plugin-react": "4.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
+  }
+}

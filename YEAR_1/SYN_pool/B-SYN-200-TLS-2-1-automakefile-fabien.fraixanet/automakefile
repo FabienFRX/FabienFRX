@@ -1,0 +1,172 @@
+##
+## EPITECH PROJECT, 2023
+## B-SYN-200-TLS-2-1-automakefile-fabien.fraixanet
+## File description:
+## automakefile
+##
+
+#!/bin/sh
+
+function get_sources()
+{
+    sources=$(echo $1 | tr " " "\n")
+    directory=$2
+    srcs=""
+    for source in $sources; do
+        srcs+=" ${directory}/${source}"
+    done
+    eval "$3='$srcs'"
+}
+
+#error handling
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 <config_file>"
+    exit 84
+fi
+if [ ! -f $1 ]; then
+    echo "ERROR: $1 is not a file or does not exist"
+    exit 84
+fi
+config_file=$1
+now=$(date +%d-%m-%Y_%Hh-%Mm)
+
+# get file data: https://www.baeldung.com/linux/script-parsing-properties-file 4
+declare -A config
+while IFS=";" read -r key value; do
+    config[$key]=$value
+done < "$config_file"
+
+if [ -z "${config[PROJECT_DIR]}" ]
+then
+    echo "PROJECT_DIR is mandatory in the configuration file."
+    exit 0
+fi
+
+if [ -z "${config[SOURCES_DIR]}" ]
+then
+    config[SOURCES_DIR]="${config[PROJECT_DIR]}"
+fi
+
+if [ -z "${config["source_filename"]}" ]
+then
+    src1=$(ls "${config[PROJECT_DIR]}" | grep '\.c')
+    src2=$(ls "${config[SOURCES_DIR]}" | grep '\.c')
+    if [ -n src2 ]
+    then
+        config["source_filename"]=$src2
+    fi
+    if [ -n src1 ]
+    then
+        config["source_filename"]=$src1
+    fi
+    if [ -z "${config["source_filename"]}" ]
+    then
+        echo "No source given"
+        exit 84
+    fi
+fi
+
+if [ -z "${config[EXEC]}" ]
+then
+    config[EXEC]="a.out"
+fi
+
+if [ -z "${config[CC]}" ]
+then
+    config[CC]="gcc"
+fi
+
+if [ -z "${config[HEADERS_DIR]}" ]
+then
+    config[HEADERS_DIR]="includes"
+fi
+
+# if [ -z "${config[CFLAGS]}" ]
+# then
+#     config[CFLAGS]="-W -Wall -Wextra -I${config[PROJECT_DIR]}/${config[HEADERS_DIR]} -pedantic"
+# fi
+
+if [ -z "${config[LIBS_DIR]}" ]
+then
+    config[LIBS_DIR]="lib"
+fi
+
+#if [ -z "${config[LDFLAGS]}" ]
+#then
+#    config[LDFLAGS]="-L${config[PROJECT_DIR]}/${config[LIBS_DIR]} -lmy"
+#fi
+
+if [ -z "${config[ZIP]}" ]
+then
+    config[ZIP]="tar"
+fi
+
+if [ -z "${config[ZIPFLAGS]}" ]
+then
+    config[ZIPFLAGS]="-czvf"
+fi
+
+if [ -z "${config[BCK_DIR]}" ]
+then
+    config[BCK_DIR]="backup"
+fi
+
+if [ -z "${config[UNZIP]}" ]
+then
+    config[UNZIP]="tar"
+fi
+
+if [ -z "${config[UNZIPFLAGS]}" ]
+then
+    config[UNZIPFLAGS]="-xvf"
+fi
+
+files=''
+get_sources "${config["source_filename"]}" "${config["SOURCES_DIR"]}" files
+
+makefile_content="CC=${config[CC]}
+CFLAGS=${config[CFLAGS]}
+LDFLAGS=${config[LDFLAGS]}
+EXEC=${config[EXEC]}
+
+SOURCES_DIR=${config[SOURCES_DIR]}
+LIBS_DIR=${config[LIBS_DIR]}
+PROJECT_DIR=${config[PROJECT_DIR]}
+
+SOURCES=${files}
+OBJECTS=\$(SOURCES:.c=.o)
+
+all: \$(EXEC)
+
+\$(EXEC): \$(OBJECTS)
+	\$(CC) \$(OBJECTS) \$(LDFLAGS) \$(CFLAGS) -o \$@
+
+clean:
+	rm -f \$(OBJECTS)
+	rm -f *.gcno
+
+fclean: clean
+	rm -f \$(EXEC)
+
+re: fclean all
+
+archive:
+	mkdir -p \$(PROJECT_DIR)/${config[BCK_DIR]}
+	${config[ZIP]} ${config[ZIPFLAGS]} \$(PROJECT_DIR)/${config[BCK_DIR]}/backup_${now}.zip \$(SOURCES)
+	echo 'backup_${now}.zip file generated.'
+
+revert:
+	${config[UNZIP]} ${config[UNZIPFLAGS]} \$(PROJECT_DIR)/${config[BCK_DIR]}/backup_${now}.zip
+
+num:
+	ls -1 \$(PROJECT_DIR)/${config[BCK_DIR]} | wc -l
+
+delete:
+	rm -f \$(PROJECT_DIR)/${config[BCK_DIR]}/backup_${now}.zip
+
+.PHONY: all clean fclean re archive revert num delete
+"
+
+echo "$makefile_content" > "${config[PROJECT_DIR]}/Makefile"

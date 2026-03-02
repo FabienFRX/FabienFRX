@@ -1,0 +1,16 @@
+EVAN :
+
+UI Workflow AREA (WEB)
+Google OAuth2 (WEB)
+
+MARCEAU : 
+
+UserService model (OAuth2 storage)
+
+FABIEN : 
+
+OAuth2 Google (MOBILE)
+
+ANDI :
+
+Mise à jour documentation

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # Application Django
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py sync_jeb_data &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - JEB_API_TOKEN=${JEB_API_TOKEN}
+      - JEB_API_BASE_URL=${JEB_API_BASE_URL}
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - jeb-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://jeb-api.local:8000/api  # URL avec nom de domaine local
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    depends_on:
+      - web
+    restart: unless-stopped
+    networks:
+      - jeb-network
+
+  # Nginx reverse proxy pour les noms de domaine locaux
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+      - frontend
+    restart: unless-stopped
+    networks:
+      - jeb-network
+
+networks:
+  jeb-network:
+    driver: bridge

@@ -1,0 +1,142 @@
+Documentation Utilisateur 
+
+ 
+
+Nous voulons créer une application web et mobile de quiz de culture générale avec une intelligence artificielle qui s’adapte à chaque utilisateur selon son âge et son niveau. 
+ 
+
+Parcours utilisateur 
+
+ 
+
+L’utilisateur peut créer son profil s’il le souhaite. (Un profil permet de jouer avec ses amis / sauvegarder ses scores) 
+
+S’il désire apprendre il peut se diriger sur le bouton Learn, choisir le thème ainsi que la difficultée. 
+
+À chaque réponse, une explication s’affiche. L’IA retient les erreurs et propose plus tard des questions pour réviser. 
+
+S’il désire affronter, il peut jouer avec ses amis ou des randoms en temps réel via le bouton Quiz. Il aura accès à un classement global/badges  pour encourager la progression. 
+
+L’utilisateur retrouve ses statistiques, son niveau et ses badges dans son profil. L’application lui suggère des thèmes à travailler selon ses points faibles. 
+
+ 
+
+
+Points forts du produit 
+
++---------------------------+-------------------------------------------------------------+
+| Atout                     | Description                                                 |
++---------------------------+-------------------------------------------------------------+
+| Adaptation intelligente   | L’IA ajuste la difficulté et les thèmes automatiquement     |
+| Double approche           | Apprentissage + Quiz                                        |
+| Tous âges                 | Contenu adapté aux enfants, ados et adultes                 |
+| Multijoueur amusant       | Défie tes amis et monte dans le classement                  |
+| Explications pédagogiques | Chaque réponse est expliquée avec une source fiable         |
++---------------------------+-------------------------------------------------------------+
+
+
+ 
+
+Documentation Technique (Équipe de Développement) 
+
+ 
+
+1. Stack technique front-end 
+
+
+Framework & Build 
+
+• React 18 — Interface utilisateur réactive et composants réutilisables. 
+
+• TypeScript — Typage statique pour réduire les bugs et améliorer la maintenabilité. 
+
+• Vite — Build ultra-rapide et hot reload instantané. 
+
+ 
+
+Styling & Design 
+
+• Tailwind CSS — Utility-first CSS via design system (tokens HSL dans index.css). 
+
+• Shadcn/UI — Composants accessibles et personnalisables (Button, Card, Dialog, etc.). 
+
+• CVA (class-variance-authority) — Gestion propre des variants de composants. 
+
+• clsx + tailwind-merge — Fusion intelligente des classes CSS sans conflits. 
+
+
+
+UI Components & Icons 
+
+• Radix UI — Primitives accessibles (Dialog, Dropdown, Tabs, etc.) utilisées comme base de Shadcn. 
+
+• Lucide React — Bibliothèque d’icônes moderne et tree-shakable (Users, Trophy, Brain, etc.). 
+
+ 
+
+ 
+
+2. Architecture backend
+
+
+• Backend : Node.js (Express) ou Python (FastAPI). 
+
+• Base de données : PostgreSQL pour les données et Redis pour le cache et le temps réel. 
+
+• Authentification : JWT / OAuth. 
+
+• Stockage : Supabase Storage (images, logs, historiques) pour commencer et suivant les fonds, AWS S3. 
+
+• Gestion multijoueur : Socket.IO pour la communication en temps réel. 
+
+• CI/CD : GitHub Actions 
+
+ 
+
+
+
+3. LLM et adaptation intelligente 
+
+ 
+
+QuizLab utilise un modèle de langage (LLM) pour générer, adapter et expliquer les questions de manière dynamique. Deux API sont envisagées : 
+
+• API Mistral — modèle performant, économique et hébergé en Europe. 
+
+• API OpenAI — GPT-4o ou GPT-4o mini, pour des résultats rapides et cohérents. 
+
+ 
+
+Objectif  
+
+Générer des questions 4 choix (1 vraie) adaptées à l’âge / thème / niveau.  
+
+Sans stocker chaque question car trop volumineux -> deux suite de bonne réponses. Pour maintenir un taux de réussite cible (ex. 60–70%). 
+
+Vue d’ensemble du pipeline : 
+
+Backend → LLM (prompt + contraintes + table) 
+Entrée : {age, thème, niveau, streak, old_streak} 
+Sortie : {question, 4 options, index_correct, explication} (JSON strict) 
+
+Affichage & réponse utilisateur Mise à jour du niveau  
+
+Stockage: seulement {user_id, thème, difficulté_b, timestamp, streaks}  
+
+ 
+
+Type de prompt llm :  
+ 
+Tu es un générateur d'items de quiz. Tu renvoies STRICTEMENT du JSON valide. 
+Règles : 
+1 seule bonne réponse. 3 distracteurs plausibles et non absurdes. 
+Langage adapté à l'âge cible. 
+Interdiction de révéler la réponse dans la question. 
+Pas de "toutes les réponses sont correctes" ni d'ambiguïtés gratuites. 
+Respecte le style demandé (longueur question <= 200 chars). 
+
+ 
+
+Les appels API sont asynchrones, avec une mise en cache Redis pour réduire la latence. Les données utilisateur sont anonymisées avant l’envoi à l’IA. 
+
+ 

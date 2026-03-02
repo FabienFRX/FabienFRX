@@ -1,0 +1,34 @@
+{
+  "header": {
+    "title": "Formatted XML Document",
+    "author": "Test User",
+    "date": "2025-04-28"
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        {"type": "text", "content": "This paragraph has "},
+        {"type": "bold", "content": [
+                  {"type": "text", "content": "bold text"}
+        ]},
+        {"type": "text", "content": " and "},
+        {"type": "italic", "content": [
+                  {"type": "text", "content": "italic text"}
+        ]},
+        {"type": "text", "content": "."}
+      ]
+    },
+    {
+      "type": "list",
+      "items": [
+        {"content": [
+                  {"type": "text", "content": "First item"}
+        ]},
+        {"content": [
+                  {"type": "text", "content": "Second item"}
+        ]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+./SRC/main.c:35: INFO:C-A3
+./SRC/reader.c:20: MAJOR:C-L1
+./SRC/reader.c:32: MAJOR:C-F4
+./lib/my/my_str_isnum.c:12: MINOR:C-L2

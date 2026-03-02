@@ -1,0 +1,8 @@
+fn main() {
+    x = 100
+    y = 20
+    z = x - y
+
+    result = z * 2
+    return result
+}

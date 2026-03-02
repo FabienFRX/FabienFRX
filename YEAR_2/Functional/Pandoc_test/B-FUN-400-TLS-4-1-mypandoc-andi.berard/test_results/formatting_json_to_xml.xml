@@ -1,0 +1,10 @@
+<document>
+  <header title="Formatted JSON Document" author="Test User" date="2025-04-28"></header>
+  <body>
+    <paragraph>This paragraph contains <bold>bold text</bold> and <italic>italic text</italic>.</paragraph>
+    <list>
+<item>First item</item>
+<item>Second item</item>
+    </list>
+  </body>
+</document>

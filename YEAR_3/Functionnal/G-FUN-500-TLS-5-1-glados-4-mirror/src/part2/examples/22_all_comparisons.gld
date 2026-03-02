@@ -1,0 +1,31 @@
+fn bool_to_int(b) {
+    if (b) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+fn test_comparisons(a, b) {
+    eq = bool_to_int(a == b)
+    neq = bool_to_int(a != b)
+    lt = bool_to_int(a < b)
+    gt = bool_to_int(a > b)
+    lte = bool_to_int(a <= b)
+    gte = bool_to_int(a >= b)
+
+    result = eq + neq + lt + gt + lte + gte
+    return result
+}
+
+fn main() {
+    x = 10
+    y = 20
+
+    test1 = test_comparisons(x, y)
+    test2 = test_comparisons(y, x)
+    test3 = test_comparisons(x, x)
+
+    total = test1 + test2 + test3
+    return total
+}

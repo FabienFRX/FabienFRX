@@ -1,0 +1,12 @@
+fn main() {
+    a = 10
+    b = 5
+
+    sum = a + b
+    diff = a - b
+    prod = a * b
+    quot = a / b
+
+    result = sum + diff + prod + quot
+    return result
+}

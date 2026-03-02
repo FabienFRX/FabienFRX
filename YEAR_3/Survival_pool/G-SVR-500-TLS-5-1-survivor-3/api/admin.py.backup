@@ -1,0 +1,52 @@
+from django.contrib import admin
+from .models import Startup, Event, News, Message, Opportunity, UserProfile, Investor, Partner, JEBUser
+
+@admin.register(Startup)
+class StartupAdmin(admin.ModelAdmin):
+    list_display = ['name', 'sector', 'maturity', 'email', 'created_at']
+    list_filter = ['sector', 'maturity', 'legal_status']
+    search_fields = ['name', 'email', 'description']
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'related_startup', 'news_date']
+    list_filter = ['category', 'news_date']
+    search_fields = ['title', 'content']
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['name', 'event_type', 'dates', 'location']
+    list_filter = ['event_type', 'dates']
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['sender', 'recipient', 'subject', 'sent_at', 'is_read']
+    list_filter = ['is_read', 'sent_at']
+
+@admin.register(Opportunity)
+class OpportunityAdmin(admin.ModelAdmin):
+    list_display = ['title', 'opportunity_type', 'deadline', 'created_at']
+    list_filter = ['opportunity_type', 'deadline']
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'role', 'startup', 'created_at']
+    list_filter = ['role']
+
+@admin.register(Investor)
+class InvestorAdmin(admin.ModelAdmin):
+    list_display = ['name', 'investor_type', 'investment_focus', 'email', 'created_at']
+    list_filter = ['investor_type', 'investment_focus', 'legal_status']
+    search_fields = ['name', 'email', 'description']
+
+@admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'partner_type', 'focus_area', 'email', 'created_at']
+    list_filter = ['partner_type', 'focus_area', 'legal_status']
+    search_fields = ['name', 'email', 'description']
+
+@admin.register(JEBUser)
+class JEBUserAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'role', 'company', 'position', 'created_at']
+    list_filter = ['role', 'company']
+    search_fields = ['name', 'email', 'company']

@@ -1,0 +1,140 @@
+name: CI/CD Pipeline
+
+env:
+  TARGET_REPO_SSH: "git@github.com:GobyNathan/G-FUN-500-TLS-5-1-glados-4-mirror.git"
+  EXECUTABLES: "glados"
+
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore-*"
+  pull_request:
+    branches-ignore:
+      - "ga-ignore-*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4' }}
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq ghc hlint || echo "HLint installation failed, continuing..."
+
+      - name: Lint Haskell code
+        run: |
+          if command -v hlint >/dev/null 2>&1; then
+            echo "Running HLint analysis..."
+            find . -name "*.hs" -not -path "./.stack-work/*" | xargs hlint || echo "Linting completed with suggestions"
+          else
+            echo "HLint not available, skipping linting"
+          fi
+
+  build-test-and-verify:
+    name: Build, Test & Verify
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4' }}
+    needs: [code-quality]
+    container:
+      image: epitechcontent/epitest-docker
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Stack dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.stack
+            .stack-work
+          key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml') }}-${{ hashFiles('**/package.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml') }}-
+            ${{ runner.os }}-stack-
+
+      - name: Install system dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq git build-essential cmake libgl1-mesa-dev libglfw3-dev libopenal-dev ghc
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      - name: Build project
+        run: |
+          echo "Building project..."
+          make clean || true
+          make
+
+      - name: Run comprehensive tests
+        run: |
+          echo "Running unit and integration tests..."
+          make test_rule
+
+      - name: Verify executable functionality
+        run: |
+          echo "Verifying build artifacts and basic functionality..."
+          for exe in ${{ env.EXECUTABLES }}; do
+            if [ ! -f "$exe" ]; then
+              echo "Missing executable: $exe"
+              echo "Available files:"
+              ls -la
+              exit 1
+            fi
+            echo "Found executable: $exe"
+            
+            if [ -x "$exe" ]; then
+              echo "Executable is runnable"
+              # Simple smoke test - just ensure it doesn't crash
+              echo "42" | ./$exe > /dev/null && echo "Basic smoke test passed" || echo "Smoke test failed"
+            fi
+          done
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: glados-executable-${{ github.sha }}
+          path: |
+            glados
+            *.log
+          retention-days: 30
+
+      - name: Clean build artifacts
+        if: always()
+        run: make fclean || true
+
+  deploy-mirror:
+    name: Deploy to Mirror
+    runs-on: ubuntu-latest
+    needs: [build-test-and-verify]
+    if: ${{ github.repository == 'EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4' && github.event_name == 'push' && success() }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to mirror
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: ${{ env.TARGET_REPO_SSH }}
+          ssh_private_key: ${{ secrets.LITTLE_SECRET }}
+
+      - name: Deployment summary
+        run: |
+          echo "Successfully deployed to mirror repository"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"

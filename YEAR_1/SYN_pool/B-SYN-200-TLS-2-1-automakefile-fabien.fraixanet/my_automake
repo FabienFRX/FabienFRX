@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Vérification du nombre d'arguments
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <config_file>"
+    exit 1
+fi
+
+config_file=$1
+
+# Lire le fichier de configuration
+declare -A config
+while IFS=';' read -r key value; do
+    config[$key]=$value
+done < "$config_file"
+
+# Vérification des paramètres obligatoires
+if [ -z "${config[PROJECT_DIR]}" ] || [ -z "${config[SOURCES_DIR]}" ]; then
+    echo "PROJECT_DIR and SOURCES_DIR are mandatory in the configuration file."
+    exit 1
+fi
+
+# Génération du Makefile
+makefile_content="CC=${config[CC]:-gcc}
+CFLAGS=${config[CFLAGS]:-}
+LDFLAGS=${config[LDFLAGS]:-}
+EXEC=${config[EXEC]:-a.out}
+
+SOURCES_DIR=${config[SOURCES_DIR]}
+HEADERS_DIR=${config[HEADERS_DIR]}
+LIBS_DIR=${config[LIBS_DIR]}
+PROJECT_DIR=${config[PROJECT_DIR]}
+
+SOURCES=\$(wildcard \$(SOURCES_DIR)/*.c)
+OBJECTS=\$(SOURCES:.c=.o)
+
+all: \$(EXEC)
+
+\$(EXEC): \$(OBJECTS)
+	\$(CC) \$(OBJECTS) \$(LDFLAGS) -o \$@
+
+%.o: %.c
+	\$(CC) \$(CFLAGS) -c \$< -o \$@
+
+clean:
+	rm -f \$(OBJECTS)
+
+fclean: clean
+	rm -f \$(EXEC)
+
+re: fclean all
+
+archive:
+	mkdir -p \$(PROJECT_DIR)/\$(config[BCK_DIR])
+	\$(config[ZIP]) \$(config[ZIPFLAGS]) \$(PROJECT_DIR)/\$(config[BCK_DIR])/backup_\$(date +%Y%m%d%H%M%S).zip \$(SOURCES)
+	echo 'backup_\$(date +%Y%m%d%H%M%S).zip file generated.'
+
+revert:
+	\$(config[UNZIP]) \$(config[UNZIPFLAGS]) \$(PROJECT_DIR)/\$(config[BCK_DIR])/backup_\$(date +%Y%m%d%H%M%S).zip -d \$(SOURCES_DIR)
+
+num:
+	ls -1 \$(PROJECT_DIR)/\$(config[BCK_DIR]) | wc -l
+
+delete:
+	rm -f \$(PROJECT_DIR)/\$(config[BCK_DIR])/backup_\$(date +%Y%m%d%H%M%S).zip
+"
+
+echo "$makefile_content" > "${config[PROJECT_DIR]}/Makefile"

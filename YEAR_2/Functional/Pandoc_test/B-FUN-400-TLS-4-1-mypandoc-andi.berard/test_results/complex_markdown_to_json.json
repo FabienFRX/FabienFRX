@@ -1,0 +1,34 @@
+{
+  "header": {
+    "title": "Complex Document",
+    "author": "Test User",
+    "date": "2025-04-28"
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        {"type": "text", "content": "# IntroductionThis document demonstrates various Markdown features.## SubsectionText with "},
+        {"type": "bold", "content": [
+                  {"type": "text", "content": "bold formatting"}
+        ]},
+        {"type": "text", "content": " and "},
+        {"type": "italic", "content": [
+                  {"type": "text", "content": "italic words"}
+        ]},
+        {"type": "text", "content": ".- List item one- List item two with "},
+        {"type": "bold", "content": [
+                  {"type": "text", "content": "important"}
+        ]},
+        {"type": "text", "content": " note- List item three with "},
+        {"type": "italic", "content": [
+                  {"type": "text", "content": "emphasized"}
+        ]},
+        {"type": "text", "content": " text# Code ExamplesHere's a simple code block:"},
+        {"type": "code", "content": ""},
+        {"type": "code", "content": "pythondef hello():    print("Hello, world!")    return True"},
+        {"type": "code", "content": ""}
+      ]
+    }
+  ]
+}

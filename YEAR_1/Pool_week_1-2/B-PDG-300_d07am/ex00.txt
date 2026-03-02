@@ -1,0 +1,11 @@
+The ship USS Janissary has been finished.
+It is 289 m in length and 132 m in width.
+It can go to Warp 6!
+The independent ship Nomad just finished its construction.
+It is 150 m in length and 230 m in width.
+USS Janissary: The core is set.
+USS Janissary: The core is stable at the time.
+Nomad: The core is set.
+Nomad: The core is stable at the time.
+USS Janissary: The core is unstable at the time.
+Nomad: The core is unstable at the time.

@@ -1,0 +1,3 @@
+Error in setAscii: bad new illustration
+Error in speak_es: wrong mode
+Error in speak_es: wrong mode

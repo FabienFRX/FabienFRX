@@ -1,0 +1,11 @@
+Charles de Gaulle is alive
+Georges Pompidou is alive
+Valery Giscard D'Estaing is alive
+Charles de Gaulle is dead
+Francois Mitterrand is alive
+Georges Pompidou is dead
+Jacques Chirac is alive
+Valery Giscard D'Estaing is dead
+Jacques Chirac is touched
+Francois Mitterrand is dead
+Jacques Chirac is dead

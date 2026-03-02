@@ -1,0 +1,184 @@
+from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import generics, status
+from rest_framework.decorators import api_view  
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from .models import Message, Investor, Partner, JEBUser
+from .serializers import MessageSerializer
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from .models import Startup, Event, News
+from .serializers import (
+    StartupSerializer, StartupDetailSerializer,
+    EventSerializer, EventDetailSerializer,
+    NewsSerializer, UserSerializer, InvestorSerializer, PartnerSerializer, JEBUserSerializer
+)
+
+class StartupListView(generics.ListCreateAPIView):
+    queryset = Startup.objects.all()
+    serializer_class = StartupSerializer
+
+class StartupDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Startup.objects.all()
+    serializer_class = StartupDetailSerializer
+
+class EventListView(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventDetailSerializer
+
+class NewsListView(generics.ListCreateAPIView):
+    queryset = News.objects.all().order_by('-news_date')
+    serializer_class = NewsSerializer
+
+class NewsDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        
+        profile = getattr(user, 'userprofile', None)
+        role = profile.role if profile else 'visitor'
+        
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'username': user.username,
+            'role': role
+        })
+
+class MessageListView(generics.ListCreateAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Message.objects.filter(recipient=self.request.user).order_by('-sent_at')
+    
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+
+class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Message.objects.filter(recipient=self.request.user)
+# Vues pour les investisseurs
+class InvestorListView(generics.ListAPIView):
+    queryset = Investor.objects.all()
+    serializer_class = InvestorSerializer
+
+class InvestorDetailView(generics.RetrieveAPIView):
+    queryset = Investor.objects.all()
+    serializer_class = InvestorSerializer
+
+# Vues pour les partenaires
+class PartnerListView(generics.ListAPIView):
+    queryset = Partner.objects.all()
+    serializer_class = PartnerSerializer
+
+class PartnerDetailView(generics.RetrieveAPIView):
+    queryset = Partner.objects.all()
+    serializer_class = PartnerSerializer
+
+# Vues pour les images (proxies vers l'API JEB)
+@api_view(['GET'])
+def news_image(request, news_id):
+    """Récupère l'image d'une actualité depuis l'API JEB"""
+    try:
+        from django.conf import settings
+        import requests
+        
+        response = requests.get(
+            f"{settings.JEB_API_BASE_URL}/news/{news_id}/image",
+            headers={'X-Group-Authorization': settings.JEB_API_TOKEN}
+        )
+        
+        if response.status_code == 200:
+            return Response({'image_url': response.text.strip('"')})
+        else:
+            return Response({'error': 'Image not found'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@api_view(['GET'])
+def event_image(request, event_id):
+    """Récupère l'image d'un événement depuis l'API JEB"""
+    try:
+        from django.conf import settings
+        import requests
+        
+        response = requests.get(
+            f"{settings.JEB_API_BASE_URL}/events/{event_id}/image",
+            headers={'X-Group-Authorization': settings.JEB_API_TOKEN}
+        )
+        
+        if response.status_code == 200:
+            return Response({'image_url': response.text.strip('"')})
+        else:
+            return Response({'error': 'Image not found'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@api_view(['GET'])
+def user_image(request, user_id):
+    """Récupère l'image d'un utilisateur depuis l'API JEB"""
+    try:
+        from django.conf import settings
+        import requests
+        
+        response = requests.get(
+            f"{settings.JEB_API_BASE_URL}/users/{user_id}/image",
+            headers={'X-Group-Authorization': settings.JEB_API_TOKEN}
+        )
+        
+        if response.status_code == 200:
+            return Response({'image_url': response.text.strip('"')})
+        else:
+            return Response({'error': 'Image not found'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+# Vue pour rechercher un utilisateur par email
+@api_view(['GET'])
+def user_by_email(request, email):
+    """Récupère un utilisateur par email depuis l'API JEB"""
+    try:
+        from django.conf import settings
+        import requests
+        
+        response = requests.get(
+            f"{settings.JEB_API_BASE_URL}/users/email/{email}",
+            headers={'X-Group-Authorization': settings.JEB_API_TOKEN}
+        )
+        
+        if response.status_code == 200:
+            return Response(response.json())
+        else:
+            return Response({'error': 'User not found'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+# Vues pour les utilisateurs JEB
+class JEBUserListView(generics.ListAPIView):
+    queryset = JEBUser.objects.all()
+    serializer_class = JEBUserSerializer
+
+class JEBUserDetailView(generics.RetrieveAPIView):
+    queryset = JEBUser.objects.all()
+    serializer_class = JEBUserSerializer

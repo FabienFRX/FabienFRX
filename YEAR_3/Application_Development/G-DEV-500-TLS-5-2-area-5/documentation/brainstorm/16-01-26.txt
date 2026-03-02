@@ -1,0 +1,20 @@
+EVAN :
+
+make template with helper for workflow
+
+MARCEAU : 
+
+Gitlab service + action / reaction
+help fab with mobile
+
+FABIEN : 
+
+make the same as web for mobile
+make working google oauth2
+
+ANDI : 
+
+help fab with mobile
+finalise linkedin service 
+test actions + reaction
+

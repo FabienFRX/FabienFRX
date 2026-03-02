@@ -1,0 +1,20 @@
+[Unit]
+Description=Worker Application Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/worker
+ExecStart=/usr/bin/java -jar target/worker-jar-with-dependencies.jar
+Restart=always
+Environment=REDIS_HOST={{ redis_host }}
+Environment=REDIS_PORT={{ redis_port }}
+Environment=DB_HOST={{ db_host }}
+Environment=DB_PORT={{ db_port }}
+Environment=DB_USER={{ db_user }}
+Environment=DB_PASS={{ db_password }}
+Environment=DB_NAME={{ db_name }}
+
+[Install]
+WantedBy=multi-user.target

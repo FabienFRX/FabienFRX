@@ -1,0 +1,96 @@
+name: GLaDOS CI/CD
+
+on:
+  push:
+    branches-ignore: ["ga-ignore-*"]
+  pull_request:
+    branches-ignore: ["ga-ignore-*"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    if: github.repository == 'GobyNathan/G-FUN-500-TLS-5-1-glados-4-mirror'
+    container: epitechcontent/epitest-docker
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Stack
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.stack
+            .stack-work
+            /tmp/.stack
+          key: stack-${{ hashFiles('**/stack.yaml', '**/glados.cabal') }}
+
+      - name: Install dependencies & Setup
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq git build-essential ghc hlint curl
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      - uses: haskell-actions/setup@v2
+        with:
+          enable-stack: true
+          stack-no-global: true
+
+      - name: Lint & Build & Test
+        run: |
+          export STACK_ROOT=/tmp/.stack
+          find . -name "*.hs" -not -path "./.stack-work/*" | xargs hlint || true
+          make clean || true
+          make
+          make test_rule
+
+      - name: Upload executables
+        uses: actions/upload-artifact@v4
+        if: github.event_name == 'push'
+        with:
+          name: glados-binaries-${{ github.sha }}
+          path: |
+            glados-compiler
+            glados-vm
+          retention-days: 1
+
+      - name: Cleanup
+        if: always()
+        run: make fclean || true
+
+  mirror-and-deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mirror Repository
+        uses: pixta-dev/repository-mirroring-action@v1.1.1
+        with:
+          target_repo_url: ${{ vars.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.SSH_KEY }}
+
+      - name: Download Executables
+        uses: actions/download-artifact@v4
+        with:
+          name: glados-binaries-${{ github.sha }}
+          path: ./release
+
+      - name: Deploy Executables
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: GLaDOS v1.0.${{ github.run_number }}
+          files: |
+            ./release/glados-compiler
+            ./release/glados-vm
+          repository: ${{ vars.MIRROR_REPO }}
+          token: ${{ secrets.LITTLE_SECRET }}

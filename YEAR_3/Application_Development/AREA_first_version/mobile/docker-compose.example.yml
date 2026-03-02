@@ -1,0 +1,37 @@
+# Exemple de docker-compose pour l'architecture AREA complète
+# À adapter avec votre serveur backend et client web
+
+version: '3.8'
+
+services:
+  # Serveur backend (à remplacer par votre vrai serveur)
+  # server:
+  #   build: ./server
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - NODE_ENV=production
+  
+  # Client web (à remplacer par votre vrai client web)
+  # client_web:
+  #   build: ./client_web
+  #   ports:
+  #     - "8081:80"
+  #   depends_on:
+  #     - server
+  
+  # Client mobile Flutter - Sert l'APK Android
+  mobile_client:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: area-mobile-apk
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    labels:
+      - "description=AREA Mobile Client APK Server"
+    # L'APK sera accessible sur http://localhost:8081/client.apk
+
+# Pour lancer : docker-compose up -d mobile_client
+# Pour télécharger l'APK : curl http://localhost:8081/client.apk -o area-mobile.apk

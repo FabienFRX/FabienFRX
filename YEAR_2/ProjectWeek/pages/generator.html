@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Home - Search</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/basic.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/gen.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/style.css'>
+    <script>
+        const imagesLine1 = [
+            "../img/food/1.png",
+            "../img/food/1.png",
+            "../img/food/1.png",
+        ];
+    
+        const imagesLine2 = [
+            "../img/food/1.png",
+            "../img/food/1.png",
+            "../img/food/1.png",
+        ];
+
+        const imagesLine3 = [
+            "../img/food/1.png",
+            "../img/food/2.png",
+            "../img/food/3.png",
+        ];
+
+        const imagesLine4 = [
+            "../img/food/1.png",
+            "../img/food/2.png",
+            "../img/food/3.png",
+        ];
+
+        const imagesLine5 = [
+            "../img/food/1.png",
+            "../img/food/2.png",
+            "../img/food/3.png",
+        ];
+
+        const imagesLine6 = [
+            "../img/food/1.png",
+            "../img/food/2.png",
+            "../img/food/3.png",
+        ];
+
+        const imagesLine7 = [
+            "../img/food/1.png",
+            "../img/food/2.png",
+            "../img/food/3.png",
+        ];
+
+        let currentIndexLine1 = 1;
+        let currentIndexLine2 = 1;
+        let currentIndexLine3 = 1;
+        let currentIndexLine4 = 1;
+        let currentIndexLine5 = 1;
+        let currentIndexLine6 = 1;
+        let currentIndexLine7 = 1;
+        let isAnimatingLine1 = false;
+        let isAnimatingLine2 = false;
+        let isAnimatingLine3 = false;
+        let isAnimatingLine4 = false;
+        let isAnimatingLine5 = false;
+        let isAnimatingLine6 = false;
+        let isAnimatingLine7 = false;
+    
+        function swipeLeftLine1() {
+            if (isAnimatingLine1) return;
+            isAnimatingLine1 = true;
+    
+            const mainLogoLine1 = document.getElementById("main-logo-line1");
+            mainLogoLine1.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine1 = (currentIndexLine1 - 1 + imagesLine1.length) % imagesLine1.length;
+                mainLogoLine1.src = imagesLine1[currentIndexLine1];
+                mainLogoLine1.classList.remove("swipe-left");
+                isAnimatingLine1 = false;
+            }, 500);
+        }
+    
+        function swipeRightLine1() {
+            if (isAnimatingLine1) return;
+            isAnimatingLine1 = true;
+    
+            const mainLogoLine1 = document.getElementById("main-logo-line1");
+            mainLogoLine1.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine1 = (currentIndexLine1 + 1) % imagesLine1.length;
+                mainLogoLine1.src = imagesLine1[currentIndexLine1];
+                mainLogoLine1.classList.remove("swipe-right");
+                isAnimatingLine1 = false;
+            }, 500);
+        }
+    
+        function swipeLeftLine2() {
+            if (isAnimatingLine2) return;
+            isAnimatingLine2 = true;
+    
+            const mainLogoLine2 = document.getElementById("main-logo-line2");
+            mainLogoLine2.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine2 = (currentIndexLine2 - 1 + imagesLine2.length) % imagesLine2.length;
+                mainLogoLine2.src = imagesLine2[currentIndexLine2];
+                mainLogoLine2.classList.remove("swipe-left");
+                isAnimatingLine2 = false;
+            }, 500);
+        }
+
+        function swipeRightLine2() {
+            if (isAnimatingLine2) return;
+            isAnimatingLine2 = true;
+    
+            const mainLogoLine2 = document.getElementById("main-logo-line2");
+            mainLogoLine2.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine2 = (currentIndexLine2 + 1) % imagesLine2.length;
+                mainLogoLine2.src = imagesLine2[currentIndexLine2];
+                mainLogoLine2.classList.remove("swipe-right");
+                isAnimatingLine2 = false;
+            }, 500);
+        }
+
+        function swipeLeftLine3() {
+            if (isAnimatingLine3) return;
+            isAnimatingLine3 = true;
+    
+            const mainLogoLine3 = document.getElementById("main-logo-line3");
+            mainLogoLine3.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine3 = (currentIndexLine3 - 1 + imagesLine3.length) % imagesLine3.length;
+                mainLogoLine3.src = imagesLine3[currentIndexLine3];
+                mainLogoLine3.classList.remove("swipe-left");
+                isAnimatingLine3 = false;
+            }, 500);
+        }
+
+        function swipeRightLine3() {
+            if (isAnimatingLine3) return;
+            isAnimatingLine3 = true;
+    
+            const mainLogoLine3 = document.getElementById("main-logo-line3");
+            mainLogoLine3.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine3 = (currentIndexLine3 + 1) % imagesLine3.length;
+                mainLogoLine3.src = imagesLine3[currentIndexLine3];
+                mainLogoLine3.classList.remove("swipe-right");
+                isAnimatingLine3 = false;
+            }, 500);
+        }
+
+        function swipeLeftLine4() {
+            if (isAnimatingLine4) return;
+            isAnimatingLine4 = true;
+    
+            const mainLogoLine4 = document.getElementById("main-logo-line4");
+            mainLogoLine4.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine4 = (currentIndexLine4 - 1 + imagesLine4.length) % imagesLine4.length;
+                mainLogoLine4.src = imagesLine4[currentIndexLine4];
+                mainLogoLine4.classList.remove("swipe-left");
+                isAnimatingLine4 = false;
+            }, 500);
+        }
+
+        function swipeRightLine4() {
+            if (isAnimatingLine4) return;
+            isAnimatingLine4 = true;
+    
+            const mainLogoLine4 = document.getElementById("main-logo-line4");
+            mainLogoLine4.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine4 = (currentIndexLine4 + 1) % imagesLine4.length;
+                mainLogoLine4.src = imagesLine4[currentIndexLine4];
+                mainLogoLine4.classList.remove("swipe-right");
+                isAnimatingLine4 = false;
+            }, 500);
+        }
+
+        function swipeLeftLine5() {
+            if (isAnimatingLine5) return;
+            isAnimatingLine5 = true;
+    
+            const mainLogoLine5 = document.getElementById("main-logo-line5");
+            mainLogoLine5.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine5 = (currentIndexLine5 - 1 + imagesLine5.length) % imagesLine5.length;
+                mainLogoLine5.src = imagesLine5[currentIndexLine5];
+                mainLogoLine5.classList.remove("swipe-left");
+                isAnimatingLine5 = false;
+            }, 500);
+        }
+
+        function swipeRightLine5() {
+            if (isAnimatingLine5) return;
+            isAnimatingLine5 = true;
+    
+            const mainLogoLine5 = document.getElementById("main-logo-line5");
+            mainLogoLine5.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine5 = (currentIndexLine5 + 1) % imagesLine5.length;
+                mainLogoLine5.src = imagesLine5[currentIndexLine5];
+                mainLogoLine5.classList.remove("swipe-right");
+                isAnimatingLine5 = false;
+            }, 500);
+        }
+
+        function swipeLeftLine6() {
+            if (isAnimatingLine6) return;
+            isAnimatingLine6 = true;
+    
+            const mainLogoLine6 = document.getElementById("main-logo-line6");
+            mainLogoLine6.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine6 = (currentIndexLine6 - 1 + imagesLine6.length) % imagesLine6.length;
+                mainLogoLine6.src = imagesLine6[currentIndexLine6];
+                mainLogoLine6.classList.remove("swipe-left");
+                isAnimatingLine6 = false;
+            }, 500);
+        }
+
+        function swipeRightLine6() {
+            if (isAnimatingLine6) return;
+            isAnimatingLine6 = true;
+    
+            const mainLogoLine6 = document.getElementById("main-logo-line6");
+            mainLogoLine6.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine6 = (currentIndexLine6 + 1) % imagesLine6.length;
+                mainLogoLine6.src = imagesLine6[currentIndexLine6];
+                mainLogoLine6.classList.remove("swipe-right");
+                isAnimatingLine6 = false;
+            }, 500);
+        }
+
+        function swipeLeftLine7() {
+            if (isAnimatingLine7) return;
+            isAnimatingLine7 = true;
+    
+            const mainLogoLine7 = document.getElementById("main-logo-line7");
+            mainLogoLine7.classList.add("swipe-left");
+    
+            setTimeout(() => {
+                currentIndexLine7 = (currentIndexLine7 - 1 + imagesLine7.length) % imagesLine7.length;
+                mainLogoLine7.src = imagesLine7[currentIndexLine7];
+                mainLogoLine7.classList.remove("swipe-left");
+                isAnimatingLine7 = false;
+            }, 500);
+        }
+
+        function swipeRightLine7() {
+            if (isAnimatingLine7) return;
+            isAnimatingLine7 = true;
+    
+            const mainLogoLine7 = document.getElementById("main-logo-line7");
+            mainLogoLine7.classList.add("swipe-right");
+    
+            setTimeout(() => {
+                currentIndexLine7 = (currentIndexLine7 + 1) % imagesLine7.length;
+                mainLogoLine7.src = imagesLine7[currentIndexLine7];
+                mainLogoLine7.classList.remove("swipe-right");
+                isAnimatingLine7 = false;
+            }, 500);
+        }
+    </script>
+       
+</head>
+<body>
+    <nav></nav>
+    <div class="box-middle">
+        <div class="box-element">
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine1()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line1" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine1()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine2()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line2" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine2()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine3()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line3" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine3()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine4()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line4" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine4()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine5()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line5" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine5()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine6()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line6" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine6()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+
+            <div class="line-element-1">
+                <img src="../img/dislikee.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeLeftLine7()">
+                    <img src="../img/swipe_left.png" class="element-logo">
+                </button>
+                <img id="main-logo-line7" src="../img/food/1.png" class="element-logo">
+                <button class="btn-swipe" onclick="swipeRightLine7()">
+                    <img src="../img/swipe_right.png" class="element-logo">
+                </button>
+                <img src="../img/likee.png" class="element-logo">
+            </div>
+        </div>
+        <div class="box-button">
+            <button>Generate</button>
+            <button>Express</button>
+        </div>
+    </div>
+    <footer>
+        <a href="generator.html"><img src="../img/assietter.png" class="size-button"></a>
+        <a href="story.html"><img src="../img/story.png" class="size-button"></a>
+        <a href="home.html"><img src="../img/loop.png" class="size-button"></a>
+        <a href="profile.html"><img src="../img/profile.png" class="size-button"></a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+$>ls -a ./test/
+.
+..
+.hidden
+file1
+file2
+subdirectory
+$> ./a.out 2>&1 | cat -e
+.$
+..$
+file1$
+.hidden$
+file2$
+subdirectory$
+invalid path: No such file or directory$
+file1$
+file2$
+subdirectory$

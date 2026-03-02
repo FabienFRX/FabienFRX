@@ -1,0 +1,43 @@
+# Environment variables - SECURITE CRITIQUE
+.env
+.env.local
+.env.production
+.env.development
+backend/.env*
+
+# Database
+*.sqlite3
+*.db
+db.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+backend/venv/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+web/node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build artifacts
+dist/
+build/

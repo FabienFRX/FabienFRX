@@ -1,0 +1,11 @@
+Cerise lives.
+Framboise lives.
+Anis lives.
+[[name: "Cerise", vitamins: 0, peeled: false], [name: "Framboise", vitamins: 0, peeled: false], [name: "Anis", vitamins: 0, peeled: false]]
+Serge lives.
+0
+Serge dies.
+Cerise dies.
+[[name: "Framboise", vitamins: 0, peeled: false], [name: "Anis", vitamins: 0, peeled: false]]
+Framboise dies.
+Anis dies.

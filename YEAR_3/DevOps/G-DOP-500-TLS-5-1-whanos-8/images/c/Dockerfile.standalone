@@ -1,0 +1,10 @@
+FROM gcc:13.2 AS builder
+WORKDIR /build
+COPY app/ .
+RUN make
+
+FROM debian:bookworm-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y libc6 && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /build/compiled-app .
+CMD ["./compiled-app"]

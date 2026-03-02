@@ -1,0 +1,39 @@
+# Haskell compilation files
+
+dist/
+dist-newstyle/
+.stack-work/
+*.hi
+*.o
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+*.prof
+*.aux
+*.hp
+*.eventlog
+
+# IDE specific files
+
+.vscode/
+.idea/
+*.swp
+*~
+
+# Binary files
+
+lambdananas
+src/Main
+
+# Cabal & Stack files
+
+cabal.project.local
+.HTF/
+.ghc.environment.*
+stack.yaml.lock
+
+# System files
+
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+<document>
+    <header title="Complex XML Document" author="Test User" date="2025-04-28"></header>
+    <body>
+        <section title="Introduction">
+            <paragraph>This is the introduction paragraph.</paragraph>
+        </section>
+        <section title="Main Content">
+            <paragraph>This section contains <bold>formatted</bold> text and a <italic>list</italic>.</paragraph>
+            <list>
+                <item>First list item</item>
+                <item>Second list item with <bold>bold text</bold></item>
+                <item>Third list item</item>
+            </list>
+            <codeblock>function example() {
+    return "This is a code example";
+}</codeblock>
+        </section>
+    </body>
+</document>

@@ -1,0 +1,6 @@
+[[name: "orange", vitamins: 7, peeled: true], [name: "lemon", vitamins: 0, peeled: false], [name: "strawberry", vitamins: 6, peeled: true], [name: "almond", vitamins: 0, peeled: false]]
+mixer has no blade
+result: 0
+[[name: "orange", vitamins: 7, peeled: true], [name: "lemon", vitamins: 0, peeled: false], [name: "strawberry", vitamins: 6, peeled: true], [name: "almond", vitamins: 0, peeled: false]]
+result: 13
+[[name: "lemon", vitamins: 0, peeled: false], [name: "almond", vitamins: 0, peeled: false]]

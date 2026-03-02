@@ -1,0 +1,74 @@
+---
+- name: Install Node.js repository signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Add Node.js repository
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_18.x bookworm main
+    state: present
+    filename: nodesource
+
+- name: Install Node.js and npm
+  apt:
+    name:
+      - nodejs
+    state: present
+    update_cache: yes
+
+- name: Create result application directory
+  file:
+    path: /opt/result
+    state: directory
+    mode: '0755'
+
+- name: Check if result.tar exists locally
+  local_action: stat path=result.tar
+  register: result_tar_stat
+  become: no
+
+- name: Display result.tar status
+  debug:
+    msg: "Result tarball exists: {{ result_tar_stat.stat.exists }}, Size: {{ result_tar_stat.stat.size | default('Unknown') }} bytes"
+  
+- name: Copy result.tar to remote server
+  copy:
+    src: "{{ playbook_dir }}/result.tar"
+    dest: /tmp/result.tar
+    mode: '0644'
+  when: result_tar_stat.stat.exists and result_tar_stat.stat.size > 0
+
+- name: Extract result application tarball
+  unarchive:
+    src: "{{ playbook_dir }}/result.tar"
+    dest: /opt/result
+    remote_src: no
+
+- name: Install Node.js dependencies
+  npm:
+    path: /opt/result
+    state: present
+
+- name: Template systemd service file
+  template:
+    src: result.service
+    dest: /etc/systemd/system/result.service
+    mode: '0644'
+  notify: Restart Result service
+
+- name: Allow Result service through firewall
+  ufw:
+    rule: allow
+    port: "{{ result_port }}"
+    proto: tcp
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Ensure Result service is running and enabled
+  service:
+    name: result
+    state: started
+    enabled: yes

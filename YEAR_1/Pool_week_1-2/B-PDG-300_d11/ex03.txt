@@ -1,0 +1,10 @@
+Kermit is alive
+Miss Piggy is alive
+Fozzie is alive
+Fozzie is touched
+Kermit is touched
+Miss Piggy is touched
+Fozzie is dead
+Kermit is dead
+Miss Piggy is dead
+Invalid operation on a list

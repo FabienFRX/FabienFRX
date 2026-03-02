@@ -1,0 +1,97 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           glados
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4#readme>
+homepage:       https://github.com/EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4#readme
+bug-reports:    https://github.com/EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4/issues
+author:         Gobijan Nathakrishnan
+maintainer:     gobijan.nathakrishnan@epitech.eu
+copyright:      2025 EPITECH
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/EpitechPGE3-2025/G-FUN-500-TLS-5-1-glados-4
+
+library
+  exposed-modules:
+      Parser
+      AST
+      Compiler
+      CompilerInterface
+      Types
+      VM
+  other-modules:
+      Paths_glados
+  autogen-modules:
+      Paths_glados
+  hs-source-dirs:
+      src/part2/Compiler
+      src/part2/VM
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , binary >=0.8 && <1
+    , bytestring >=0.10 && <1
+    , containers >=0.6 && <1
+    , parsec >=3.1 && <4
+  default-language: Haskell2010
+
+executable glados-compiler
+  main-is: CompilerMain.hs
+  hs-source-dirs:
+      src/part2/App
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , binary >=0.8 && <1
+    , bytestring >=0.10 && <1
+    , containers >=0.6 && <1
+    , filepath >=1.4 && <2
+    , glados
+    , parsec >=3.1 && <4
+  default-language: Haskell2010
+
+executable glados-vm
+  main-is: VMMain.hs
+  hs-source-dirs:
+      src/part2/App
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , binary >=0.8 && <1
+    , bytestring >=0.10 && <1
+    , containers >=0.6 && <1
+    , glados
+    , parsec >=3.1 && <4
+  default-language: Haskell2010
+
+test-suite glados-test
+  type: exitcode-stdio-1.0
+  main-is: TestMain.hs
+  other-modules:
+      ParserTests
+      CompilerTests
+      VMTests
+      IntegrationTests
+  hs-source-dirs:
+      src/part2/tests
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HUnit >=1.6 && <2
+    , base >=4.7 && <5
+    , binary >=0.8 && <1
+    , bytestring >=0.10 && <1
+    , containers >=0.6 && <1
+    , glados
+    , parsec >=3.1 && <4
+  default-language: Haskell2010

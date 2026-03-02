@@ -1,0 +1,9 @@
+ERROR: takes only one file as argument
+
+usage: 
+
+./convertImg <file.png | file.jpg>
+
+	(takes a png or jpeg image and prints it in a format
+	 suitable to be inputed in an imageCompressor binary)
+

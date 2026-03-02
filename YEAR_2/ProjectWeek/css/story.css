@@ -1,0 +1,42 @@
+.box-middle
+{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url(../img/plate.png);
+    background-size: cover;
+}
+
+.like-dislike
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 15%;
+    margin-bottom: 100px;
+}
+
+.dislike
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+}
+
+.like
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+}
+
+.like-dislike-size
+{
+    width: 80%;
+}

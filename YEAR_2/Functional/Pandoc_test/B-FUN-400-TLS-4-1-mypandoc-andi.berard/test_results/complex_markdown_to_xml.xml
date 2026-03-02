@@ -1,0 +1,6 @@
+<document>
+  <header title="Complex Document" author="Test User" date="2025-04-28"></header>
+  <body>
+    <paragraph># IntroductionThis document demonstrates various Markdown features.## SubsectionText with <bold>bold formatting</bold> and <italic>italic words</italic>.- List item one- List item two with <bold>important</bold> note- List item three with <italic>emphasized</italic> text# Code ExamplesHere&apos;s a simple code block:<code></code><code>pythondef hello():    print(&quot;Hello, world!&quot;)    return True</code><code></code></paragraph>
+  </body>
+</document>

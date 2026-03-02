@@ -1,0 +1,4 @@
+orange: 0 vitamins
+[name: "strawberry", vitamins: 6, peeled: true]
+[name: "almond", vitamins: 0, peeled: false]
+[name: "orange", vitamins: 7, peeled: true]

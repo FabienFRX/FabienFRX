@@ -1,0 +1,745 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functions - GLaDOS Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">GLaDOS Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<p>Functions are the building blocks of GLaDOS programs. All code must be inside functions, and every program requires a <code>main()</code> function as its entry point.</p>
+<h2 id="function-definition"><a class="header" href="#function-definition">Function Definition</a></h2>
+<h3 id="syntax"><a class="header" href="#syntax">Syntax</a></h3>
+<pre><code class="language-glados">fn function_name(param1, param2, ...) {
+    // Function body
+    return value
+}
+</code></pre>
+<h3 id="components"><a class="header" href="#components">Components</a></h3>
+<ul>
+<li><code>fn</code> - Keyword to define a function</li>
+<li><code>function_name</code> - Name of the function (must be a valid identifier)</li>
+<li><code>(param1, param2, ...)</code> - Parameters (zero or more)</li>
+<li><code>{ ... }</code> - Function body</li>
+<li><code>return value</code> - Return statement (required)</li>
+</ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<pre><code class="language-glados">fn add(a, b) {
+    return a + b
+}
+
+fn main() {
+    result = add(10, 20)
+    return result
+}
+</code></pre>
+<h2 id="parameters"><a class="header" href="#parameters">Parameters</a></h2>
+<h3 id="zero-parameters"><a class="header" href="#zero-parameters">Zero Parameters</a></h3>
+<pre><code class="language-glados">fn get_answer() {
+    return 42
+}
+
+fn main() {
+    answer = get_answer()
+    return answer
+}
+</code></pre>
+<h3 id="one-parameter"><a class="header" href="#one-parameter">One Parameter</a></h3>
+<pre><code class="language-glados">fn square(n) {
+    return n * n
+}
+
+fn main() {
+    return square(7)    // 49
+}
+</code></pre>
+<h3 id="multiple-parameters"><a class="header" href="#multiple-parameters">Multiple Parameters</a></h3>
+<pre><code class="language-glados">fn multiply(a, b) {
+    return a * b
+}
+
+fn power(base, exp) {
+    if (exp &lt;= 0) {
+        return 1
+    } else {
+        return base * power(base, exp - 1)
+    }
+}
+
+fn main() {
+    return power(2, 10)    // 1024
+}
+</code></pre>
+<h2 id="function-calls"><a class="header" href="#function-calls">Function Calls</a></h2>
+<h3 id="syntax-1"><a class="header" href="#syntax-1">Syntax</a></h3>
+<pre><code class="language-glados">function_name(arg1, arg2, ...)
+</code></pre>
+<h3 id="calling-functions"><a class="header" href="#calling-functions">Calling Functions</a></h3>
+<pre><code class="language-glados">fn add(a, b) {
+    return a + b
+}
+
+fn main() {
+    x = add(5, 10)          // Assign result to variable
+    y = add(x, 20)          // Use variable as argument
+    z = add(add(1, 2), 3)   // Nested calls
+    return z
+}
+</code></pre>
+<h3 id="argument-matching"><a class="header" href="#argument-matching">Argument Matching</a></h3>
+<p>The number of arguments must match the number of parameters:</p>
+<pre><code class="language-glados">fn add(a, b) {
+    return a + b
+}
+
+fn main() {
+    x = add(10, 20)     // ✓ Correct: 2 arguments
+    // y = add(10)      // ❌ Error: too few arguments
+    // z = add(10, 20, 30)  // ❌ Error: too many arguments
+    return x
+}
+</code></pre>
+<h2 id="return-statements"><a class="header" href="#return-statements">Return Statements</a></h2>
+<p>Every function must have a <code>return</code> statement.</p>
+<h3 id="simple-return"><a class="header" href="#simple-return">Simple Return</a></h3>
+<pre><code class="language-glados">fn get_answer() {
+    return 42
+}
+</code></pre>
+<h3 id="returning-expressions"><a class="header" href="#returning-expressions">Returning Expressions</a></h3>
+<pre><code class="language-glados">fn sum(a, b, c) {
+    return a + b + c
+}
+
+fn main() {
+    return sum(10, 20, 30)    // 60
+}
+</code></pre>
+<h3 id="multiple-return-points"><a class="header" href="#multiple-return-points">Multiple Return Points</a></h3>
+<pre><code class="language-glados">fn abs(n) {
+    if (n &lt; 0) {
+        return 0 - n
+    } else {
+        return n
+    }
+}
+</code></pre>
+<h2 id="the-main-function"><a class="header" href="#the-main-function">The <code>main()</code> Function</a></h2>
+<p>Every GLaDOS program must have a <code>main()</code> function.</p>
+<h3 id="requirements"><a class="header" href="#requirements">Requirements</a></h3>
+<ul>
+<li>Must be named exactly <code>main</code></li>
+<li>Must have <strong>zero parameters</strong></li>
+<li>Must have a <code>return</code> statement</li>
+<li>Serves as the program entry point</li>
+</ul>
+<h3 id="example-1"><a class="header" href="#example-1">Example</a></h3>
+<pre><code class="language-glados">fn main() {
+    return 42
+}
+</code></pre>
+<h3 id="invalid-main-functions"><a class="header" href="#invalid-main-functions">Invalid <code>main()</code> Functions</a></h3>
+<pre><code class="language-glados">// ❌ ERROR: main() cannot have parameters
+fn main(x) {
+    return x
+}
+
+// ❌ ERROR: wrong name
+fn Main() {
+    return 42
+}
+
+// ❌ ERROR: missing return
+fn main() {
+    x = 42
+}
+</code></pre>
+<h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
+<p>Functions can call themselves, enabling iterative computations.</p>
+<h3 id="basic-recursion"><a class="header" href="#basic-recursion">Basic Recursion</a></h3>
+<pre><code class="language-glados">fn countdown(n) {
+    if (n &lt;= 0) {
+        return 0
+    } else {
+        return n + countdown(n - 1)
+    }
+}
+
+fn main() {
+    return countdown(5)    // 15 (5+4+3+2+1)
+}
+</code></pre>
+<h3 id="factorial"><a class="header" href="#factorial">Factorial</a></h3>
+<pre><code class="language-glados">fn factorial(n) {
+    if (n &lt; 2) {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+
+fn main() {
+    return factorial(5)    // 120
+}
+</code></pre>
+<h3 id="fibonacci"><a class="header" href="#fibonacci">Fibonacci</a></h3>
+<pre><code class="language-glados">fn fibonacci(n) {
+    if (n &lt; 2) {
+        return n
+    } else {
+        a = n - 1
+        b = n - 2
+        return fibonacci(a) + fibonacci(b)
+    }
+}
+
+fn main() {
+    return fibonacci(10)    // 55
+}
+</code></pre>
+<h3 id="mutual-recursion"><a class="header" href="#mutual-recursion">Mutual Recursion</a></h3>
+<p>Functions can call each other:</p>
+<pre><code class="language-glados">fn is_even(n) {
+    if (n == 0) {
+        return 1
+    } else {
+        return is_odd(n - 1)
+    }
+}
+
+fn is_odd(n) {
+    if (n == 0) {
+        return 0
+    } else {
+        return is_even(n - 1)
+    }
+}
+
+fn main() {
+    return is_even(42)    // 1 (true)
+}
+</code></pre>
+<h2 id="variable-scope"><a class="header" href="#variable-scope">Variable Scope</a></h2>
+<p>Variables are scoped to the function in which they're defined.</p>
+<h3 id="local-variables"><a class="header" href="#local-variables">Local Variables</a></h3>
+<pre><code class="language-glados">fn func1() {
+    x = 10
+    return x
+}
+
+fn func2() {
+    x = 20       // Different x, local to func2
+    return x
+}
+
+fn main() {
+    a = func1()  // 10
+    b = func2()  // 20
+    return a + b // 30
+}
+</code></pre>
+<h3 id="parameter-scope"><a class="header" href="#parameter-scope">Parameter Scope</a></h3>
+<pre><code class="language-glados">fn add(a, b) {
+    // a and b are local to this function
+    sum = a + b
+    return sum
+}
+
+fn main() {
+    result = add(10, 20)
+    // a and b are not accessible here
+    return result
+}
+</code></pre>
+<h2 id="function-composition"><a class="header" href="#function-composition">Function Composition</a></h2>
+<p>Functions can call other functions:</p>
+<pre><code class="language-glados">fn square(n) {
+    return n * n
+}
+
+fn sum_of_squares(a, b) {
+    return square(a) + square(b)
+}
+
+fn main() {
+    return sum_of_squares(3, 4)    // 25 (9 + 16)
+}
+</code></pre>
+<h2 id="common-function-patterns"><a class="header" href="#common-function-patterns">Common Function Patterns</a></h2>
+<h3 id="helper-functions"><a class="header" href="#helper-functions">Helper Functions</a></h3>
+<pre><code class="language-glados">fn bool_to_int(b) {
+    if (b) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+fn main() {
+    x = 10
+    y = 20
+    result = bool_to_int(x &lt; y)
+    return result    // 1
+}
+</code></pre>
+<h3 id="predicate-functions"><a class="header" href="#predicate-functions">Predicate Functions</a></h3>
+<pre><code class="language-glados">fn is_positive(n) {
+    if (n &gt; 0) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+fn is_negative(n) {
+    if (n &lt; 0) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+fn main() {
+    return is_positive(42)    // 1
+}
+</code></pre>
+<h3 id="utility-functions"><a class="header" href="#utility-functions">Utility Functions</a></h3>
+<pre><code class="language-glados">fn max(a, b) {
+    if (a &gt; b) {
+        return a
+    } else {
+        return b
+    }
+}
+
+fn min(a, b) {
+    if (a &lt; b) {
+        return a
+    } else {
+        return b
+    }
+}
+
+fn clamp(value, low, high) {
+    if (value &lt; low) {
+        return low
+    } else {
+        if (value &gt; high) {
+            return high
+        } else {
+            return value
+        }
+    }
+}
+
+fn main() {
+    return clamp(15, 10, 20)    // 15
+}
+</code></pre>
+<h2 id="tail-recursion"><a class="header" href="#tail-recursion">Tail Recursion</a></h2>
+<p>Tail-recursive functions call themselves as their last operation:</p>
+<pre><code class="language-glados">fn factorial_helper(n, acc) {
+    if (n &lt; 2) {
+        return acc
+    } else {
+        return factorial_helper(n - 1, n * acc)
+    }
+}
+
+fn factorial(n) {
+    return factorial_helper(n, 1)
+}
+
+fn main() {
+    return factorial(5)    // 120
+}
+</code></pre>
+<h2 id="advanced-examples"><a class="header" href="#advanced-examples">Advanced Examples</a></h2>
+<h3 id="gcd-greatest-common-divisor"><a class="header" href="#gcd-greatest-common-divisor">GCD (Greatest Common Divisor)</a></h3>
+<pre><code class="language-glados">fn mod(a, b) {
+    return a - (a / b) * b
+}
+
+fn gcd(a, b) {
+    if (b == 0) {
+        return a
+    } else {
+        return gcd(b, mod(a, b))
+    }
+}
+
+fn main() {
+    return gcd(48, 18)    // 6
+}
+</code></pre>
+<h3 id="ackermann-function"><a class="header" href="#ackermann-function">Ackermann Function</a></h3>
+<pre><code class="language-glados">fn ackermann(m, n) {
+    if (m == 0) {
+        return n + 1
+    } else {
+        if (n == 0) {
+            return ackermann(m - 1, 1)
+        } else {
+            inner = ackermann(m, n - 1)
+            return ackermann(m - 1, inner)
+        }
+    }
+}
+
+fn main() {
+    return ackermann(3, 3)    // 61
+}
+</code></pre>
+<h3 id="power-function"><a class="header" href="#power-function">Power Function</a></h3>
+<pre><code class="language-glados">fn power(base, exp) {
+    if (exp &lt;= 0) {
+        return 1
+    } else {
+        if (exp == 1) {
+            return base
+        } else {
+            return base * power(base, exp - 1)
+        }
+    }
+}
+
+fn main() {
+    return power(2, 10)    // 1024
+}
+</code></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="descriptive-names"><a class="header" href="#descriptive-names">Descriptive Names</a></h3>
+<pre><code class="language-glados">// ✓ Good: descriptive names
+fn calculate_area(width, height) {
+    return width * height
+}
+
+// ❌ Bad: unclear names
+fn f(a, b) {
+    return a * b
+}
+</code></pre>
+<h3 id="single-responsibility"><a class="header" href="#single-responsibility">Single Responsibility</a></h3>
+<pre><code class="language-glados">// ✓ Good: each function does one thing
+fn square(n) {
+    return n * n
+}
+
+fn sum_of_squares(a, b) {
+    return square(a) + square(b)
+}
+
+// ❌ Bad: doing too much in one function
+fn everything(a, b, c, d) {
+    x = a * a
+    y = b * b
+    z = c * c
+    w = d * d
+    return x + y + z + w
+}
+</code></pre>
+<h3 id="base-cases-first"><a class="header" href="#base-cases-first">Base Cases First</a></h3>
+<pre><code class="language-glados">// ✓ Good: base case first
+fn factorial(n) {
+    if (n &lt; 2) {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+</code></pre>
+<h2 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h2>
+<h3 id="missing-return"><a class="header" href="#missing-return">Missing Return</a></h3>
+<pre><code class="language-glados">// ❌ ERROR
+fn broken(x) {
+    x + 10
+}
+
+// ✓ CORRECT
+fn fixed(x) {
+    return x + 10
+}
+</code></pre>
+<h3 id="wrong-parameter-count"><a class="header" href="#wrong-parameter-count">Wrong Parameter Count</a></h3>
+<pre><code class="language-glados">fn add(a, b) {
+    return a + b
+}
+
+fn main() {
+    // ❌ ERROR: wrong number of arguments
+    // result = add(10)
+
+    // ✓ CORRECT
+    result = add(10, 20)
+    return result
+}
+</code></pre>
+<h3 id="infinite-recursion"><a class="header" href="#infinite-recursion">Infinite Recursion</a></h3>
+<pre><code class="language-glados">// ❌ ERROR: infinite recursion (no base case)
+fn broken(n) {
+    return broken(n - 1)
+}
+
+// ✓ CORRECT: has base case
+fn fixed(n) {
+    if (n &lt;= 0) {
+        return 0
+    } else {
+        return fixed(n - 1)
+    }
+}
+</code></pre>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<ul>
+<li><strong>All code must be in functions</strong></li>
+<li><strong><code>main()</code> is required</strong> with zero parameters</li>
+<li><strong>Parameters</strong> can be zero or more</li>
+<li><strong>Return required</strong> in all functions</li>
+<li><strong>Recursion</strong> is the primary iteration mechanism</li>
+<li><strong>Scope</strong> is function-local</li>
+<li><strong>Composition</strong> enables building complex behavior</li>
+</ul>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li>See <a href="../examples/functions.html">examples</a> of advanced function usage</li>
+<li>Learn about <a href="../examples/advanced.html">recursion patterns</a></li>
+<li>Explore the <a href="../architecture/compiler.html">compiler</a> to understand how functions are compiled</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../language/control-flow.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../architecture/compiler.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../language/control-flow.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../architecture/compiler.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

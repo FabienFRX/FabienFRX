@@ -1,0 +1,11 @@
+*.o
+*.a
+*.sh
+*.log
+*.out
+*.exe
+*.log
+*.gch
+*.info
+*.vgcore
+*.vscode

@@ -1,0 +1,11 @@
+*.o
+*.exe
+*.out
+*.a
+*.so
+*.log
+*.vscode
+build/
+bin/
+champions/
+test_asm

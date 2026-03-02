@@ -1,0 +1,29 @@
+{
+  "name": "poc-mobile-ionic",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PoC Ionic React pour AREA",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "ionic:serve": "vite",
+    "ionic:build": "vite build"
+  },
+  "dependencies": {
+    "@ionic/react": "^7.5.0",
+    "@ionic/react-router": "^7.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^5.3.4",
+    "axios": "^1.6.0",
+    "ionicons": "^7.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.0.0",
+    "typescript": "^5.3.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  }
+}

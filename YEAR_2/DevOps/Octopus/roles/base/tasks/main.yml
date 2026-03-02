@@ -1,0 +1,57 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install essential packages
+  apt:
+    name:
+      - git
+      - curl
+      - ca-certificates
+      - gnupg
+      - apt-transport-https
+      - sudo
+      - vim
+      - unzip
+      - htop
+      - net-tools
+    state: present
+
+- name: Set timezone
+  timezone:
+    name: Europe/Paris
+
+- name: Set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Ensure sudo group exists
+  group:
+    name: sudo
+    state: present
+
+- name: Configure SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  notify: Restart SSH
+
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow SSH through firewall
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+
+  notify: Restart SSH

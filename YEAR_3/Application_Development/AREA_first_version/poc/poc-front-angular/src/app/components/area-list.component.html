@@ -1,0 +1,41 @@
+<div class="areas-list">
+  <h2>Mes AREAs ({{ areas.length }})</h2>
+  
+  <div *ngIf="areas.length === 0" class="no-areas">
+    <p>Aucune AREA créée. Commencez par en créer une !</p>
+  </div>
+
+  <div 
+    *ngFor="let area of areas" 
+    [class.active]="area.active"
+    [class.inactive]="!area.active"
+    class="area-card"
+  >
+    <div class="area-content">
+      <div class="area-description">
+        <span class="area-when">
+          <strong>Quand:</strong> {{ area.action.label }}
+        </span>
+        <span class="area-then">
+          <strong>Alorx:</strong> {{ area.reaction.label }}
+        </span>
+      </div>
+      <div class="area-actions">
+        <button 
+          (click)="onToggleArea(area.id)"
+          [class.activate]="!area.active"
+          [class.deactivate]="area.active"
+          class="toggle-button"
+        >
+          {{ area.active ? 'Désactiver' : 'Activer' }}
+        </button>
+        <button 
+          (click)="onDeleteArea(area.id)"
+          class="delete-button"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+fn multiply(x, y) {
+    return x * y
+}
+
+fn square(n) {
+    return multiply(n, n)
+}
+
+fn main() {
+    result = square(7)
+    return result
+}
